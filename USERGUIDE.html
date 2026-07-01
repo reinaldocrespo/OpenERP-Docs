@@ -1,152 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Reinaldo Crespo" />
   <title>OpenERP User Guide</title>
   <style>
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -227,269 +87,347 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
+  <link rel="stylesheet" href="html-style.css" />
 </head>
 <body>
 <header id="title-block-header">
 <h1 class="title">OpenERP User Guide</h1>
+<p class="subtitle">Property Management System</p>
+<p class="author">Reinaldo Crespo</p>
+<p class="date">July 2026</p>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#openerp-users-guide" id="toc-openerp-users-guide">OpenERP
-User’s Guide</a>
+<li><a href="#openerp-users-guide" id="toc-openerp-users-guide"><span
+class="toc-section-number">1</span> OpenERP User’s Guide</a>
 <ul>
-<li><a href="#table-of-contents" id="toc-table-of-contents">Table of
-Contents</a></li>
-<li><a href="#getting-started" id="toc-getting-started">1. Getting
-Started</a>
+<li><a href="#table-of-contents" id="toc-table-of-contents"><span
+class="toc-section-number">1.1</span> Table of Contents</a></li>
+<li><a href="#getting-started" id="toc-getting-started"><span
+class="toc-section-number">1.2</span> 1. Getting Started</a>
 <ul>
-<li><a href="#first-login" id="toc-first-login">1.1 First Login</a></li>
-<li><a href="#dashboard" id="toc-dashboard">1.2 Dashboard</a></li>
-<li><a href="#company-setup" id="toc-company-setup">1.3 Company
-Setup</a></li>
-<li><a href="#chart-of-accounts" id="toc-chart-of-accounts">1.4 Chart of
-Accounts</a></li>
+<li><a href="#first-login" id="toc-first-login"><span
+class="toc-section-number">1.2.1</span> 1.1 First Login</a></li>
+<li><a href="#dashboard" id="toc-dashboard"><span
+class="toc-section-number">1.2.2</span> 1.2 Dashboard</a></li>
+<li><a href="#company-setup" id="toc-company-setup"><span
+class="toc-section-number">1.2.3</span> 1.3 Company Setup</a></li>
+<li><a href="#chart-of-accounts" id="toc-chart-of-accounts"><span
+class="toc-section-number">1.2.4</span> 1.4 Chart of Accounts</a></li>
 <li><a href="#payment-terms-and-tax-codes"
-id="toc-payment-terms-and-tax-codes">1.5 Payment Terms and Tax
+id="toc-payment-terms-and-tax-codes"><span
+class="toc-section-number">1.2.5</span> 1.5 Payment Terms and Tax
 Codes</a></li>
 <li><a href="#go-live-setup-checklist"
-id="toc-go-live-setup-checklist">1.6 Go-Live Setup Checklist</a></li>
+id="toc-go-live-setup-checklist"><span
+class="toc-section-number">1.2.6</span> 1.6 Go-Live Setup
+Checklist</a></li>
 </ul></li>
 <li><a href="#how-the-modules-connect"
-id="toc-how-the-modules-connect">2. How the Modules Connect</a>
+id="toc-how-the-modules-connect"><span
+class="toc-section-number">1.3</span> 2. How the Modules Connect</a>
 <ul>
-<li><a href="#the-core-flows" id="toc-the-core-flows">2.1 The Core
-Flows</a></li>
+<li><a href="#the-core-flows" id="toc-the-core-flows"><span
+class="toc-section-number">1.3.1</span> 2.1 The Core Flows</a></li>
 <li><a href="#auto-posting-what-posts-to-gl-and-when"
-id="toc-auto-posting-what-posts-to-gl-and-when">2.2 Auto-Posting: What
-Posts to GL and When</a></li>
-<li><a href="#the-ar-to-cash-chain" id="toc-the-ar-to-cash-chain">2.3
-The AR-to-Cash Chain</a></li>
+id="toc-auto-posting-what-posts-to-gl-and-when"><span
+class="toc-section-number">1.3.2</span> 2.2 Auto-Posting: What Posts to
+GL and When</a></li>
+<li><a href="#the-ar-to-cash-chain" id="toc-the-ar-to-cash-chain"><span
+class="toc-section-number">1.3.3</span> 2.3 The AR-to-Cash
+Chain</a></li>
 <li><a href="#the-po-to-expense-chain"
-id="toc-the-po-to-expense-chain">2.4 The PO-to-Expense Chain</a></li>
+id="toc-the-po-to-expense-chain"><span
+class="toc-section-number">1.3.4</span> 2.4 The PO-to-Expense
+Chain</a></li>
 <li><a href="#how-a-sales-order-touches-five-modules"
-id="toc-how-a-sales-order-touches-five-modules">2.5 How a Sales Order
-Touches Five Modules</a></li>
+id="toc-how-a-sales-order-touches-five-modules"><span
+class="toc-section-number">1.3.5</span> 2.5 How a Sales Order Touches
+Five Modules</a></li>
 <li><a href="#atp-available-to-promise-and-how-inventory-informs-sales"
-id="toc-atp-available-to-promise-and-how-inventory-informs-sales">2.6
-ATP (Available to Promise) and How Inventory Informs Sales</a></li>
+id="toc-atp-available-to-promise-and-how-inventory-informs-sales"><span
+class="toc-section-number">1.3.6</span> 2.6 ATP (Available to Promise)
+and How Inventory Informs Sales</a></li>
 </ul></li>
-<li><a href="#order-to-cash" id="toc-order-to-cash">3. Order-to-Cash</a>
+<li><a href="#order-to-cash" id="toc-order-to-cash"><span
+class="toc-section-number">1.4</span> 3. Order-to-Cash</a>
 <ul>
-<li><a href="#customer-master" id="toc-customer-master">3.1 Customer
-Master</a></li>
-<li><a href="#sales-quotes" id="toc-sales-quotes">3.2 Sales
-Quotes</a></li>
-<li><a href="#sales-orders" id="toc-sales-orders">3.3 Sales
-Orders</a></li>
-<li><a href="#ar-invoices" id="toc-ar-invoices">3.4 AR Invoices</a></li>
-<li><a href="#cash-receipts" id="toc-cash-receipts">3.5 Cash
-Receipts</a></li>
-<li><a href="#customer-deposits" id="toc-customer-deposits">3.6 Customer
-Deposits</a></li>
+<li><a href="#customer-master" id="toc-customer-master"><span
+class="toc-section-number">1.4.1</span> 3.1 Customer Master</a></li>
+<li><a href="#sales-quotes" id="toc-sales-quotes"><span
+class="toc-section-number">1.4.2</span> 3.2 Sales Quotes</a></li>
+<li><a href="#sales-orders" id="toc-sales-orders"><span
+class="toc-section-number">1.4.3</span> 3.3 Sales Orders</a></li>
+<li><a href="#ar-invoices" id="toc-ar-invoices"><span
+class="toc-section-number">1.4.4</span> 3.4 AR Invoices</a></li>
+<li><a href="#cash-receipts" id="toc-cash-receipts"><span
+class="toc-section-number">1.4.5</span> 3.5 Cash Receipts</a></li>
+<li><a href="#customer-deposits" id="toc-customer-deposits"><span
+class="toc-section-number">1.4.6</span> 3.6 Customer Deposits</a></li>
 <li><a href="#ar-aging-and-collections"
-id="toc-ar-aging-and-collections">3.7 AR Aging and Collections</a></li>
-<li><a href="#customer-statements" id="toc-customer-statements">3.8
-Customer Statements</a></li>
+id="toc-ar-aging-and-collections"><span
+class="toc-section-number">1.4.7</span> 3.7 AR Aging and
+Collections</a></li>
+<li><a href="#customer-statements" id="toc-customer-statements"><span
+class="toc-section-number">1.4.8</span> 3.8 Customer Statements</a></li>
 </ul></li>
-<li><a href="#procure-to-pay" id="toc-procure-to-pay">4.
-Procure-to-Pay</a>
+<li><a href="#procure-to-pay" id="toc-procure-to-pay"><span
+class="toc-section-number">1.5</span> 4. Procure-to-Pay</a>
 <ul>
-<li><a href="#vendor-master" id="toc-vendor-master">4.1 Vendor
-Master</a></li>
-<li><a href="#purchase-requisitions" id="toc-purchase-requisitions">4.2
-Purchase Requisitions</a></li>
+<li><a href="#vendor-master" id="toc-vendor-master"><span
+class="toc-section-number">1.5.1</span> 4.1 Vendor Master</a></li>
+<li><a href="#purchase-requisitions"
+id="toc-purchase-requisitions"><span
+class="toc-section-number">1.5.2</span> 4.2 Purchase
+Requisitions</a></li>
 <li><a href="#rfq-and-quote-comparison"
-id="toc-rfq-and-quote-comparison">4.3 RFQ and Quote Comparison</a></li>
-<li><a href="#purchase-orders" id="toc-purchase-orders">4.4 Purchase
-Orders</a></li>
-<li><a href="#ap-bills" id="toc-ap-bills">4.5 AP Bills</a></li>
-<li><a href="#ap-payments" id="toc-ap-payments">4.6 AP Payments</a></li>
+id="toc-rfq-and-quote-comparison"><span
+class="toc-section-number">1.5.3</span> 4.3 RFQ and Quote
+Comparison</a></li>
+<li><a href="#purchase-orders" id="toc-purchase-orders"><span
+class="toc-section-number">1.5.4</span> 4.4 Purchase Orders</a></li>
+<li><a href="#ap-bills" id="toc-ap-bills"><span
+class="toc-section-number">1.5.5</span> 4.5 AP Bills</a></li>
+<li><a href="#ap-payments" id="toc-ap-payments"><span
+class="toc-section-number">1.5.6</span> 4.6 AP Payments</a></li>
 <li><a href="#ap-aging-and-vendor-statements"
-id="toc-ap-aging-and-vendor-statements">4.7 AP Aging and Vendor
+id="toc-ap-aging-and-vendor-statements"><span
+class="toc-section-number">1.5.7</span> 4.7 AP Aging and Vendor
 Statements</a></li>
-<li><a href="#report" id="toc-report">4.8 1099 Report</a></li>
+<li><a href="#report" id="toc-report"><span
+class="toc-section-number">1.5.8</span> 4.8 1099 Report</a></li>
 <li><a href="#check-register-and-positive-pay"
-id="toc-check-register-and-positive-pay">4.9 Check Register and Positive
+id="toc-check-register-and-positive-pay"><span
+class="toc-section-number">1.5.9</span> 4.9 Check Register and Positive
 Pay</a></li>
-<li><a href="#vendor-rebates" id="toc-vendor-rebates">4.10 Vendor
-Rebates</a></li>
-<li><a href="#vendor-item-catalog" id="toc-vendor-item-catalog">4.11
-Vendor Item Catalog</a></li>
-<li><a href="#blanket-pos" id="toc-blanket-pos">4.12 Blanket
-POs</a></li>
+<li><a href="#vendor-rebates" id="toc-vendor-rebates"><span
+class="toc-section-number">1.5.10</span> 4.10 Vendor Rebates</a></li>
+<li><a href="#vendor-item-catalog" id="toc-vendor-item-catalog"><span
+class="toc-section-number">1.5.11</span> 4.11 Vendor Item
+Catalog</a></li>
+<li><a href="#blanket-pos" id="toc-blanket-pos"><span
+class="toc-section-number">1.5.12</span> 4.12 Blanket POs</a></li>
 </ul></li>
-<li><a href="#inventory" id="toc-inventory">5. Inventory</a>
+<li><a href="#inventory" id="toc-inventory"><span
+class="toc-section-number">1.6</span> 5. Inventory</a>
 <ul>
-<li><a href="#warehouses-and-bins" id="toc-warehouses-and-bins">5.1
-Warehouses and Bins</a></li>
-<li><a href="#on-hand-quantity" id="toc-on-hand-quantity">5.2 On-Hand
-Quantity</a></li>
-<li><a href="#manual-adjustments" id="toc-manual-adjustments">5.3 Manual
-Adjustments</a></li>
-<li><a href="#warehouse-transfers" id="toc-warehouse-transfers">5.4
-Warehouse Transfers</a></li>
-<li><a href="#fifo-cost-layers" id="toc-fifo-cost-layers">5.5 FIFO Cost
-Layers</a></li>
-<li><a href="#landed-costs" id="toc-landed-costs">5.6 Landed
-Costs</a></li>
+<li><a href="#warehouses-and-bins" id="toc-warehouses-and-bins"><span
+class="toc-section-number">1.6.1</span> 5.1 Warehouses and Bins</a></li>
+<li><a href="#on-hand-quantity" id="toc-on-hand-quantity"><span
+class="toc-section-number">1.6.2</span> 5.2 On-Hand Quantity</a></li>
+<li><a href="#manual-adjustments" id="toc-manual-adjustments"><span
+class="toc-section-number">1.6.3</span> 5.3 Manual Adjustments</a></li>
+<li><a href="#warehouse-transfers" id="toc-warehouse-transfers"><span
+class="toc-section-number">1.6.4</span> 5.4 Warehouse Transfers</a></li>
+<li><a href="#fifo-cost-layers" id="toc-fifo-cost-layers"><span
+class="toc-section-number">1.6.5</span> 5.5 FIFO Cost Layers</a></li>
+<li><a href="#landed-costs" id="toc-landed-costs"><span
+class="toc-section-number">1.6.6</span> 5.6 Landed Costs</a></li>
 <li><a href="#physical-inventory-count"
-id="toc-physical-inventory-count">5.7 Physical Inventory Count</a></li>
-<li><a href="#cycle-counts" id="toc-cycle-counts">5.8 Cycle
-Counts</a></li>
-<li><a href="#reorder-suggestions" id="toc-reorder-suggestions">5.9
-Reorder Suggestions</a></li>
-<li><a href="#auto-replenishment" id="toc-auto-replenishment">5.10
+id="toc-physical-inventory-count"><span
+class="toc-section-number">1.6.7</span> 5.7 Physical Inventory
+Count</a></li>
+<li><a href="#cycle-counts" id="toc-cycle-counts"><span
+class="toc-section-number">1.6.8</span> 5.8 Cycle Counts</a></li>
+<li><a href="#reorder-suggestions" id="toc-reorder-suggestions"><span
+class="toc-section-number">1.6.9</span> 5.9 Reorder Suggestions</a></li>
+<li><a href="#auto-replenishment" id="toc-auto-replenishment"><span
+class="toc-section-number">1.6.10</span> 5.10
 Auto-Replenishment</a></li>
-<li><a href="#abc-classification" id="toc-abc-classification">5.11 ABC
+<li><a href="#abc-classification" id="toc-abc-classification"><span
+class="toc-section-number">1.6.11</span> 5.11 ABC
 Classification</a></li>
-<li><a href="#demand-forecasting" id="toc-demand-forecasting">5.12
-Demand Forecasting</a></li>
+<li><a href="#demand-forecasting" id="toc-demand-forecasting"><span
+class="toc-section-number">1.6.12</span> 5.12 Demand
+Forecasting</a></li>
 </ul></li>
-<li><a href="#item-master" id="toc-item-master">6. Item Master</a>
+<li><a href="#item-master" id="toc-item-master"><span
+class="toc-section-number">1.7</span> 6. Item Master</a>
 <ul>
-<li><a href="#items" id="toc-items">6.1 Items</a></li>
-<li><a href="#categories-and-uom" id="toc-categories-and-uom">6.2
-Categories and UOM</a></li>
-<li><a href="#price-lists" id="toc-price-lists">6.3 Price Lists</a></li>
-<li><a href="#contract-pricing" id="toc-contract-pricing">6.4 Contract
-Pricing</a></li>
-<li><a href="#matrix-pricing" id="toc-matrix-pricing">6.5 Matrix
-Pricing</a></li>
-<li><a href="#lot-tracking" id="toc-lot-tracking">6.6 Lot
-Tracking</a></li>
+<li><a href="#items" id="toc-items"><span
+class="toc-section-number">1.7.1</span> 6.1 Items</a></li>
+<li><a href="#categories-and-uom" id="toc-categories-and-uom"><span
+class="toc-section-number">1.7.2</span> 6.2 Categories and UOM</a></li>
+<li><a href="#price-lists" id="toc-price-lists"><span
+class="toc-section-number">1.7.3</span> 6.3 Price Lists</a></li>
+<li><a href="#contract-pricing" id="toc-contract-pricing"><span
+class="toc-section-number">1.7.4</span> 6.4 Contract Pricing</a></li>
+<li><a href="#matrix-pricing" id="toc-matrix-pricing"><span
+class="toc-section-number">1.7.5</span> 6.5 Matrix Pricing</a></li>
+<li><a href="#lot-tracking" id="toc-lot-tracking"><span
+class="toc-section-number">1.7.6</span> 6.6 Lot Tracking</a></li>
 <li><a href="#serial-number-tracking"
-id="toc-serial-number-tracking">6.7 Serial Number Tracking</a></li>
-<li><a href="#traceability" id="toc-traceability">6.8
-Traceability</a></li>
-<li><a href="#item-cross-references" id="toc-item-cross-references">6.9
-Item Cross-References</a></li>
-<li><a href="#item-substitutes" id="toc-item-substitutes">6.10 Item
-Substitutes</a></li>
-<li><a href="#item-supersession" id="toc-item-supersession">6.11 Item
-Supersession</a></li>
-<li><a href="#kitting-bom" id="toc-kitting-bom">6.12 Kitting /
-BOM</a></li>
-<li><a href="#barcode-scanning" id="toc-barcode-scanning">6.13 Barcode
-Scanning</a></li>
-<li><a href="#inbound-shipments" id="toc-inbound-shipments">6.14 Inbound
-Shipments</a></li>
+id="toc-serial-number-tracking"><span
+class="toc-section-number">1.7.7</span> 6.7 Serial Number
+Tracking</a></li>
+<li><a href="#traceability" id="toc-traceability"><span
+class="toc-section-number">1.7.8</span> 6.8 Traceability</a></li>
+<li><a href="#item-cross-references"
+id="toc-item-cross-references"><span
+class="toc-section-number">1.7.9</span> 6.9 Item
+Cross-References</a></li>
+<li><a href="#item-substitutes" id="toc-item-substitutes"><span
+class="toc-section-number">1.7.10</span> 6.10 Item Substitutes</a></li>
+<li><a href="#item-supersession" id="toc-item-supersession"><span
+class="toc-section-number">1.7.11</span> 6.11 Item Supersession</a></li>
+<li><a href="#kitting-bom" id="toc-kitting-bom"><span
+class="toc-section-number">1.7.12</span> 6.12 Kitting / BOM</a></li>
+<li><a href="#barcode-scanning" id="toc-barcode-scanning"><span
+class="toc-section-number">1.7.13</span> 6.13 Barcode Scanning</a></li>
+<li><a href="#inbound-shipments" id="toc-inbound-shipments"><span
+class="toc-section-number">1.7.14</span> 6.14 Inbound Shipments</a></li>
 </ul></li>
-<li><a href="#financials" id="toc-financials">7. Financials</a>
+<li><a href="#financials" id="toc-financials"><span
+class="toc-section-number">1.8</span> 7. Financials</a>
 <ul>
-<li><a href="#general-ledger" id="toc-general-ledger">7.1 General
-Ledger</a></li>
-<li><a href="#financial-statements" id="toc-financial-statements">7.2
-Financial Statements</a></li>
-<li><a href="#gl-budgets" id="toc-gl-budgets">7.3 GL Budgets</a></li>
-<li><a href="#departments" id="toc-departments">7.4 Departments</a></li>
+<li><a href="#general-ledger" id="toc-general-ledger"><span
+class="toc-section-number">1.8.1</span> 7.1 General Ledger</a></li>
+<li><a href="#financial-statements" id="toc-financial-statements"><span
+class="toc-section-number">1.8.2</span> 7.2 Financial
+Statements</a></li>
+<li><a href="#gl-budgets" id="toc-gl-budgets"><span
+class="toc-section-number">1.8.3</span> 7.3 GL Budgets</a></li>
+<li><a href="#departments" id="toc-departments"><span
+class="toc-section-number">1.8.4</span> 7.4 Departments</a></li>
 <li><a href="#fixed-assets-and-depreciation"
-id="toc-fixed-assets-and-depreciation">7.5 Fixed Assets and
+id="toc-fixed-assets-and-depreciation"><span
+class="toc-section-number">1.8.5</span> 7.5 Fixed Assets and
 Depreciation</a></li>
 <li><a href="#recurring-journal-entries"
-id="toc-recurring-journal-entries">7.6 Recurring Journal
+id="toc-recurring-journal-entries"><span
+class="toc-section-number">1.8.6</span> 7.6 Recurring Journal
 Entries</a></li>
-<li><a href="#year-end-close" id="toc-year-end-close">7.7 Year-End
-Close</a></li>
-<li><a href="#bank-reconciliation" id="toc-bank-reconciliation">7.8 Bank
-Reconciliation</a></li>
-<li><a href="#multi-currency" id="toc-multi-currency">7.9
-Multi-Currency</a></li>
-<li><a href="#cash-flow-statement" id="toc-cash-flow-statement">7.10
-Cash Flow Statement</a></li>
+<li><a href="#year-end-close" id="toc-year-end-close"><span
+class="toc-section-number">1.8.7</span> 7.7 Year-End Close</a></li>
+<li><a href="#bank-reconciliation" id="toc-bank-reconciliation"><span
+class="toc-section-number">1.8.8</span> 7.8 Bank Reconciliation</a></li>
+<li><a href="#multi-currency" id="toc-multi-currency"><span
+class="toc-section-number">1.8.9</span> 7.9 Multi-Currency</a></li>
+<li><a href="#cash-flow-statement" id="toc-cash-flow-statement"><span
+class="toc-section-number">1.8.10</span> 7.10 Cash Flow
+Statement</a></li>
 <li><a href="#cash-application-batch"
-id="toc-cash-application-batch">7.11 Cash Application Batch</a></li>
+id="toc-cash-application-batch"><span
+class="toc-section-number">1.8.11</span> 7.11 Cash Application
+Batch</a></li>
 </ul></li>
-<li><a href="#administration" id="toc-administration">8.
-Administration</a>
+<li><a href="#administration" id="toc-administration"><span
+class="toc-section-number">1.9</span> 8. Administration</a>
 <ul>
-<li><a href="#users-and-groups" id="toc-users-and-groups">8.1 Users and
-Groups</a></li>
-<li><a href="#permissions-reference" id="toc-permissions-reference">8.2
-Permissions Reference</a></li>
-<li><a href="#audit-log" id="toc-audit-log">8.3 Audit Log</a></li>
-<li><a href="#payment-terms" id="toc-payment-terms">8.4 Payment
-Terms</a></li>
-<li><a href="#tax-codes" id="toc-tax-codes">8.5 Tax Codes</a></li>
+<li><a href="#users-and-groups" id="toc-users-and-groups"><span
+class="toc-section-number">1.9.1</span> 8.1 Users and Groups</a></li>
+<li><a href="#permissions-reference"
+id="toc-permissions-reference"><span
+class="toc-section-number">1.9.2</span> 8.2 Permissions
+Reference</a></li>
+<li><a href="#audit-log" id="toc-audit-log"><span
+class="toc-section-number">1.9.3</span> 8.3 Audit Log</a></li>
+<li><a href="#payment-terms" id="toc-payment-terms"><span
+class="toc-section-number">1.9.4</span> 8.4 Payment Terms</a></li>
+<li><a href="#tax-codes" id="toc-tax-codes"><span
+class="toc-section-number">1.9.5</span> 8.5 Tax Codes</a></li>
 <li><a href="#sales-tax-us-multi-jurisdiction"
-id="toc-sales-tax-us-multi-jurisdiction">8.6 Sales Tax (US
+id="toc-sales-tax-us-multi-jurisdiction"><span
+class="toc-section-number">1.9.6</span> 8.6 Sales Tax (US
 Multi-Jurisdiction)</a></li>
-<li><a href="#customer-classes" id="toc-customer-classes">8.7 Customer
-Classes</a></li>
-<li><a href="#return-reason-codes" id="toc-return-reason-codes">8.8
-Return Reason Codes</a></li>
+<li><a href="#customer-classes" id="toc-customer-classes"><span
+class="toc-section-number">1.9.7</span> 8.7 Customer Classes</a></li>
+<li><a href="#return-reason-codes" id="toc-return-reason-codes"><span
+class="toc-section-number">1.9.8</span> 8.8 Return Reason Codes</a></li>
 <li><a href="#carriers-and-ship-methods"
-id="toc-carriers-and-ship-methods">8.9 Carriers and Ship
+id="toc-carriers-and-ship-methods"><span
+class="toc-section-number">1.9.9</span> 8.9 Carriers and Ship
 Methods</a></li>
-<li><a href="#smtp-and-email-log" id="toc-smtp-and-email-log">8.10 SMTP
-and Email Log</a></li>
-<li><a href="#scheduled-reports" id="toc-scheduled-reports">8.11
-Scheduled Reports</a></li>
-<li><a href="#csv-import" id="toc-csv-import">8.12 CSV Import</a></li>
-<li><a href="#csv-export" id="toc-csv-export">8.13 CSV Export</a></li>
+<li><a href="#smtp-and-email-log" id="toc-smtp-and-email-log"><span
+class="toc-section-number">1.9.10</span> 8.10 SMTP and Email
+Log</a></li>
+<li><a href="#scheduled-reports" id="toc-scheduled-reports"><span
+class="toc-section-number">1.9.11</span> 8.11 Scheduled Reports</a></li>
+<li><a href="#csv-import" id="toc-csv-import"><span
+class="toc-section-number">1.9.12</span> 8.12 CSV Import</a></li>
+<li><a href="#csv-export" id="toc-csv-export"><span
+class="toc-section-number">1.9.13</span> 8.13 CSV Export</a></li>
 </ul></li>
-<li><a href="#integration" id="toc-integration">9. Integration</a>
+<li><a href="#integration" id="toc-integration"><span
+class="toc-section-number">1.10</span> 9. Integration</a>
 <ul>
 <li><a href="#edi-inbound-purchase-orders-850"
-id="toc-edi-inbound-purchase-orders-850">9.1 EDI — Inbound Purchase
+id="toc-edi-inbound-purchase-orders-850"><span
+class="toc-section-number">1.10.1</span> 9.1 EDI — Inbound Purchase
 Orders (850)</a></li>
 <li><a href="#edi-outbound-asn-856-and-invoice-810"
-id="toc-edi-outbound-asn-856-and-invoice-810">9.2 EDI — Outbound ASN
-(856) and Invoice (810)</a></li>
-<li><a href="#e-commerce-webhook" id="toc-e-commerce-webhook">9.3
-E-Commerce Webhook</a></li>
-<li><a href="#recurring-pos" id="toc-recurring-pos">9.4 Recurring
-POs</a></li>
+id="toc-edi-outbound-asn-856-and-invoice-810"><span
+class="toc-section-number">1.10.2</span> 9.2 EDI — Outbound ASN (856)
+and Invoice (810)</a></li>
+<li><a href="#e-commerce-webhook" id="toc-e-commerce-webhook"><span
+class="toc-section-number">1.10.3</span> 9.3 E-Commerce Webhook</a></li>
+<li><a href="#recurring-pos" id="toc-recurring-pos"><span
+class="toc-section-number">1.10.4</span> 9.4 Recurring POs</a></li>
 </ul></li>
 <li><a href="#management-operating-procedures"
-id="toc-management-operating-procedures">10. Management Operating
+id="toc-management-operating-procedures"><span
+class="toc-section-number">1.11</span> 10. Management Operating
 Procedures</a>
 <ul>
-<li><a href="#daily-routines" id="toc-daily-routines">10.1 Daily
-Routines</a></li>
-<li><a href="#weekly-routines" id="toc-weekly-routines">10.2 Weekly
-Routines</a></li>
+<li><a href="#daily-routines" id="toc-daily-routines"><span
+class="toc-section-number">1.11.1</span> 10.1 Daily Routines</a></li>
+<li><a href="#weekly-routines" id="toc-weekly-routines"><span
+class="toc-section-number">1.11.2</span> 10.2 Weekly Routines</a></li>
 <li><a href="#monthly-period-end-checklist"
-id="toc-monthly-period-end-checklist">10.3 Monthly Period-End
+id="toc-monthly-period-end-checklist"><span
+class="toc-section-number">1.11.3</span> 10.3 Monthly Period-End
 Checklist</a></li>
-<li><a href="#quarterly-procedures" id="toc-quarterly-procedures">10.4
-Quarterly Procedures</a></li>
-<li><a href="#annual-procedures" id="toc-annual-procedures">10.5 Annual
+<li><a href="#quarterly-procedures" id="toc-quarterly-procedures"><span
+class="toc-section-number">1.11.4</span> 10.4 Quarterly
 Procedures</a></li>
-<li><a href="#exception-handling" id="toc-exception-handling">10.6
-Exception Handling</a></li>
+<li><a href="#annual-procedures" id="toc-annual-procedures"><span
+class="toc-section-number">1.11.5</span> 10.5 Annual Procedures</a></li>
+<li><a href="#exception-handling" id="toc-exception-handling"><span
+class="toc-section-number">1.11.6</span> 10.6 Exception
+Handling</a></li>
 </ul></li>
-<li><a href="#reference" id="toc-reference">11. Reference</a>
+<li><a href="#reference" id="toc-reference"><span
+class="toc-section-number">1.12</span> 11. Reference</a>
 <ul>
-<li><a href="#document-status-codes" id="toc-document-status-codes">11.1
-Document Status Codes</a></li>
-<li><a href="#pdf-generation" id="toc-pdf-generation">11.2 PDF
-Generation</a></li>
+<li><a href="#document-status-codes"
+id="toc-document-status-codes"><span
+class="toc-section-number">1.12.1</span> 11.1 Document Status
+Codes</a></li>
+<li><a href="#pdf-generation" id="toc-pdf-generation"><span
+class="toc-section-number">1.12.2</span> 11.2 PDF Generation</a></li>
 <li><a href="#gl-auto-posting-summary"
-id="toc-gl-auto-posting-summary">11.3 GL Auto-Posting Summary</a></li>
-<li><a href="#api-base-url" id="toc-api-base-url">11.4 API Base
-URL</a></li>
-<li><a href="#diagnostic-tools" id="toc-diagnostic-tools">11.5
-Diagnostic Tools</a></li>
-<li><a href="#primary-key-format" id="toc-primary-key-format">11.6
-Primary Key Format</a></li>
+id="toc-gl-auto-posting-summary"><span
+class="toc-section-number">1.12.3</span> 11.3 GL Auto-Posting
+Summary</a></li>
+<li><a href="#api-base-url" id="toc-api-base-url"><span
+class="toc-section-number">1.12.4</span> 11.4 API Base URL</a></li>
+<li><a href="#diagnostic-tools" id="toc-diagnostic-tools"><span
+class="toc-section-number">1.12.5</span> 11.5 Diagnostic Tools</a></li>
+<li><a href="#primary-key-format" id="toc-primary-key-format"><span
+class="toc-section-number">1.12.6</span> 11.6 Primary Key
+Format</a></li>
 <li><a href="#session-and-security-notes"
-id="toc-session-and-security-notes">11.7 Session and Security
+id="toc-session-and-security-notes"><span
+class="toc-section-number">1.12.7</span> 11.7 Session and Security
 Notes</a></li>
 <li><a href="#internal-controls-checklist"
-id="toc-internal-controls-checklist">11.8 Internal Controls
+id="toc-internal-controls-checklist"><span
+class="toc-section-number">1.12.8</span> 11.8 Internal Controls
 Checklist</a></li>
 </ul></li>
 </ul></li>
 </ul>
 </nav>
-<h1 id="openerp-users-guide">OpenERP User’s Guide</h1>
+<h1 data-number="1" id="openerp-users-guide"><span
+class="header-section-number">1</span> OpenERP User’s Guide</h1>
 <blockquote>
 <p><strong>Audience:</strong> End users, system administrators, and
 business analysts operating an OpenERP installation. For installation
 and server setup, see <a href="INSTALL.md">INSTALL.md</a>.</p>
 </blockquote>
 <hr />
-<h2 id="table-of-contents">Table of Contents</h2>
+<h2 data-number="1.1" id="table-of-contents"><span
+class="header-section-number">1.1</span> Table of Contents</h2>
 <ol type="1">
 <li><a href="#1-getting-started">Getting Started</a></li>
 <li><a href="#2-how-the-modules-connect">How the Modules
@@ -506,8 +444,10 @@ Procedures</a></li>
 <li><a href="#11-reference">Reference</a></li>
 </ol>
 <hr />
-<h2 id="getting-started">1. Getting Started</h2>
-<h3 id="first-login">1.1 First Login</h3>
+<h2 data-number="1.2" id="getting-started"><span
+class="header-section-number">1.2</span> 1. Getting Started</h2>
+<h3 data-number="1.2.1" id="first-login"><span
+class="header-section-number">1.2.1</span> 1.1 First Login</h3>
 <p>Navigate to <code>http://&lt;server&gt;:5173</code> in a browser. Log
 in with the credentials provided by your administrator. The default
 admin account created at install time is <code>admin</code> /
@@ -515,7 +455,8 @@ admin account created at install time is <code>admin</code> /
 under Admin → Users before going live.</p>
 <p>The session token expires after 8 hours. You will be redirected to
 the login screen automatically when it expires.</p>
-<h3 id="dashboard">1.2 Dashboard</h3>
+<h3 data-number="1.2.2" id="dashboard"><span
+class="header-section-number">1.2.2</span> 1.2 Dashboard</h3>
 <p>The Dashboard shows live KPIs pulled from the database:</p>
 <table>
 <colgroup>
@@ -560,7 +501,8 @@ the login screen automatically when it expires.</p>
 a flat Cash balance is an early warning that collections need attention.
 A rising AP Balance approaching its due dates means a check run is
 due.</p>
-<h3 id="company-setup">1.3 Company Setup</h3>
+<h3 data-number="1.2.3" id="company-setup"><span
+class="header-section-number">1.2.3</span> 1.3 Company Setup</h3>
 <p>Go to <strong>Admin → Company Settings</strong> to configure:</p>
 <ul>
 <li><strong>Company name, address, phone, website</strong> — printed on
@@ -585,7 +527,8 @@ it finds. If your chart of accounts has multiple accounts of the same
 subtype, the wrong account may receive the entry. Set the mappings
 before processing any transactions.</p>
 </blockquote>
-<h3 id="chart-of-accounts">1.4 Chart of Accounts</h3>
+<h3 data-number="1.2.4" id="chart-of-accounts"><span
+class="header-section-number">1.2.4</span> 1.4 Chart of Accounts</h3>
 <p>Before processing any transactions, import or manually create your
 chart of accounts under <strong>GL → Accounts</strong>.</p>
 <p>Each account has: - <strong>Account number</strong> — user-defined
@@ -600,7 +543,8 @@ amounts; they exist only for subtotaling in financial statements.</p>
 year, then <strong>GL → Periods</strong> to create the twelve monthly
 periods inside it. The system will not allow posting to a closed
 period.</p>
-<h3 id="payment-terms-and-tax-codes">1.5 Payment Terms and Tax
+<h3 data-number="1.2.5" id="payment-terms-and-tax-codes"><span
+class="header-section-number">1.2.5</span> 1.5 Payment Terms and Tax
 Codes</h3>
 <ul>
 <li><strong>Admin → Payment Terms</strong> — define NET30, NET60,
@@ -611,7 +555,9 @@ at 6.25%). Assigned to items and overridable per invoice line. For US
 sales tax with multi-jurisdiction support, use the Sales Tax engine
 (Admin → Sales Tax).</li>
 </ul>
-<h3 id="go-live-setup-checklist">1.6 Go-Live Setup Checklist</h3>
+<h3 data-number="1.2.6" id="go-live-setup-checklist"><span
+class="header-section-number">1.2.6</span> 1.6 Go-Live Setup
+Checklist</h3>
 <p>Before your first live transaction, confirm the following:</p>
 <ul class="task-list">
 <li><label><input type="checkbox" />Company name, address, and logo are
@@ -648,11 +594,13 @@ bills</label></li>
 (Admin → Import → GL Balances)</label></li>
 </ul>
 <hr />
-<h2 id="how-the-modules-connect">2. How the Modules Connect</h2>
+<h2 data-number="1.3" id="how-the-modules-connect"><span
+class="header-section-number">1.3</span> 2. How the Modules Connect</h2>
 <p>Understanding how data flows between modules prevents duplicate work
 and explains why a transaction in one area shows up somewhere
 unexpected.</p>
-<h3 id="the-core-flows">2.1 The Core Flows</h3>
+<h3 data-number="1.3.1" id="the-core-flows"><span
+class="header-section-number">1.3.1</span> 2.1 The Core Flows</h3>
 <pre><code>PURCHASING (PO)                     SALES (SO)
      |                                   |
      | Receive goods                     | Ship goods
@@ -673,8 +621,10 @@ AP PAYMENTS -----&gt; GL: DR AP / CR Cash   GL: DR Cash / CR AR</code></pre>
 <p>Every transaction that touches money posts a GL batch automatically.
 You do not need to create manual journal entries for normal
 operations.</p>
-<h3 id="auto-posting-what-posts-to-gl-and-when">2.2 Auto-Posting: What
-Posts to GL and When</h3>
+<h3 data-number="1.3.2"
+id="auto-posting-what-posts-to-gl-and-when"><span
+class="header-section-number">1.3.2</span> 2.2 Auto-Posting: What Posts
+to GL and When</h3>
 <p>The following events create a GL journal batch silently in the
 background the moment you save:</p>
 <table>
@@ -750,7 +700,8 @@ shipped on a Sales Order. This is the standard perpetual inventory model
 — the inventory asset account increases on receipt via the AP bill (DR
 Inventory is embedded in the COGS flow), and COGS hits the income
 statement on shipment.</p>
-<h3 id="the-ar-to-cash-chain">2.3 The AR-to-Cash Chain</h3>
+<h3 data-number="1.3.3" id="the-ar-to-cash-chain"><span
+class="header-section-number">1.3.3</span> 2.3 The AR-to-Cash Chain</h3>
 <p>Many users expect cash to appear in their bank account when they
 “apply” a payment. What actually happens is a GL entry (DR Cash / CR
 AR). The cash account balance rises, the AR balance falls. The actual
@@ -760,7 +711,9 @@ bank deposit must be reconciled in <strong>Bank Reconciliation</strong>
 Payment saved       → No effect yet (payment is unmatched)
 Payment applied     → AR balance falls, Cash (GL) balance rises
 Bank statement rec  → Statement line matched to payment, bank confirmed</code></pre>
-<h3 id="the-po-to-expense-chain">2.4 The PO-to-Expense Chain</h3>
+<h3 data-number="1.3.4" id="the-po-to-expense-chain"><span
+class="header-section-number">1.3.4</span> 2.4 The PO-to-Expense
+Chain</h3>
 <pre><code>PO created          → No GL effect
 PO received         → On-hand rises; FIFO layer created
 AP Bill from PO     → AP balance rises, Expense (or Inventory) balance rises
@@ -769,8 +722,10 @@ AP Payment applied  → AP balance falls, Cash balance falls</code></pre>
 / CR AP — the cost stays in inventory until the items ship, at which
 point COGS is posted. For <strong>service or expense items</strong>
 (non-inventory): the AP bill posts DR Expense / CR AP directly.</p>
-<h3 id="how-a-sales-order-touches-five-modules">2.5 How a Sales Order
-Touches Five Modules</h3>
+<h3 data-number="1.3.5"
+id="how-a-sales-order-touches-five-modules"><span
+class="header-section-number">1.3.5</span> 2.5 How a Sales Order Touches
+Five Modules</h3>
 <p>When a Sales Order is created, processed, and invoiced:</p>
 <ol type="1">
 <li><strong>SO created</strong> — no financial effect; just a
@@ -787,8 +742,10 @@ deposit; GL cash confirmed</li>
 <p>The sales rep’s commission accrues conceptually at step 3 (when the
 invoice is created). The Commission Report at <strong>Sales →
 Commissions</strong> shows commission earned on invoiced SOs.</p>
-<h3 id="atp-available-to-promise-and-how-inventory-informs-sales">2.6
-ATP (Available to Promise) and How Inventory Informs Sales</h3>
+<h3 data-number="1.3.6"
+id="atp-available-to-promise-and-how-inventory-informs-sales"><span
+class="header-section-number">1.3.6</span> 2.6 ATP (Available to
+Promise) and How Inventory Informs Sales</h3>
 <p>When you select an item on a Sales Order, the <strong>ATP
 badge</strong> shows:</p>
 <pre><code>ATP = On-hand − Committed (open SO lines) + On-order (open PO lines)</code></pre>
@@ -798,11 +755,13 @@ a PO first. The ATP calculation happens in real time and reflects all
 open SOs and POs — it is the link between sales commitments and
 purchasing plans.</p>
 <hr />
-<h2 id="order-to-cash">3. Order-to-Cash</h2>
+<h2 data-number="1.4" id="order-to-cash"><span
+class="header-section-number">1.4</span> 3. Order-to-Cash</h2>
 <p>The Order-to-Cash workflow moves a sales opportunity from quotation
 through cash collection.</p>
 <pre><code>Customer → Quote → Sales Order → Shipment → AR Invoice → Cash Receipt → Applied → Reconciled</code></pre>
-<h3 id="customer-master">3.1 Customer Master</h3>
+<h3 data-number="1.4.1" id="customer-master"><span
+class="header-section-number">1.4.1</span> 3.1 Customer Master</h3>
 <p><strong>AR → Customers</strong> — create a customer before entering
 any orders.</p>
 <p>Key fields: - <strong>Customer number</strong> — unique identifier;
@@ -826,7 +785,8 @@ credit limit and payment terms before their first order. A customer with
 no credit limit will never be blocked by the credit check, regardless of
 how much they owe.</p>
 </blockquote>
-<h3 id="sales-quotes">3.2 Sales Quotes</h3>
+<h3 data-number="1.4.2" id="sales-quotes"><span
+class="header-section-number">1.4.2</span> 3.2 Sales Quotes</h3>
 <p><strong>Sales → Quotes</strong> — optional step before creating a
 firm order.</p>
 <p>Statuses: <code>DRAFT</code> → <code>SENT</code> →
@@ -847,9 +807,11 @@ a Sales Order. The quote line prices and quantities carry over exactly.
 You can then edit the SO if quantities need adjustment before
 shipment.</p>
 </blockquote>
-<h3 id="sales-orders">3.3 Sales Orders</h3>
+<h3 data-number="1.4.3" id="sales-orders"><span
+class="header-section-number">1.4.3</span> 3.3 Sales Orders</h3>
 <p><strong>Sales → Orders</strong> — the core transaction.</p>
-<h4 id="creating-a-sales-order">Creating a Sales Order</h4>
+<h4 data-number="1.4.3.1" id="creating-a-sales-order"><span
+class="header-section-number">1.4.3.1</span> Creating a Sales Order</h4>
 <ol type="1">
 <li>Choose a <strong>customer</strong>. The system immediately checks
 credit: a green/yellow/red banner shows available credit. If the
@@ -883,7 +845,8 @@ order should ship today, proceed to the <strong>Ship</strong> action
 (below). - If payment terms are prepaid, go to <strong>AR →
 Deposits</strong> to record the customer’s payment before shipping.</p>
 </blockquote>
-<h4 id="sales-order-statuses">Sales Order Statuses</h4>
+<h4 data-number="1.4.3.2" id="sales-order-statuses"><span
+class="header-section-number">1.4.3.2</span> Sales Order Statuses</h4>
 <table>
 <colgroup>
 <col style="width: 27%" />
@@ -925,7 +888,8 @@ Deposits</strong> to record the customer’s payment before shipping.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="shipping">Shipping</h4>
+<h4 data-number="1.4.3.3" id="shipping"><span
+class="header-section-number">1.4.3.3</span> Shipping</h4>
 <p>Click <strong>Ship</strong> on an order in OPEN or PARTIAL status.
 Enter: - <strong>Ship date</strong>, <strong>period</strong>,
 <strong>warehouse</strong> - Per-line <strong>qty shipped</strong>
@@ -941,7 +905,8 @@ button). The order status moves to SHIPPED. If not all lines shipped,
 status is PARTIAL — you can ship again or create a back-order. When all
 lines are SHIPPED, the <strong>Invoice</strong> button appears.</p>
 </blockquote>
-<h4 id="invoicing">Invoicing</h4>
+<h4 data-number="1.4.3.4" id="invoicing"><span
+class="header-section-number">1.4.3.4</span> Invoicing</h4>
 <p>Once fully shipped (<code>SHIPPED</code> status), click
 <strong>Invoice</strong>. Provide an invoice number, invoice date, due
 date, and period. The system creates an AR invoice from the SO lines
@@ -955,7 +920,8 @@ Payments</strong>. If the customer does not pay by the due date, the
 invoice will appear in <strong>AR → Aging</strong> under the overdue
 buckets.</p>
 </blockquote>
-<h4 id="back-orders">Back-orders</h4>
+<h4 data-number="1.4.3.5" id="back-orders"><span
+class="header-section-number">1.4.3.5</span> Back-orders</h4>
 <p>Click <strong>Back-Order</strong> on a PARTIAL order to split
 remaining (unshipped) qty into a new linked SO. The original order’s
 lines are reduced to shipped qty; the new order covers the
@@ -968,13 +934,15 @@ back-order so you can invoice the shipped portion immediately. The
 back-order report (<strong>Sales → Back-Orders</strong>) shows all open
 back-orders so nothing falls through the cracks.</p>
 </blockquote>
-<h4 id="drop-ship-orders">Drop-Ship Orders</h4>
+<h4 data-number="1.4.3.6" id="drop-ship-orders"><span
+class="header-section-number">1.4.3.6</span> Drop-Ship Orders</h4>
 <p>After adding drop-ship lines to an SO, click <strong>Drop-Ship
 PO</strong>. Choose a vendor, PO number, dates, period, and terms. The
 system creates a PO with the customer’s shipping address; when the
 vendor ships and the PO is received, the linked SO lines are marked
 shipped automatically — no warehouse inventory movement occurs.</p>
-<h3 id="ar-invoices">3.4 AR Invoices</h3>
+<h3 data-number="1.4.4" id="ar-invoices"><span
+class="header-section-number">1.4.4</span> 3.4 AR Invoices</h3>
 <p><strong>AR → Invoices</strong> — invoices can be created standalone
 or from an SO (§3.3).</p>
 <p>Standalone invoice creation: 1. Choose customer, invoice number,
@@ -982,7 +950,8 @@ dates, period, payment terms. 2. Add lines: item, description, qty, unit
 price, tax rate, and optionally a jurisdiction override. 3. The system
 computes subtotal, tax, and total. On save it posts a GL batch: DR AR /
 CR Revenue (+ CR Tax Payable if tax &gt; 0).</p>
-<h4 id="voiding-an-invoice">Voiding an Invoice</h4>
+<h4 data-number="1.4.4.1" id="voiding-an-invoice"><span
+class="header-section-number">1.4.4.1</span> Voiding an Invoice</h4>
 <p>Only <code>OPEN</code> invoices can be voided. Click
 <strong>Void</strong>. The system posts a reversing GL batch.</p>
 <blockquote>
@@ -992,12 +961,14 @@ Write-off an invoice when the goods were delivered, the invoice is
 legitimate, but the customer will not pay. A void removes the revenue
 from your books; a write-off moves the balance to Bad Debt Expense.</p>
 </blockquote>
-<h4 id="write-offs">Write-offs</h4>
+<h4 data-number="1.4.4.2" id="write-offs"><span
+class="header-section-number">1.4.4.2</span> Write-offs</h4>
 <p>For uncollectable balances, click <strong>Write-Off</strong> on an
 OPEN or PARTIAL invoice. Enter the write-off amount. The system creates
 an <code>ar_write_offs</code> record and posts GL: DR Bad Debt Expense /
 CR AR.</p>
-<h3 id="cash-receipts">3.5 Cash Receipts</h3>
+<h3 data-number="1.4.5" id="cash-receipts"><span
+class="header-section-number">1.4.5</span> 3.5 Cash Receipts</h3>
 <p><strong>AR → Payments</strong> — record a cash receipt: 1. Choose
 customer, payment number, date, amount, payment method (CHECK, WIRE,
 ACH, etc.), and period. 2. Save. The payment is unmatched (status:
@@ -1014,7 +985,8 @@ statement is available. - If the customer took an early-pay discount
 the discount on the apply screen. The remaining balance is posted as
 discount taken.</p>
 </blockquote>
-<h4 id="credit-memos">Credit Memos</h4>
+<h4 data-number="1.4.5.1" id="credit-memos"><span
+class="header-section-number">1.4.5.1</span> Credit Memos</h4>
 <p><strong>AR → Credit Memos</strong> — issue a credit for a return or
 price adjustment: 1. Create with customer, amount, and description.
 Posts GL: DR Revenue / CR AR. 2. Apply to an open invoice using
@@ -1027,7 +999,8 @@ received goods and is returning some of them, issue a credit memo — the
 original invoice was correct when issued. If the invoice itself was
 wrong (wrong price, wrong customer), void the invoice and reissue.</p>
 </blockquote>
-<h3 id="customer-deposits">3.6 Customer Deposits</h3>
+<h3 data-number="1.4.6" id="customer-deposits"><span
+class="header-section-number">1.4.6</span> 3.6 Customer Deposits</h3>
 <p><strong>AR → Deposits</strong> — record a prepayment before the
 invoice is raised: 1. Create deposit: customer, amount, period. 2. Apply
 to an invoice when it is ready: GL moves the deposit from Deposits
@@ -1041,7 +1014,9 @@ to zero (or to the remaining amount if the deposit was partial). This
 keeps your AR aging accurate — the deposit does not show as an open
 invoice.</p>
 </blockquote>
-<h3 id="ar-aging-and-collections">3.7 AR Aging and Collections</h3>
+<h3 data-number="1.4.7" id="ar-aging-and-collections"><span
+class="header-section-number">1.4.7</span> 3.7 AR Aging and
+Collections</h3>
 <p><strong>AR → Aging</strong> — shows open balances bucketed by 0–30,
 31–60, 61–90, 91+ days past due.</p>
 <blockquote>
@@ -1057,7 +1032,8 @@ pay: set a follow-up date in the Collections log.</p>
 <p><strong>AR → Collections</strong> — a prioritized queue of customers
 with overdue balances. Log contact attempts with notes; the contact
 history is visible per customer.</p>
-<h3 id="customer-statements">3.8 Customer Statements</h3>
+<h3 data-number="1.4.8" id="customer-statements"><span
+class="header-section-number">1.4.8</span> 3.8 Customer Statements</h3>
 <p><strong>AR → Statements</strong> — view a customer’s transaction
 history for any date range. <strong>Print</strong> generates a PDF.
 <strong>Email</strong> sends it to the customer’s primary contact.</p>
@@ -1069,9 +1045,11 @@ their payments. A statement shows all open invoices, any credits, and
 the total balance due.</p>
 </blockquote>
 <hr />
-<h2 id="procure-to-pay">4. Procure-to-Pay</h2>
+<h2 data-number="1.5" id="procure-to-pay"><span
+class="header-section-number">1.5</span> 4. Procure-to-Pay</h2>
 <pre><code>Vendor → Requisition → RFQ → PO → Receipt → AP Bill → Payment → Applied → Reconciled</code></pre>
-<h3 id="vendor-master">4.1 Vendor Master</h3>
+<h3 data-number="1.5.1" id="vendor-master"><span
+class="header-section-number">1.5.1</span> 4.1 Vendor Master</h3>
 <p><strong>AP → Vendors</strong> — create vendors before entering bills
 or POs.</p>
 <p>Key fields: - <strong>Tax ID + Is 1099</strong> — populated on the
@@ -1089,7 +1067,9 @@ proprietor or LLC who provides services (not goods), check the
 will need this at year end. Set a default expense GL account if all
 purchases from this vendor hit the same expense line.</p>
 </blockquote>
-<h3 id="purchase-requisitions">4.2 Purchase Requisitions</h3>
+<h3 data-number="1.5.2" id="purchase-requisitions"><span
+class="header-section-number">1.5.2</span> 4.2 Purchase
+Requisitions</h3>
 <p><strong>Purchasing → Requisitions</strong> — internal request before
 a PO is issued.</p>
 <p>Statuses: <code>DRAFT</code> → <code>PENDING</code> →
@@ -1111,7 +1091,9 @@ manager approves or rejects. Only after approval can a PO be created.
 For small purchases below a threshold (e.g., under $500), you may
 configure your policy to allow POs directly without a requisition.</p>
 </blockquote>
-<h3 id="rfq-and-quote-comparison">4.3 RFQ and Quote Comparison</h3>
+<h3 data-number="1.5.3" id="rfq-and-quote-comparison"><span
+class="header-section-number">1.5.3</span> 4.3 RFQ and Quote
+Comparison</h3>
 <p><strong>Purchasing → RFQs</strong> — request quotes from multiple
 vendors for the same items.</p>
 <ol type="1">
@@ -1133,13 +1115,15 @@ decision defensible and documented. For routine reorders of items with a
 Vendor Catalog price (§4.10), you can skip the RFQ and go directly to a
 PO.</p>
 </blockquote>
-<h3 id="purchase-orders">4.4 Purchase Orders</h3>
+<h3 data-number="1.5.4" id="purchase-orders"><span
+class="header-section-number">1.5.4</span> 4.4 Purchase Orders</h3>
 <p><strong>Purchasing → Orders</strong> — the core procurement
 transaction.</p>
 <p>Creating a PO is similar to SO creation: choose vendor, dates,
 period, terms, warehouse, and add lines (item, qty, unit cost). The PO
 starts in <code>OPEN</code> status.</p>
-<h4 id="po-statuses">PO Statuses</h4>
+<h4 data-number="1.5.4.1" id="po-statuses"><span
+class="header-section-number">1.5.4.1</span> PO Statuses</h4>
 <table>
 <colgroup>
 <col style="width: 27%" />
@@ -1181,7 +1165,8 @@ starts in <code>OPEN</code> status.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="receiving-goods">Receiving Goods</h4>
+<h4 data-number="1.5.4.2" id="receiving-goods"><span
+class="header-section-number">1.5.4.2</span> Receiving Goods</h4>
 <p>Click <strong>Receive</strong> on an OPEN or PARTIAL PO. Enter
 receipt number, receipt date, period, and warehouse (+ optional bin).
 The system: - Creates <code>RECEIPT</code> inventory transactions
@@ -1197,7 +1182,8 @@ invoice in hand and have matched it against what you actually received
 </blockquote>
 <p>For drop-ship POs (ship_to = customer address), receiving does not
 touch inventory — it marks the linked SO lines SHIPPED instead.</p>
-<h4 id="creating-an-ap-bill-from-a-po">Creating an AP Bill from a
+<h4 data-number="1.5.4.3" id="creating-an-ap-bill-from-a-po"><span
+class="header-section-number">1.5.4.3</span> Creating an AP Bill from a
 PO</h4>
 <p>Click <strong>Bill</strong> on a RECEIVED or PARTIAL PO. Enter bill
 number, bill date, due date, period, and terms. The system creates an AP
@@ -1215,7 +1201,8 @@ flags discrepancies. Do not pay a bill with an over-billed quantity or a
 price higher than the PO without a manager’s approval and a PO
 amendment.</p>
 </blockquote>
-<h3 id="ap-bills">4.5 AP Bills</h3>
+<h3 data-number="1.5.5" id="ap-bills"><span
+class="header-section-number">1.5.5</span> 4.5 AP Bills</h3>
 <p><strong>AP → Bills</strong> — bills can be created standalone or from
 a PO (§4.4).</p>
 <p>On save, the system posts GL: DR Expense / CR AP. For
@@ -1229,7 +1216,8 @@ that do not go through the PO/receiving process. For goods that were
 purchased and received, always create the bill from the PO to preserve
 three-way match tracking.</p>
 </blockquote>
-<h3 id="ap-payments">4.6 AP Payments</h3>
+<h3 data-number="1.5.6" id="ap-payments"><span
+class="header-section-number">1.5.6</span> 4.6 AP Payments</h3>
 <p><strong>AP → Payments</strong> — record a payment to a vendor: 1.
 Enter payment number, vendor, date, amount, method (CHECK, ACH, WIRE),
 and period. 2. Click <strong>Apply</strong> to match it against open
@@ -1248,7 +1236,8 @@ initiate ACH transfers outside the system. 5. After the bank confirms
 the checks cleared, match them in <strong>Bank
 Reconciliation</strong>.</p>
 </blockquote>
-<h3 id="ap-aging-and-vendor-statements">4.7 AP Aging and Vendor
+<h3 data-number="1.5.7" id="ap-aging-and-vendor-statements"><span
+class="header-section-number">1.5.7</span> 4.7 AP Aging and Vendor
 Statements</h3>
 <p><strong>AP → Aging</strong> — open balances bucketed by days past
 due.</p>
@@ -1261,7 +1250,8 @@ vendor to investigate.</p>
 </blockquote>
 <p><strong>AP → Vendor Statement</strong> — shows bills and payments in
 a date range. Print as PDF or view on screen.</p>
-<h3 id="report">4.8 1099 Report</h3>
+<h3 data-number="1.5.8" id="report"><span
+class="header-section-number">1.5.8</span> 4.8 1099 Report</h3>
 <p><strong>AP → 1099 Report</strong> — lists vendors with
 <code>is_1099 = true</code> and total payments in the selected year.
 Filter by minimum amount (default $600). Shows a ⚠ badge for vendors
@@ -1273,13 +1263,15 @@ badge, contact them to obtain their W-9 (Tax ID). 1099-NEC forms must be
 issued by January 31. See §10.5 (Annual Procedures) for the full
 year-end checklist.</p>
 </blockquote>
-<h3 id="check-register-and-positive-pay">4.9 Check Register and Positive
-Pay</h3>
+<h3 data-number="1.5.9" id="check-register-and-positive-pay"><span
+class="header-section-number">1.5.9</span> 4.9 Check Register and
+Positive Pay</h3>
 <p><strong>AP → Check Register</strong> — log issued checks with check
 number, payee, amount, bank account. Mark as cleared or void.</p>
 <p><strong>AP → Positive Pay</strong> — download a CSV file of uncleared
 checks in the required bank format for fraud prevention.</p>
-<h3 id="vendor-rebates">4.10 Vendor Rebates</h3>
+<h3 data-number="1.5.10" id="vendor-rebates"><span
+class="header-section-number">1.5.10</span> 4.10 Vendor Rebates</h3>
 <p><strong>Purchasing → Vendor Rebates</strong> — track rebate
 agreements (percent or fixed-per-unit) with effective and expiry dates
 and a minimum purchase threshold.</p>
@@ -1297,23 +1289,28 @@ can be applied against open bills to that vendor. Rebate agreements
 often have minimum purchase thresholds — the system enforces these
 automatically.</p>
 </blockquote>
-<h3 id="vendor-item-catalog">4.11 Vendor Item Catalog</h3>
+<h3 data-number="1.5.11" id="vendor-item-catalog"><span
+class="header-section-number">1.5.11</span> 4.11 Vendor Item
+Catalog</h3>
 <p><strong>Purchasing → Vendor Catalog</strong> — stores vendor-specific
 part numbers, lead times, MOQ, packing quantities, and last cost per
 item. Mark one vendor as “preferred” per item — the preferred vendor’s
 cost auto-fills on PO lines.</p>
-<h3 id="blanket-pos">4.12 Blanket POs</h3>
+<h3 data-number="1.5.12" id="blanket-pos"><span
+class="header-section-number">1.5.12</span> 4.12 Blanket POs</h3>
 <p><strong>Purchasing → Blanket POs</strong> — standing contracts with a
 vendor for a total committed quantity at a fixed price.</p>
 <p><strong>Release</strong> creates a standard PO for a chosen portion
 of the committed quantity. Released quantities are tracked against the
 blanket.</p>
 <hr />
-<h2 id="inventory">5. Inventory</h2>
+<h2 data-number="1.6" id="inventory"><span
+class="header-section-number">1.6</span> 5. Inventory</h2>
 <p>Inventory in OpenERP is a perpetual system: every transaction
 (receipt, shipment, adjustment, transfer) updates on-hand in real time.
 There is no end-of-day batch update.</p>
-<h3 id="warehouses-and-bins">5.1 Warehouses and Bins</h3>
+<h3 data-number="1.6.1" id="warehouses-and-bins"><span
+class="header-section-number">1.6.1</span> 5.1 Warehouses and Bins</h3>
 <p><strong>Inventory → Warehouses</strong> — create warehouses
 (e.g. MAIN, EAST, OVERFLOW). Each warehouse has: - Warehouse code and
 name - <strong>Bins</strong> — aisle/rack/shelf/bin-code locations
@@ -1329,7 +1326,8 @@ directed putaway and pick instructions. If your operation does not
 require bin-level tracking, leave the bin field blank — warehouse-level
 tracking is sufficient.</p>
 </blockquote>
-<h3 id="on-hand-quantity">5.2 On-Hand Quantity</h3>
+<h3 data-number="1.6.2" id="on-hand-quantity"><span
+class="header-section-number">1.6.2</span> 5.2 On-Hand Quantity</h3>
 <p>On-hand is calculated in real time as the signed sum of all inventory
 transactions:</p>
 <table>
@@ -1366,7 +1364,8 @@ transactions:</p>
 </tr>
 </tbody>
 </table>
-<h3 id="manual-adjustments">5.3 Manual Adjustments</h3>
+<h3 data-number="1.6.3" id="manual-adjustments"><span
+class="header-section-number">1.6.3</span> 5.3 Manual Adjustments</h3>
 <p><strong>Inventory → Items</strong> — click <strong>Adjust</strong> on
 an item row. Enter qty (positive = increase, negative = decrease), date,
 period, warehouse, optional bin, and notes. The system posts a GL batch:
@@ -1381,7 +1380,8 @@ internal use)</p>
 will show who made the adjustment and when, and the note explains why.
 Unexplained adjustments are an audit risk.</p>
 </blockquote>
-<h3 id="warehouse-transfers">5.4 Warehouse Transfers</h3>
+<h3 data-number="1.6.4" id="warehouse-transfers"><span
+class="header-section-number">1.6.4</span> 5.4 Warehouse Transfers</h3>
 <p><strong>Inventory → Transfers</strong> — move stock between
 warehouses.</p>
 <ol type="1">
@@ -1399,7 +1399,8 @@ the same moment. If your physical transfer takes days (inter-city
 shipment), you may want to record the transfer only when the goods
 physically arrive at the destination.</p>
 </blockquote>
-<h3 id="fifo-cost-layers">5.5 FIFO Cost Layers</h3>
+<h3 data-number="1.6.5" id="fifo-cost-layers"><span
+class="header-section-number">1.6.5</span> 5.5 FIFO Cost Layers</h3>
 <p>Every PO receipt pushes a cost layer (qty_received, unit_cost,
 receipt_id, lot_id). When items are shipped via SO, the system consumes
 the oldest layers first (FIFO). The resulting COGS is posted to GL.</p>
@@ -1414,7 +1415,8 @@ shows you exactly what your inventory is worth at any point in time.</p>
 <p><strong>Inventory → Valuation (FIFO)</strong> — shows current FIFO
 layers by item and warehouse: qty remaining, average cost per unit, and
 total value. A summary endpoint returns the grand total.</p>
-<h3 id="landed-costs">5.6 Landed Costs</h3>
+<h3 data-number="1.6.6" id="landed-costs"><span
+class="header-section-number">1.6.6</span> 5.6 Landed Costs</h3>
 <p><strong>Purchasing → Landed Costs</strong> — allocate additional
 costs (ocean freight, customs duty, brokerage, insurance, tariff) to PO
 receipts.</p>
@@ -1440,7 +1442,9 @@ understated. Post landed costs before you ship those items; once a FIFO
 layer is consumed by a shipment, the layer is gone and cannot be
 retrospectively adjusted.</p>
 </blockquote>
-<h3 id="physical-inventory-count">5.7 Physical Inventory Count</h3>
+<h3 data-number="1.6.7" id="physical-inventory-count"><span
+class="header-section-number">1.6.7</span> 5.7 Physical Inventory
+Count</h3>
 <p><strong>Inventory → Physical Count</strong> — a formal full-warehouse
 count.</p>
 <ol type="1">
@@ -1462,7 +1466,8 @@ snapshot and the true count. - Document and review all variances over a
 threshold (e.g., $500) before posting — unexplained large variances may
 indicate theft or systemic errors.</p>
 </blockquote>
-<h3 id="cycle-counts">5.8 Cycle Counts</h3>
+<h3 data-number="1.6.8" id="cycle-counts"><span
+class="header-section-number">1.6.8</span> 5.8 Cycle Counts</h3>
 <p><strong>Inventory → Cycle Counts</strong> — targeted per-item counts
 on a rolling schedule.</p>
 <ol type="1">
@@ -1486,7 +1491,8 @@ variances above your threshold (e.g., &gt;2% of value). Over time, cycle
 counts build much more accurate inventory records than an annual
 physical count.</p>
 </blockquote>
-<h3 id="reorder-suggestions">5.9 Reorder Suggestions</h3>
+<h3 data-number="1.6.9" id="reorder-suggestions"><span
+class="header-section-number">1.6.9</span> 5.9 Reorder Suggestions</h3>
 <p><strong>Inventory → Reorder Suggestions</strong> — lists items where
 on-hand is below the reorder point. Shows reorder qty, min/max qty,
 standard cost, and reorder value. Filter by warehouse.</p>
@@ -1500,26 +1506,31 @@ items from that vendor that need replenishment. 5. The reorder qty shown
 is the suggested quantity; adjust up if you have a promotion coming or
 down if demand has slowed.</p>
 </blockquote>
-<h3 id="auto-replenishment">5.10 Auto-Replenishment</h3>
+<h3 data-number="1.6.10" id="auto-replenishment"><span
+class="header-section-number">1.6.10</span> 5.10 Auto-Replenishment</h3>
 <p><strong>Inventory → Replenishment</strong> — click
 <strong>Run</strong> to auto-generate draft POs for all items below
 reorder point, grouped by preferred vendor. Review and post the draft
 POs from <strong>Purchasing → Orders</strong>.</p>
-<h3 id="abc-classification">5.11 ABC Classification</h3>
+<h3 data-number="1.6.11" id="abc-classification"><span
+class="header-section-number">1.6.11</span> 5.11 ABC Classification</h3>
 <p><strong>Inventory → ABC Classify</strong> — ranks all items by annual
 COGS and assigns A (top 70%), B (next 20%), C (bottom 10%). Updates the
 <code>abc_class</code> field on each item. Run annually or after
 significant volume changes to keep cycle count scheduling
 meaningful.</p>
-<h3 id="demand-forecasting">5.12 Demand Forecasting</h3>
+<h3 data-number="1.6.12" id="demand-forecasting"><span
+class="header-section-number">1.6.12</span> 5.12 Demand Forecasting</h3>
 <p><strong>Inventory → Items</strong> → <strong>Forecast</strong> modal
 — shows 12-month transaction history and computes 3-month, 6-month, and
 12-month moving average daily demand. Includes a projected date when
 current on-hand will reach the reorder point at the forecast demand
 rate.</p>
 <hr />
-<h2 id="item-master">6. Item Master</h2>
-<h3 id="items">6.1 Items</h3>
+<h2 data-number="1.7" id="item-master"><span
+class="header-section-number">1.7</span> 6. Item Master</h2>
+<h3 data-number="1.7.1" id="items"><span
+class="header-section-number">1.7.1</span> 6.1 Items</h3>
 <p><strong>Inventory → Items</strong> — the central item catalog.</p>
 <p>Key fields: - <strong>Item number</strong> — unique; used on all
 documents - <strong>Description</strong> - <strong>Category</strong> —
@@ -1532,7 +1543,8 @@ class</strong> — A, B, or C (updated by ABC classification run) -
 <strong>HTS code, country of origin, tariff rate</strong> — for import
 cost calculations - <strong>Is kit</strong> — if checked, the item is
 exploded into BOM components on SO entry</p>
-<h3 id="categories-and-uom">6.2 Categories and UOM</h3>
+<h3 data-number="1.7.2" id="categories-and-uom"><span
+class="header-section-number">1.7.2</span> 6.2 Categories and UOM</h3>
 <ul>
 <li><strong>Inventory → Categories</strong> — organize items for
 reporting and matrix pricing</li>
@@ -1540,7 +1552,8 @@ reporting and matrix pricing</li>
 <strong>Conversions</strong> (e.g. 12 EA = 1 CASE) so items can be sold
 in one UOM and stocked in another</li>
 </ul>
-<h3 id="price-lists">6.3 Price Lists</h3>
+<h3 data-number="1.7.3" id="price-lists"><span
+class="header-section-number">1.7.3</span> 6.3 Price Lists</h3>
 <p><strong>Sales → Price Lists</strong> — customer-assignable price
 lists with per-item unit price overrides.</p>
 <ul>
@@ -1559,30 +1572,38 @@ item category discount) 4. Item list price</p>
 manually. Review and update price lists at least annually — or when your
 cost increases — to protect margins.</p>
 </blockquote>
-<h3 id="contract-pricing">6.4 Contract Pricing</h3>
+<h3 data-number="1.7.4" id="contract-pricing"><span
+class="header-section-number">1.7.4</span> 6.4 Contract Pricing</h3>
 <p><strong>Sales → Contracts</strong> — customer + item fixed price with
 an effective date range. Takes priority over all price lists. Good for
 long-term supply agreements.</p>
-<h3 id="matrix-pricing">6.5 Matrix Pricing</h3>
+<h3 data-number="1.7.5" id="matrix-pricing"><span
+class="header-section-number">1.7.5</span> 6.5 Matrix Pricing</h3>
 <p><strong>Sales → Matrix Pricing</strong> — discount rules keyed on
 customer class × item category. Applied when no contract or price list
 override exists. Example: KEY customers get 15% off FITTINGS.</p>
-<h3 id="lot-tracking">6.6 Lot Tracking</h3>
+<h3 data-number="1.7.6" id="lot-tracking"><span
+class="header-section-number">1.7.6</span> 6.6 Lot Tracking</h3>
 <p>Items with <code>lot_tracking = true</code> require a lot number on
 receipt and shipment. Manage lot numbers from <strong>Inventory →
 Items</strong> → <strong>Lots</strong> modal: enter lot number, received
 date, and optional expiry date. Expiring lots are highlighted in the lot
 list.</p>
-<h3 id="serial-number-tracking">6.7 Serial Number Tracking</h3>
+<h3 data-number="1.7.7" id="serial-number-tracking"><span
+class="header-section-number">1.7.7</span> 6.7 Serial Number
+Tracking</h3>
 <p>Items with <code>serial_tracking = true</code> require a serial
 number on each unit shipped. Manage serial numbers from
 <strong>Inventory → Items</strong> → <strong>Serials</strong> modal:
 enter serial number, received date, optional warranty expiry.</p>
-<h3 id="traceability">6.8 Traceability</h3>
+<h3 data-number="1.7.8" id="traceability"><span
+class="header-section-number">1.7.8</span> 6.8 Traceability</h3>
 <p><strong>Inventory → Traceability</strong> — look up all inventory
 transactions for a given serial number or lot number. Trace from receipt
 PO through shipment SO.</p>
-<h3 id="item-cross-references">6.9 Item Cross-References</h3>
+<h3 data-number="1.7.9" id="item-cross-references"><span
+class="header-section-number">1.7.9</span> 6.9 Item
+Cross-References</h3>
 <p><strong>Inventory → Items</strong> → <strong>X-Refs</strong> modal —
 store alternative part numbers:</p>
 <table>
@@ -1612,40 +1633,47 @@ store alternative part numbers:</p>
 </tbody>
 </table>
 <p>Cross-references feed the barcode lookup endpoint.</p>
-<h3 id="item-substitutes">6.10 Item Substitutes</h3>
+<h3 data-number="1.7.10" id="item-substitutes"><span
+class="header-section-number">1.7.10</span> 6.10 Item Substitutes</h3>
 <p><strong>Inventory → Items</strong> → <strong>Subs</strong> modal —
 define substitute items with priority ranking. When a flagged-superseded
 item is selected on an SO, the system prompts with available
 substitutes.</p>
-<h3 id="item-supersession">6.11 Item Supersession</h3>
+<h3 data-number="1.7.11" id="item-supersession"><span
+class="header-section-number">1.7.11</span> 6.11 Item Supersession</h3>
 <p><strong>Inventory → Items</strong> → <strong>Supersession</strong>
 history — record when one item replaces another (old item → new item,
 reason, effective date). SO entry warns the user when a superseded item
 is selected.</p>
-<h3 id="kitting-bom">6.12 Kitting / BOM</h3>
+<h3 data-number="1.7.12" id="kitting-bom"><span
+class="header-section-number">1.7.12</span> 6.12 Kitting / BOM</h3>
 <p><strong>Inventory → Kitting</strong> — bill-of-materials for kit
 items. Defines component items and required quantities. When a kit item
 is shipped, the system pulls FIFO cost from the components.</p>
-<h3 id="barcode-scanning">6.13 Barcode Scanning</h3>
+<h3 data-number="1.7.13" id="barcode-scanning"><span
+class="header-section-number">1.7.13</span> 6.13 Barcode Scanning</h3>
 <p>The endpoint <code>GET /items/barcode/{code}</code> checks
 <code>item_number</code> first, then cross-reference numbers (UPC, MPN,
 etc.). Returns the matching item. Useful for integrating mobile scan
 devices or the WH app.</p>
-<h3 id="inbound-shipments">6.14 Inbound Shipments</h3>
+<h3 data-number="1.7.14" id="inbound-shipments"><span
+class="header-section-number">1.7.14</span> 6.14 Inbound Shipments</h3>
 <p><strong>Purchasing → Inbound Shipments</strong> — track ocean or air
 freight containers with vessel, voyage, carrier, origin/destination
 ports, ETA, ATA, and customs status (PENDING → IN_TRANSIT → ARRIVED →
 CLEARED → HELD).</p>
 <p>Attach POs to a shipment to group expected receipts by container.</p>
 <hr />
-<h2 id="financials">7. Financials</h2>
+<h2 data-number="1.8" id="financials"><span
+class="header-section-number">1.8</span> 7. Financials</h2>
 <p>The Financials module provides the General Ledger, financial
 statements, bank reconciliation, multi-currency, and year-end close. For
 most companies, the subledgers (AR, AP, Inventory) handle the day-to-day
 posting automatically. The GL is where you review the cumulative result,
 make manual corrections, and produce financial statements for management
 and external reporting.</p>
-<h3 id="general-ledger">7.1 General Ledger</h3>
+<h3 data-number="1.8.1" id="general-ledger"><span
+class="header-section-number">1.8.1</span> 7.1 General Ledger</h3>
 <p><strong>GL → Accounts</strong> — chart of accounts (see §1.4).</p>
 <p><strong>GL → Fiscal Years / Periods</strong> — set up the accounting
 calendar. Closing a period prevents any further posting to it. Fiscal
@@ -1671,7 +1699,8 @@ the system already posted will double-count the amount.</p>
 payments, AP bills, AP payments, SO shipments, and inventory adjustments
 are saved. You generally do not need to create manual journals for those
 events.</p>
-<h3 id="financial-statements">7.2 Financial Statements</h3>
+<h3 data-number="1.8.2" id="financial-statements"><span
+class="header-section-number">1.8.2</span> 7.2 Financial Statements</h3>
 <p><strong>GL → Reports</strong>: - <strong>Trial Balance</strong> — all
 accounts with period debit/credit activity and ending balance. Requires
 a period selection. - <strong>Income Statement</strong> — revenue minus
@@ -1688,15 +1717,18 @@ activity you do not recognize</p>
 <p>Investigate anomalies before closing the period. It is much harder to
 correct after the period is closed.</p>
 </blockquote>
-<h3 id="gl-budgets">7.3 GL Budgets</h3>
+<h3 data-number="1.8.3" id="gl-budgets"><span
+class="header-section-number">1.8.3</span> 7.3 GL Budgets</h3>
 <p><strong>GL → Budgets</strong> — enter budget amounts per account per
 period. The <strong>Budget vs Actual</strong> report compares YTD actual
 to YTD budget.</p>
-<h3 id="departments">7.4 Departments</h3>
+<h3 data-number="1.8.4" id="departments"><span
+class="header-section-number">1.8.4</span> 7.4 Departments</h3>
 <p><strong>GL → Departments</strong> — cost centers (e.g. SALES,
 WAREHOUSE, ADMIN). Journal lines can be assigned to a department for
 departmental P&amp;L analysis.</p>
-<h3 id="fixed-assets-and-depreciation">7.5 Fixed Assets and
+<h3 data-number="1.8.5" id="fixed-assets-and-depreciation"><span
+class="header-section-number">1.8.5</span> 7.5 Fixed Assets and
 Depreciation</h3>
 <p><strong>GL → Fixed Assets</strong> — track capital assets with: -
 In-service date, useful life (months), salvage value - Linked GL asset
@@ -1712,7 +1744,9 @@ for each active asset. This posts the depreciation journal entry for
 that period. Do this before running the Income Statement so that the
 depreciation expense is included in the current period’s result.</p>
 </blockquote>
-<h3 id="recurring-journal-entries">7.6 Recurring Journal Entries</h3>
+<h3 data-number="1.8.6" id="recurring-journal-entries"><span
+class="header-section-number">1.8.6</span> 7.6 Recurring Journal
+Entries</h3>
 <p><strong>GL → Recurring JEs</strong> — templates for monthly entries
 (rent, amortization, etc.): - Define template lines (debit/credit
 amounts and accounts). - Set frequency (MONTHLY, QUARTERLY, ANNUALLY)
@@ -1727,7 +1761,8 @@ revenue recognition (DR Deferred Revenue / CR Revenue)</p>
 <p>Setting these up as recurring templates ensures they are never
 forgotten and the amounts are consistent each month.</p>
 </blockquote>
-<h3 id="year-end-close">7.7 Year-End Close</h3>
+<h3 data-number="1.8.7" id="year-end-close"><span
+class="header-section-number">1.8.7</span> 7.7 Year-End Close</h3>
 <p><strong>GL → Year-End Close</strong> (when fiscal year is fully
 posted): 1. Close all open periods in the fiscal year. 2. <strong>Run
 Close</strong> — the system: - Zeros all revenue and expense account
@@ -1746,7 +1781,8 @@ database has been taken</p>
 forward as open items. Only income statement accounts (Revenue, Expense)
 are zeroed.</p>
 </blockquote>
-<h3 id="bank-reconciliation">7.8 Bank Reconciliation</h3>
+<h3 data-number="1.8.8" id="bank-reconciliation"><span
+class="header-section-number">1.8.8</span> 7.8 Bank Reconciliation</h3>
 <p><strong>Financials → Bank Reconciliation</strong>: 1. Select a bank
 account and date range. 2. <strong>Add Statement Lines</strong> — enter
 or import bank statement transactions (deposits positive, payments
@@ -1772,7 +1808,8 @@ complete when: <strong>Bank Statement Balance + Outstanding Deposits −
 Outstanding Checks = GL Cash Account Balance</strong>. 6. Reconcile
 monthly, ideally within 5 business days of receiving the statement.</p>
 </blockquote>
-<h3 id="multi-currency">7.9 Multi-Currency</h3>
+<h3 data-number="1.8.9" id="multi-currency"><span
+class="header-section-number">1.8.9</span> 7.9 Multi-Currency</h3>
 <p><strong>Admin → Currencies</strong> — activate currencies and set
 exchange rates (spot rates by date).</p>
 <p>Foreign-currency AP bills store the foreign amount and the exchange
@@ -1790,19 +1827,25 @@ statements under US GAAP and IFRS. The revaluation entries reverse in
 the following period, so only the realized gain/loss (from payment)
 remains permanently.</p>
 </blockquote>
-<h3 id="cash-flow-statement">7.10 Cash Flow Statement</h3>
+<h3 data-number="1.8.10" id="cash-flow-statement"><span
+class="header-section-number">1.8.10</span> 7.10 Cash Flow
+Statement</h3>
 <p><strong>GL → Cash Flow</strong> — indirect method: starts from net
 income, adds back depreciation, adjusts for AR/AP/inventory working
 capital changes, and includes asset purchases. Reads from GL account
 balances by subtype.</p>
-<h3 id="cash-application-batch">7.11 Cash Application Batch</h3>
+<h3 data-number="1.8.11" id="cash-application-batch"><span
+class="header-section-number">1.8.11</span> 7.11 Cash Application
+Batch</h3>
 <p><strong>AR → Batch Apply</strong> — apply multiple payments at once.
 The system matches each payment to the customer’s oldest open invoices
 first (oldest-invoice-first auto-apply). Returns a per-payment result
 showing applied amounts and any unapplied balance.</p>
 <hr />
-<h2 id="administration">8. Administration</h2>
-<h3 id="users-and-groups">8.1 Users and Groups</h3>
+<h2 data-number="1.9" id="administration"><span
+class="header-section-number">1.9</span> 8. Administration</h2>
+<h3 data-number="1.9.1" id="users-and-groups"><span
+class="header-section-number">1.9.1</span> 8.1 Users and Groups</h3>
 <p><strong>Admin → Users</strong>: - Create users with a username,
 password (minimum 6 characters), full name, and group assignment. -
 Deactivate users to block login without deleting records. -
@@ -1862,7 +1905,9 @@ re-validated per request).</p>
 a payment receipt AND apply it to an invoice without a second person
 reviewing. This is a basic internal control.</p>
 </blockquote>
-<h3 id="permissions-reference">8.2 Permissions Reference</h3>
+<h3 data-number="1.9.2" id="permissions-reference"><span
+class="header-section-number">1.9.2</span> 8.2 Permissions
+Reference</h3>
 <table>
 <colgroup>
 <col style="width: 53%" />
@@ -1901,7 +1946,8 @@ access</td>
 <p>Note: most module routes require only a valid login (not a specific
 permission). Per-route permission enforcement is an active roadmap item
 (D4).</p>
-<h3 id="audit-log">8.3 Audit Log</h3>
+<h3 data-number="1.9.3" id="audit-log"><span
+class="header-section-number">1.9.3</span> 8.3 Audit Log</h3>
 <p><strong>Admin → Audit Log</strong> — every data-changing API call
 logs: table name, record ID, action (CREATE, UPDATE, DELETE, POST,
 APPLY, SHIP, etc.), changed-by username, and timestamp. Filter by table
@@ -1912,15 +1958,18 @@ is unexpectedly wrong, filter the audit log by the affected record ID
 and review the sequence of actions. You can see exactly who changed what
 and when. The audit log is append-only and cannot be edited.</p>
 </blockquote>
-<h3 id="payment-terms">8.4 Payment Terms</h3>
+<h3 data-number="1.9.4" id="payment-terms"><span
+class="header-section-number">1.9.4</span> 8.4 Payment Terms</h3>
 <p><strong>Admin → Payment Terms</strong> — manage NET30, NET60,
 2/10-NET30, etc. Payment terms drive due-date calculation on invoices
 and bills.</p>
-<h3 id="tax-codes">8.5 Tax Codes</h3>
+<h3 data-number="1.9.5" id="tax-codes"><span
+class="header-section-number">1.9.5</span> 8.5 Tax Codes</h3>
 <p><strong>Admin → Tax Codes</strong> — simple flat-rate tax codes
 (e.g. TX-STATE at 6.25%). Assigned to items; defaulted onto invoice
 lines.</p>
-<h3 id="sales-tax-us-multi-jurisdiction">8.6 Sales Tax (US
+<h3 data-number="1.9.6" id="sales-tax-us-multi-jurisdiction"><span
+class="header-section-number">1.9.6</span> 8.6 Sales Tax (US
 Multi-Jurisdiction)</h3>
 <p><strong>Admin → Sales Tax</strong> — jurisdiction-based rates: -
 Create jurisdictions at state, county, and city level with
@@ -1930,27 +1979,33 @@ exempted customers have 0% tax applied. - On an AR invoice, the
 <strong>Sales Tax</strong> panel computes the blended rate for each
 line’s jurisdiction and applies it via <strong>Apply to
 Lines</strong>.</p>
-<h3 id="customer-classes">8.7 Customer Classes</h3>
+<h3 data-number="1.9.7" id="customer-classes"><span
+class="header-section-number">1.9.7</span> 8.7 Customer Classes</h3>
 <p><strong>Admin → Customer Classes</strong> — codes used for matrix
 pricing and reporting (e.g. KEY, STANDARD, PROSPECT). Assign to
 customers on the customer form.</p>
-<h3 id="return-reason-codes">8.8 Return Reason Codes</h3>
+<h3 data-number="1.9.8" id="return-reason-codes"><span
+class="header-section-number">1.9.8</span> 8.8 Return Reason Codes</h3>
 <p><strong>Admin → Return Reasons</strong> — standardized codes for RMA
 lines (e.g. DEFECTIVE, WRONG_ITEM, DAMAGED). Appear in the RMA line form
 dropdown.</p>
-<h3 id="carriers-and-ship-methods">8.9 Carriers and Ship Methods</h3>
+<h3 data-number="1.9.9" id="carriers-and-ship-methods"><span
+class="header-section-number">1.9.9</span> 8.9 Carriers and Ship
+Methods</h3>
 <p><strong>Admin → Carriers</strong> — carrier master (UPS, FedEx,
 etc.). Linked to ship methods.</p>
 <p><strong>Admin → Ship Methods</strong> — specific service levels per
 carrier (UPS GROUND, FEDEX 2DAY). Assignable on SOs and POs.</p>
-<h3 id="smtp-and-email-log">8.10 SMTP and Email Log</h3>
+<h3 data-number="1.9.10" id="smtp-and-email-log"><span
+class="header-section-number">1.9.10</span> 8.10 SMTP and Email Log</h3>
 <p>Configure SMTP under <strong>Admin → Company Settings</strong>
 (smtp_host, smtp_port, smtp_encryption, smtp_user, smtp_pass,
 smtp_from). Use <strong>Test Send</strong> to verify delivery.</p>
 <p><strong>Admin → Email Log</strong> — every email sent by the system
 (invoice, SO, PO) is recorded with status, recipient, subject, and
 timestamp.</p>
-<h3 id="scheduled-reports">8.11 Scheduled Reports</h3>
+<h3 data-number="1.9.11" id="scheduled-reports"><span
+class="header-section-number">1.9.11</span> 8.11 Scheduled Reports</h3>
 <p><strong>Admin → Scheduled Reports</strong> — configure reports to run
 automatically and email results: - Report type (AR Aging, AP Aging,
 Trial Balance, Backorders, Commissions) - Frequency (DAILY, WEEKLY,
@@ -1961,7 +2016,8 @@ addresses)</p>
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> F<span class="op">:</span>\OpenERP\tools\run_scheduled_reports<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
 <p>Or configure Windows Task Scheduler to run this script at your
 desired interval (e.g., daily at 7:00 AM).</p>
-<h3 id="csv-import">8.12 CSV Import</h3>
+<h3 data-number="1.9.12" id="csv-import"><span
+class="header-section-number">1.9.12</span> 8.12 CSV Import</h3>
 <p><strong>Admin → Import Tool</strong> — bulk-load master data:</p>
 <table>
 <thead>
@@ -1996,14 +2052,17 @@ desired interval (e.g., daily at 7:00 AM).</p>
 </table>
 <p>Download the column template from the Import Tool page. Required
 columns are documented in the template header row.</p>
-<h3 id="csv-export">8.13 CSV Export</h3>
+<h3 data-number="1.9.13" id="csv-export"><span
+class="header-section-number">1.9.13</span> 8.13 CSV Export</h3>
 <p>Most list screens have an <strong>Export CSV</strong> button that
 downloads the current filtered/paginated view as a CSV file. Available
 on: AR Invoices, AR Customers, AP Vendors, AP Bills, Sales Orders, and
 the Inventory Valuation report.</p>
 <hr />
-<h2 id="integration">9. Integration</h2>
-<h3 id="edi-inbound-purchase-orders-850">9.1 EDI — Inbound Purchase
+<h2 data-number="1.10" id="integration"><span
+class="header-section-number">1.10</span> 9. Integration</h2>
+<h3 data-number="1.10.1" id="edi-inbound-purchase-orders-850"><span
+class="header-section-number">1.10.1</span> 9.1 EDI — Inbound Purchase
 Orders (850)</h3>
 <p><strong>Integration → EDI Partners</strong> — configure trading
 partners (ISA sender/receiver IDs, partner name, direction).</p>
@@ -2014,13 +2073,15 @@ Body: { &quot;partner_id&quot;: &quot;&lt;edi_partner_id&gt;&quot;, &quot;x12_co
 <p>The parser auto-detects element and segment separators from the ISA
 fixed positions, then creates a PO and lines. Results are logged to
 <code>edi_transactions</code>.</p>
-<h3 id="edi-outbound-asn-856-and-invoice-810">9.2 EDI — Outbound ASN
-(856) and Invoice (810)</h3>
+<h3 data-number="1.10.2" id="edi-outbound-asn-856-and-invoice-810"><span
+class="header-section-number">1.10.2</span> 9.2 EDI — Outbound ASN (856)
+and Invoice (810)</h3>
 <pre><code>GET /edi/outbound/856/{so_id}    → X12 856 ASN file download
 GET /edi/outbound/810/{inv_id}   → X12 810 invoice file download</code></pre>
 <p>These return the X12 flat-file as a text response. Use your EDI VAN
 or AS2 adapter to transmit to the trading partner.</p>
-<h3 id="e-commerce-webhook">9.3 E-Commerce Webhook</h3>
+<h3 data-number="1.10.3" id="e-commerce-webhook"><span
+class="header-section-number">1.10.3</span> 9.3 E-Commerce Webhook</h3>
 <p><strong>Integration → E-Commerce Orders</strong> — shows orders
 imported via webhook.</p>
 <p>To push an order from your e-commerce platform:</p>
@@ -2035,7 +2096,8 @@ Body: {
 <p>The system finds or creates the customer by email, creates an SO with
 the lines, and deduplicates by <code>source + external_order_id</code> —
 safe to replay.</p>
-<h3 id="recurring-pos">9.4 Recurring POs</h3>
+<h3 data-number="1.10.4" id="recurring-pos"><span
+class="header-section-number">1.10.4</span> 9.4 Recurring POs</h3>
 <p><strong>Purchasing → Recurring POs</strong> — templates for
 regularly-ordered items (weekly, monthly). Configure a template with
 vendor, lines, and frequency. <strong>Run</strong> generates a PO from
@@ -2044,14 +2106,17 @@ the template and advances the next run date.</p>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> F<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
 <hr />
-<h2 id="management-operating-procedures">10. Management Operating
+<h2 data-number="1.11" id="management-operating-procedures"><span
+class="header-section-number">1.11</span> 10. Management Operating
 Procedures</h2>
 <p>This section describes the recommended business routines for running
 the system efficiently. These are operating procedures, not software
 instructions — they describe <em>when</em> and <em>why</em> to perform
 tasks, not just <em>how</em>.</p>
-<h3 id="daily-routines">10.1 Daily Routines</h3>
-<h4 id="finance-controller">Finance / Controller</h4>
+<h3 data-number="1.11.1" id="daily-routines"><span
+class="header-section-number">1.11.1</span> 10.1 Daily Routines</h3>
+<h4 data-number="1.11.1.1" id="finance-controller"><span
+class="header-section-number">1.11.1.1</span> Finance / Controller</h4>
 <ul>
 <li><strong>Check the Dashboard.</strong> Review cash, open AR, open AP,
 and overdue AR tiles. Any sharp movements overnight indicate
@@ -2065,7 +2130,8 @@ correct period and GL account.</li>
 <li><strong>Review the Audit Log</strong> (if anomalies are suspected).
 Filter by yesterday’s date to see all transactions.</li>
 </ul>
-<h4 id="warehouse-receiving">Warehouse / Receiving</h4>
+<h4 data-number="1.11.1.2" id="warehouse-receiving"><span
+class="header-section-number">1.11.1.2</span> Warehouse / Receiving</h4>
 <ul>
 <li><strong>Receive open POs.</strong> For each delivery that arrives,
 locate the PO in <strong>Purchasing → Orders</strong> and click
@@ -2075,7 +2141,9 @@ the receipt for the packing file.</li>
 <strong>Inventory → Reorder Suggestions</strong> to see if any items
 have dropped below reorder point. Notify purchasing.</li>
 </ul>
-<h4 id="sales-customer-service">Sales / Customer Service</h4>
+<h4 data-number="1.11.1.3" id="sales-customer-service"><span
+class="header-section-number">1.11.1.3</span> Sales / Customer
+Service</h4>
 <ul>
 <li><strong>Check the back-order report.</strong> Review <strong>Sales →
 Back-Orders</strong> for any lines with a past ship date. Contact
@@ -2083,10 +2151,12 @@ customers about delays and update promise dates.</li>
 <li><strong>Process new orders.</strong> Enter customer orders promptly
 — the ATP check gives the customer real-time availability.</li>
 </ul>
-<h3 id="weekly-routines">10.2 Weekly Routines</h3>
-<h4
-id="ar-collections-every-monday-or-first-business-day-of-the-week">AR
-Collections (every Monday, or first business day of the week)</h4>
+<h3 data-number="1.11.2" id="weekly-routines"><span
+class="header-section-number">1.11.2</span> 10.2 Weekly Routines</h3>
+<h4 data-number="1.11.2.1"
+id="ar-collections-every-monday-or-first-business-day-of-the-week"><span
+class="header-section-number">1.11.2.1</span> AR Collections (every
+Monday, or first business day of the week)</h4>
 <ol type="1">
 <li>Run <strong>AR → Aging</strong>. Sort by the 61–90 and 91+ columns
 descending.</li>
@@ -2102,8 +2172,10 @@ received or a payment plan is agreed.</li>
 <li>Discuss write-off candidates with management. Write-offs over a
 threshold (e.g., $1,000) should require controller approval.</li>
 </ol>
-<h4 id="ap-check-run-typically-wednesday-or-thursday">AP Check Run
-(typically Wednesday or Thursday)</h4>
+<h4 data-number="1.11.2.2"
+id="ap-check-run-typically-wednesday-or-thursday"><span
+class="header-section-number">1.11.2.2</span> AP Check Run (typically
+Wednesday or Thursday)</h4>
 <ol type="1">
 <li>Run <strong>AP → Aging</strong>. Identify all bills due within the
 next 7 days.</li>
@@ -2115,7 +2187,8 @@ vendor.</li>
 <li>After the bank processes the payments, match them in <strong>Bank
 Reconciliation</strong> when the statement updates.</li>
 </ol>
-<h4 id="purchasing-review">Purchasing Review</h4>
+<h4 data-number="1.11.2.3" id="purchasing-review"><span
+class="header-section-number">1.11.2.3</span> Purchasing Review</h4>
 <ol type="1">
 <li>Review open POs past their expected delivery date
 (<strong>Purchasing → Orders</strong>, filter OPEN/PARTIAL, sort by
@@ -2127,7 +2200,9 @@ shortfalls.</li>
 <li>Process any RFQs that have received all vendor responses — compare
 and convert the winner to a PO.</li>
 </ol>
-<h4 id="sales-commission-review">Sales Commission Review</h4>
+<h4 data-number="1.11.2.4" id="sales-commission-review"><span
+class="header-section-number">1.11.2.4</span> Sales Commission
+Review</h4>
 <ol type="1">
 <li>Run <strong>Sales → Commissions</strong> for the current
 month-to-date.</li>
@@ -2136,7 +2211,8 @@ quota.</li>
 <li>Commissions accrue on invoiced SOs only (not on orders or shipments)
 — remind reps to push customers to accept invoices promptly.</li>
 </ol>
-<h3 id="monthly-period-end-checklist">10.3 Monthly Period-End
+<h3 data-number="1.11.3" id="monthly-period-end-checklist"><span
+class="header-section-number">1.11.3</span> 10.3 Monthly Period-End
 Checklist</h3>
 <p>Perform these steps in order, on or before the last business day of
 each month. Do not close the period until all steps are complete.</p>
@@ -2183,7 +2259,9 @@ Statement and Balance Sheet to management. - Send the AR Aging to the
 collections team. - Send the AP Aging to the controller / CFO. - Send
 the Sales Commission report to the sales manager. - Send the Inventory
 Valuation summary to the operations manager.</p>
-<h3 id="quarterly-procedures">10.4 Quarterly Procedures</h3>
+<h3 data-number="1.11.4" id="quarterly-procedures"><span
+class="header-section-number">1.11.4</span> 10.4 Quarterly
+Procedures</h3>
 <p><strong>Sales Tax Filing:</strong> - Run <strong>Admin → Sales
 Tax</strong> reports for the quarter. - Calculate tax collected by
 jurisdiction and remit to the applicable state/local tax authorities. -
@@ -2202,8 +2280,11 @@ late deliveries. - Use this data in vendor negotiations.</p>
 Budget vs Actual</strong> for the quarter. - Identify accounts that are
 significantly over or under budget. - Adjust forecasts for the remainder
 of the year and communicate to department heads.</p>
-<h3 id="annual-procedures">10.5 Annual Procedures</h3>
-<h4 id="year-end-financial-close">Year-End Financial Close</h4>
+<h3 data-number="1.11.5" id="annual-procedures"><span
+class="header-section-number">1.11.5</span> 10.5 Annual Procedures</h3>
+<h4 data-number="1.11.5.1" id="year-end-financial-close"><span
+class="header-section-number">1.11.5.1</span> Year-End Financial
+Close</h4>
 <ol type="1">
 <li><strong>Complete all December transactions</strong> using the
 Monthly Period-End Checklist (§10.3).</li>
@@ -2229,7 +2310,8 @@ Earnings.</li>
 the new year’s first period. All balance sheet accounts should show the
 same closing balance as December 31.</li>
 </ol>
-<h4 id="preparation-us">1099 Preparation (US)</h4>
+<h4 data-number="1.11.5.2" id="preparation-us"><span
+class="header-section-number">1.11.5.2</span> 1099 Preparation (US)</h4>
 <ol type="1">
 <li>In January, run <strong>AP → 1099 Report</strong> for the prior
 calendar year with a minimum of $600.</li>
@@ -2241,7 +2323,8 @@ Vendors</strong>.</li>
 31</strong>. Due to IRS: <strong>January 31</strong> (electronic) or
 <strong>February 28</strong> (paper).</li>
 </ol>
-<h4 id="price-list-and-contract-review">Price List and Contract
+<h4 data-number="1.11.5.3" id="price-list-and-contract-review"><span
+class="header-section-number">1.11.5.3</span> Price List and Contract
 Review</h4>
 <ol type="1">
 <li>Run a margin analysis by item category — pull Sales data vs. FIFO
@@ -2253,7 +2336,9 @@ Lists</strong>.</li>
 <li>Review and renew (or renegotiate) customer contracts in
 <strong>Sales → Contracts</strong>.</li>
 </ol>
-<h4 id="sales-rep-commission-reconciliation">Sales Rep Commission
+<h4 data-number="1.11.5.4"
+id="sales-rep-commission-reconciliation"><span
+class="header-section-number">1.11.5.4</span> Sales Rep Commission
 Reconciliation</h4>
 <ul>
 <li>Pull the full-year <strong>Sales → Commissions</strong> report.</li>
@@ -2261,8 +2346,11 @@ Reconciliation</h4>
 the year.</li>
 <li>This is the basis for annual commission W-2 or 1099 reporting.</li>
 </ul>
-<h3 id="exception-handling">10.6 Exception Handling</h3>
-<h4 id="customer-disputes-a-bill">Customer Disputes a Bill</h4>
+<h3 data-number="1.11.6" id="exception-handling"><span
+class="header-section-number">1.11.6</span> 10.6 Exception Handling</h3>
+<h4 data-number="1.11.6.1" id="customer-disputes-a-bill"><span
+class="header-section-number">1.11.6.1</span> Customer Disputes a
+Bill</h4>
 <ol type="1">
 <li>Review the original SO, ship confirmation, and AR invoice — confirm
 quantities and pricing.</li>
@@ -2274,7 +2362,9 @@ and the invoice PDF. Log the dispute in the Collections notes.</li>
 <li>Never adjust an invoice after it has been sent — create a credit
 memo instead. Changing a posted invoice creates audit issues.</li>
 </ol>
-<h4 id="vendor-overcharges-on-a-bill">Vendor Overcharges on a Bill</h4>
+<h4 data-number="1.11.6.2" id="vendor-overcharges-on-a-bill"><span
+class="header-section-number">1.11.6.2</span> Vendor Overcharges on a
+Bill</h4>
 <ol type="1">
 <li>Do not pay the overcharged amount.</li>
 <li>Contact the vendor and request a corrected invoice or a credit
@@ -2286,7 +2376,8 @@ the bill.</li>
 bill, enter the correct amount as a new bill, and document the situation
 in the notes.</li>
 </ol>
-<h4 id="inventory-discrepancy">Inventory Discrepancy</h4>
+<h4 data-number="1.11.6.3" id="inventory-discrepancy"><span
+class="header-section-number">1.11.6.3</span> Inventory Discrepancy</h4>
 <ol type="1">
 <li>Identify the item, warehouse, and bin.</li>
 <li>Count the actual quantity on hand.</li>
@@ -2298,7 +2389,9 @@ the investigation.</li>
 <li>If the discrepancy is large or unexplained: investigate before
 adjusting — unexplained shrinkage may indicate theft.</li>
 </ol>
-<h4 id="bank-nsf-returned-check">Bank NSF (Returned Check)</h4>
+<h4 data-number="1.11.6.4" id="bank-nsf-returned-check"><span
+class="header-section-number">1.11.6.4</span> Bank NSF (Returned
+Check)</h4>
 <ol type="1">
 <li>The bank will debit your account for the returned check amount.</li>
 <li>In the system, void the original AR payment (<strong>AR → Payments →
@@ -2311,8 +2404,11 @@ pending resolution.</li>
 <li>Re-invoice the customer for the NSF fee if your policy allows.</li>
 </ol>
 <hr />
-<h2 id="reference">11. Reference</h2>
-<h3 id="document-status-codes">11.1 Document Status Codes</h3>
+<h2 data-number="1.12" id="reference"><span
+class="header-section-number">1.12</span> 11. Reference</h2>
+<h3 data-number="1.12.1" id="document-status-codes"><span
+class="header-section-number">1.12.1</span> 11.1 Document Status
+Codes</h3>
 <p><strong>Sales Orders and Quotes:</strong> <code>DRAFT</code> →
 <code>SENT</code> → <code>ACCEPTED</code> / <code>EXPIRED</code> /
 <code>CANCELLED</code> (quotes) <code>OPEN</code> → <code>PARTIAL</code>
@@ -2336,7 +2432,8 @@ pending resolution.</li>
 <p><strong>Inbound Shipments (containers):</strong> <code>PENDING</code>
 → <code>IN_TRANSIT</code> → <code>ARRIVED</code> → <code>CLEARED</code>
 / <code>HELD</code></p>
-<h3 id="pdf-generation">11.2 PDF Generation</h3>
+<h3 data-number="1.12.2" id="pdf-generation"><span
+class="header-section-number">1.12.2</span> 11.2 PDF Generation</h3>
 <p>Every major document has a <strong>PDF</strong> button or link:</p>
 <table>
 <thead>
@@ -2371,7 +2468,9 @@ pending resolution.</li>
 <p>PDFs embed the company logo, configurable header subtitle, footer
 note, and per-document terms. Customize these under <strong>Admin →
 Company Settings → Document Templates</strong>.</p>
-<h3 id="gl-auto-posting-summary">11.3 GL Auto-Posting Summary</h3>
+<h3 data-number="1.12.3" id="gl-auto-posting-summary"><span
+class="header-section-number">1.12.3</span> 11.3 GL Auto-Posting
+Summary</h3>
 <p>The following events automatically post a GL batch:</p>
 <table>
 <thead>
@@ -2477,7 +2576,8 @@ Company Settings → Document Templates</strong>.</p>
 <p>Account resolution order: <code>company_config</code> key → first
 active non-header account with matching subtype → error logged,
 transaction still committed.</p>
-<h3 id="api-base-url">11.4 API Base URL</h3>
+<h3 data-number="1.12.4" id="api-base-url"><span
+class="header-section-number">1.12.4</span> 11.4 API Base URL</h3>
 <p>The REST API is at <code>http://&lt;server&gt;:8081</code>. All
 endpoints require <code>Authorization: Bearer &lt;token&gt;</code>
 except <code>POST /auth/login</code>.</p>
@@ -2488,7 +2588,8 @@ paginated list with search - <code>POST /ar/customers</code> — create -
 <code>GET /ar/customers/{id}</code> — single record</p>
 <p>Paginated responses include <code>total</code>, <code>page</code>,
 <code>per_page</code>, and <code>data</code> fields.</p>
-<h3 id="diagnostic-tools">11.5 Diagnostic Tools</h3>
+<h3 data-number="1.12.5" id="diagnostic-tools"><span
+class="header-section-number">1.12.5</span> 11.5 Diagnostic Tools</h3>
 <p>Located in the <code>tools/</code> directory (run with
 <code>C:\php\php.exe -c C:\php\php_sapads.ini tools\&lt;script&gt;.php</code>):</p>
 <table>
@@ -2542,7 +2643,8 @@ DD</td>
 </tr>
 </tbody>
 </table>
-<h3 id="primary-key-format">11.6 Primary Key Format</h3>
+<h3 data-number="1.12.6" id="primary-key-format"><span
+class="header-section-number">1.12.6</span> 11.6 Primary Key Format</h3>
 <p>All record IDs are 13-character strings in the format
 <code>MMYYnnnnnnnn</code>: - <code>MM</code> — 2-character table
 mnemonic (e.g. <code>AR</code> for invoices, <code>SO</code> for sales
@@ -2551,7 +2653,9 @@ orders) - <code>YY</code> — 2-digit year - <code>nnnnnnnn</code> —
 <p>Example: <code>AR26-00000042</code> is the 42nd AR invoice record
 created in 2026. IDs are generated by the <code>NewSeqKey()</code>
 database function.</p>
-<h3 id="session-and-security-notes">11.7 Session and Security Notes</h3>
+<h3 data-number="1.12.7" id="session-and-security-notes"><span
+class="header-section-number">1.12.7</span> 11.7 Session and Security
+Notes</h3>
 <ul>
 <li>Tokens expire after <strong>8 hours</strong>. The frontend redirects
 to login automatically.</li>
@@ -2566,7 +2670,8 @@ proxy (nginx, IIS ARR) to terminate TLS in front of port 8081.</li>
 so anonymous connections are rejected at the database level. The backend
 connects as the <code>openerp_app</code> ADS user.</li>
 </ul>
-<h3 id="internal-controls-checklist">11.8 Internal Controls
+<h3 data-number="1.12.8" id="internal-controls-checklist"><span
+class="header-section-number">1.12.8</span> 11.8 Internal Controls
 Checklist</h3>
 <p>These are basic controls a controller or auditor would expect to
 find. Review periodically:</p>
