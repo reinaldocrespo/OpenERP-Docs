@@ -351,18 +351,22 @@ class="toc-section-number">1.9.13</span> 8.13 CSV Export</a></li>
 <li><a href="#integration" id="toc-integration"><span
 class="toc-section-number">1.10</span> 9. Integration</a>
 <ul>
-<li><a href="#edi-inbound-purchase-orders-850"
-id="toc-edi-inbound-purchase-orders-850"><span
-class="toc-section-number">1.10.1</span> 9.1 EDI — Inbound Purchase
-Orders (850)</a></li>
-<li><a href="#edi-outbound-asn-856-and-invoice-810"
-id="toc-edi-outbound-asn-856-and-invoice-810"><span
-class="toc-section-number">1.10.2</span> 9.2 EDI — Outbound ASN (856)
-and Invoice (810)</a></li>
-<li><a href="#e-commerce-webhook" id="toc-e-commerce-webhook"><span
-class="toc-section-number">1.10.3</span> 9.3 E-Commerce Webhook</a></li>
-<li><a href="#recurring-pos" id="toc-recurring-pos"><span
-class="toc-section-number">1.10.4</span> 9.4 Recurring POs</a></li>
+<li><a href="#edi-what-it-is-and-how-inbound-orders-arrive"
+id="toc-edi-what-it-is-and-how-inbound-orders-arrive"><span
+class="toc-section-number">1.10.1</span> 9.1 EDI — What It Is and How
+Inbound Orders Arrive</a></li>
+<li><a href="#edi-outbound-shipping-notices-856-and-invoices-810"
+id="toc-edi-outbound-shipping-notices-856-and-invoices-810"><span
+class="toc-section-number">1.10.2</span> 9.2 EDI — Outbound: Shipping
+Notices (856) and Invoices (810)</a></li>
+<li><a href="#webhooks-letting-another-system-push-data-into-openerp"
+id="toc-webhooks-letting-another-system-push-data-into-openerp"><span
+class="toc-section-number">1.10.3</span> 9.3 Webhooks — Letting Another
+System Push Data Into OpenERP</a></li>
+<li><a href="#recurring-purchase-orders"
+id="toc-recurring-purchase-orders"><span
+class="toc-section-number">1.10.4</span> 9.4 Recurring Purchase
+Orders</a></li>
 </ul></li>
 <li><a href="#management-operating-procedures"
 id="toc-management-operating-procedures"><span
@@ -2015,16 +2019,125 @@ smtp_from). Use <strong>Test Send</strong> to verify delivery.</p>
 timestamp.</p>
 <h3 data-number="1.9.11" id="scheduled-reports"><span
 class="header-section-number">1.9.11</span> 8.11 Scheduled Reports</h3>
-<p><strong>Admin → Scheduled Reports</strong> — configure reports to run
-automatically and email results: - Report type (AR Aging, AP Aging,
-Trial Balance, Backorders, Commissions) - Frequency (DAILY, WEEKLY,
-MONTHLY) - Next run date - Recipients (comma-separated email
-addresses)</p>
-<p>Run the scheduler manually:</p>
+<p><strong>Yes — these reports auto-email</strong>, to whoever you list
+as recipients when you set up the schedule. There is no automatic
+distribution list or “send to all users” option: you type in the exact
+email addresses that should receive each report, and only those
+addresses get it.</p>
+<h4 data-number="1.9.11.1" id="how-to-set-who-gets-what-report"><span
+class="header-section-number">1.9.11.1</span> How to set who gets what
+report</h4>
+<p>Go to <strong>Admin → Scheduled Reports → + New Schedule</strong> and
+fill in:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>What it controls</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Report Name</td>
+<td>A label for you to recognize this schedule by (e.g. “Weekly AR Aging
+for CFO”)</td>
+</tr>
+<tr class="even">
+<td>Report Type</td>
+<td>One of: AR Aging, AP Aging, Trial Balance, Back-Orders,
+Commissions</td>
+</tr>
+<tr class="odd">
+<td>Frequency</td>
+<td>Daily, Weekly, Bi-Weekly, Monthly, or Quarterly</td>
+</tr>
+<tr class="even">
+<td>Next Run Date</td>
+<td>The first date this should fire. After each send, this auto-advances
+by the frequency (e.g. a Weekly report set to run 2026-07-06 becomes due
+again on 2026-07-13)</td>
+</tr>
+<tr class="odd">
+<td>Format</td>
+<td><strong>CSV</strong> (a plain data table, shown inside the email
+body) or <strong>HTML</strong> (a formatted table inside the email body)
+— either way, the report is embedded directly in the email itself, not
+sent as a file attachment</td>
+</tr>
+<tr class="even">
+<td>Recipients</td>
+<td><strong>This is the “who gets it” field.</strong> Comma-separated
+email addresses —
+e.g. <code>cfo@company.com, controller@company.com</code>. Every address
+here receives every run of this specific schedule</td>
+</tr>
+<tr class="odd">
+<td>Active</td>
+<td>Turn a schedule off without deleting it (useful when someone’s on
+leave, or a report is temporarily not needed)</td>
+</tr>
+</tbody>
+</table>
+<p>Each report type pulls whatever data matches its name at the moment
+it runs (e.g. AR Aging always reflects that day’s open invoices) — you
+aren’t choosing which customers/vendors/accounts, just which report and
+who receives it. Want two different groups to get different slices
+(e.g. Trial Balance to Finance, AR Aging to Sales)? Create two separate
+schedules — one per report type/recipient combination.</p>
+<h4 data-number="1.9.11.2"
+id="how-the-automatic-emailing-actually-happens"><span
+class="header-section-number">1.9.11.2</span> How the automatic emailing
+actually happens</h4>
+<p>Two things both need to be true for a report to actually land in
+someone’s inbox:</p>
+<ol type="1">
+<li><p><strong>SMTP must be configured</strong> under <strong>Admin →
+Company Settings → Email / SMTP</strong> (host, port, from address,
+credentials). If this is missing, the runner still generates the report
+and marks the schedule as run, but the send is silently skipped — check
+<strong>Admin → Email Log</strong> (§8.10) to confirm whether emails are
+actually going out, and to see the exact error if a send fails.</p></li>
+<li><p><strong>Something has to trigger the check.</strong> OpenERP does
+not run reports on its own in the background — a separate command runs
+once, checks which schedules are due, sends them, and exits:</p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> F<span class="op">:</span>\OpenERP\tools\run_scheduled_reports<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
-<p>Or configure Windows Task Scheduler to run this script at your
-desired interval (e.g., daily at 7:00 AM).</p>
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_scheduled_reports<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
+<p>This command only sends reports whose <strong>Next Run Date</strong>
+is today or earlier — running it twice in the same day does not
+double-send anything already sent, since each successful run pushes Next
+Run Date forward.</p></li>
+</ol>
+<h4 data-number="1.9.11.3"
+id="making-it-actually-automatic-with-windows-task-scheduler"><span
+class="header-section-number">1.9.11.3</span> Making it actually
+automatic with Windows Task Scheduler</h4>
+<p>The command above does nothing by itself unless something runs it on
+a schedule. To make reports genuinely “set and forget”:</p>
+<ol type="1">
+<li>Open <strong>Task Scheduler</strong> (search for it in the Start
+menu).</li>
+<li><strong>Create Task…</strong> (not “Basic Task” — you want more
+control over timing).</li>
+<li><strong>General tab:</strong> name it something like “OpenERP
+Scheduled Reports”; select “Run whether user is logged on or not.”</li>
+<li><strong>Triggers tab → New:</strong> Daily, start time e.g. 7:00 AM
+(run it once a day even if you have weekly/monthly schedules — the
+script only sends what’s actually due that day).</li>
+<li><strong>Actions tab → New:</strong>
+<ul>
+<li><strong>Program/script:</strong> <code>C:\php\php.exe</code></li>
+<li><strong>Add arguments:</strong>
+<code>-c C:\php\php_sapads.ini C:\OpenERP\tools\run_scheduled_reports.php</code></li>
+</ul></li>
+<li><strong>OK</strong>, entering the credentials of an account with
+permission to run scheduled tasks on the server.</li>
+</ol>
+<p>From then on, Windows itself fires this script daily; OpenERP checks
+what’s due and emails it — no one has to remember to run it by hand.</p>
 <h3 data-number="1.9.12" id="csv-import"><span
 class="header-section-number">1.9.12</span> 8.12 CSV Import</h3>
 <p><strong>Admin → Import Tool</strong> — bulk-load data instead of
@@ -2383,50 +2496,299 @@ the Inventory Valuation report.</p>
 <hr />
 <h2 data-number="1.10" id="integration"><span
 class="header-section-number">1.10</span> 9. Integration</h2>
-<h3 data-number="1.10.1" id="edi-inbound-purchase-orders-850"><span
-class="header-section-number">1.10.1</span> 9.1 EDI — Inbound Purchase
-Orders (850)</h3>
-<p><strong>Integration → EDI Partners</strong> — configure trading
-partners (ISA sender/receiver IDs, partner name, direction).</p>
-<p>To import an EDI 850 (purchase order from a customer treated as a
-vendor PO to you):</p>
+<p>This section covers three ways data can move between OpenERP and the
+outside world without anyone re-typing it: <strong>EDI</strong>
+(structured business documents exchanged with trading partners),
+<strong>webhooks</strong> (another system pushing data to OpenERP the
+instant something happens), and <strong>recurring POs</strong> (OpenERP
+automatically re-issuing the same purchase order on a schedule). The
+first two are about connecting OpenERP to <em>other companies’ computer
+systems</em>; the third is about OpenERP automating a routine task for
+you internally.</p>
+<h3 data-number="1.10.1"
+id="edi-what-it-is-and-how-inbound-orders-arrive"><span
+class="header-section-number">1.10.1</span> 9.1 EDI — What It Is and How
+Inbound Orders Arrive</h3>
+<p><strong>EDI stands for Electronic Data Interchange.</strong> It’s a
+decades-old but still very widely used standard for two companies’
+computer systems to exchange business documents — purchase orders,
+shipping notices, invoices — as structured text files, instead of a
+person emailing a PDF or faxing a paper order that someone else
+re-types. Large retailers, distributors, and manufacturers commonly
+<em>require</em> their suppliers to support EDI before they’ll do
+business with them at all.</p>
+<p>Each type of document has a standard three-digit code (this standard
+is called <strong>X12</strong>, the American format most common in the
+US):</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Name</th>
+<th>Plain-language meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>850</strong></td>
+<td>Purchase Order</td>
+<td>“Here’s an order — please fulfill it.” Sent by the buyer to the
+seller.</td>
+</tr>
+<tr class="even">
+<td><strong>856</strong></td>
+<td>Advance Ship Notice (ASN)</td>
+<td>“Here’s what we just shipped you, and when it’ll arrive.” Sent by
+the seller to the buyer after shipping.</td>
+</tr>
+<tr class="odd">
+<td><strong>810</strong></td>
+<td>Invoice</td>
+<td>“Here’s the bill for what we shipped.” Sent by the seller to the
+buyer after invoicing.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important limitation to know about today’s
+implementation:</strong> when OpenERP receives an inbound 850, it
+currently creates a <strong>Purchase Order</strong> against <strong>the
+first active vendor</strong> in your vendor list — it does not yet look
+at <em>which</em> trading partner sent the document to pick the right
+vendor. This works fine if you only receive EDI from one source, but if
+you’re setting this up for multiple trading partners, verify the vendor
+on each resulting PO before acting on it until this is refined.</p>
+<h4 data-number="1.10.1.1"
+id="how-an-inbound-edi-document-actually-reaches-openerp"><span
+class="header-section-number">1.10.1.1</span> How an inbound EDI
+document actually reaches OpenERP</h4>
+<p>This is the part that trips people up: <strong>OpenERP does not
+“listen” on the internet for EDI the way it does for its own web
+pages.</strong> A real trading partner’s EDI system doesn’t call OpenERP
+directly. Real-world EDI almost always travels through one of these:</p>
+<ul>
+<li><strong>A VAN (Value-Added Network)</strong> — a third-party
+mailbox/clearinghouse service (e.g. SPS Commerce, TrueCommerce, Edicom)
+that both companies connect to. Your partner drops the document in your
+VAN mailbox; you retrieve it from there.</li>
+<li><strong>AS2</strong> — a secure, direct point-to-point internet
+connection standard, common with large retailers (Walmart, Home Depot,
+etc.) who require it.</li>
+<li><strong>SFTP</strong> — a simple secure file-drop folder, less
+common for retail but still used.</li>
+</ul>
+<p>OpenERP’s role is only the <strong>last step</strong>: it exposes one
+API call, <code>POST /edi/inbound/850</code>, that accepts an
+already-received X12 document as text and turns it into a Purchase
+Order. Getting the document <em>from</em> the trading partner
+<em>to</em> that API call is a separate piece you (or your EDI provider)
+have to set up — typically a small script or a feature of your VAN/AS2
+software that watches for new documents and forwards each one to OpenERP
+with an HTTP call, or an in-house scheduled script that logs into the
+VAN’s SFTP/mailbox, downloads new files, and posts them.</p>
+<h4 data-number="1.10.1.2"
+id="what-information-is-needed-to-set-it-up"><span
+class="header-section-number">1.10.1.2</span> What information is needed
+to set it up</h4>
+<ol type="1">
+<li><p><strong>Register the trading partner</strong> — go to
+<strong>Admin → EDI Transactions → Manage Partners</strong> and add: a
+short internal Code, the partner’s Name, the ISA Qualifier and ISA
+Sender ID they use (these identify who sent a document — get these from
+your partner’s EDI setup instructions or your VAN), and Direction
+(inbound only / outbound only / both).</p></li>
+<li><p><strong>Get your VAN, AS2 tool, or forwarding script configured
+to call</strong>:</p>
 <pre><code>POST /edi/inbound/850
-Body: { &quot;partner_id&quot;: &quot;&lt;edi_partner_id&gt;&quot;, &quot;x12_content&quot;: &quot;&lt;full X12 string&gt;&quot; }</code></pre>
-<p>The parser auto-detects element and segment separators from the ISA
-fixed positions, then creates a PO and lines. Results are logged to
-<code>edi_transactions</code>.</p>
-<h3 data-number="1.10.2" id="edi-outbound-asn-856-and-invoice-810"><span
-class="header-section-number">1.10.2</span> 9.2 EDI — Outbound ASN (856)
-and Invoice (810)</h3>
-<pre><code>GET /edi/outbound/856/{so_id}    → X12 856 ASN file download
-GET /edi/outbound/810/{inv_id}   → X12 810 invoice file download</code></pre>
-<p>These return the X12 flat-file as a text response. Use your EDI VAN
-or AS2 adapter to transmit to the trading partner.</p>
-<h3 data-number="1.10.3" id="e-commerce-webhook"><span
-class="header-section-number">1.10.3</span> 9.3 E-Commerce Webhook</h3>
-<p><strong>Integration → E-Commerce Orders</strong> — shows orders
-imported via webhook.</p>
-<p>To push an order from your e-commerce platform:</p>
-<pre><code>POST /ecomm/webhook
-Body: {
-  &quot;source&quot;: &quot;shopify&quot;,
-  &quot;external_order_id&quot;: &quot;12345&quot;,
-  &quot;customer_email&quot;: &quot;...&quot;,
-  &quot;ship_to&quot;: { &quot;name&quot;: &quot;...&quot;, &quot;address1&quot;: &quot;...&quot;, &quot;city&quot;: &quot;...&quot;, &quot;state&quot;: &quot;...&quot;, &quot;zip&quot;: &quot;...&quot; },
-  &quot;lines&quot;: [{ &quot;sku&quot;: &quot;ITEM-001&quot;, &quot;qty&quot;: 2, &quot;unit_price&quot;: 15.00 }]
-}</code></pre>
-<p>The system finds or creates the customer by email, creates an SO with
-the lines, and deduplicates by <code>source + external_order_id</code> —
-safe to replay.</p>
-<h3 data-number="1.10.4" id="recurring-pos"><span
-class="header-section-number">1.10.4</span> 9.4 Recurring POs</h3>
-<p><strong>Purchasing → Recurring POs</strong> — templates for
-regularly-ordered items (weekly, monthly). Configure a template with
-vendor, lines, and frequency. <strong>Run</strong> generates a PO from
-the template and advances the next run date.</p>
-<p>Automate with:</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> F<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
+Authorization: Bearer &lt;a valid OpenERP login token — see below&gt;
+Content-Type: application/json
+Body: { &quot;partner_id&quot;: &quot;&lt;the edi_partner_id from step 1, optional&gt;&quot;, &quot;x12&quot;: &quot;&lt;the full raw X12 document text&gt;&quot; }</code></pre>
+<p>Note the field is named <strong><code>x12</code></strong>, containing
+the <em>entire</em> raw X12 document as one string (segment terminators
+and all) — not a parsed/structured version of it.</p></li>
+<li><p><strong>Authentication:</strong> unlike a public webhook, this
+endpoint requires a logged-in OpenERP session, because inbound EDI is
+expected to come from a trusted internal integration (your
+VAN-forwarding script), not directly from a random external server.
+Whatever script or tool calls this endpoint needs to first call
+<code>POST /auth/login</code> with a service account’s username/password
+to get a token, then include
+<code>Authorization: Bearer &lt;token&gt;</code> on the
+<code>/edi/inbound/850</code> call.</p></li>
+</ol>
+<h4 data-number="1.10.1.3" id="how-to-test-it-manually"><span
+class="header-section-number">1.10.1.3</span> How to test it
+manually</h4>
+<p>You can hand-build a tiny X12 850 and post it directly to confirm
+your setup works before wiring up a real VAN connection. The parser
+figures out the field/segment separators from the fixed positions in the
+very first segment (<code>ISA</code>), so a minimal valid document looks
+like:</p>
+<pre><code>ISA*00*          *00*          *ZZ*TESTPARTNER    *ZZ*OPENERP        *230101*1200*U*00501*000000001*0*T*&gt;~GS*PO*TESTPARTNER*OPENERP*20230101*1200*1*X*005010~ST*850*0001~BEG*00*NE*PO-TEST-001**20230101~PO1*1*3*EA*10.50**BP*ITEM-NUMBER-HERE~SE*4*0001~GE*1*1~IEA*1*000000001~</code></pre>
+<p>The <code>BEG</code> segment’s third field (<code>PO-TEST-001</code>
+above) becomes your PO’s number; each <code>PO1</code> segment becomes
+one PO line, matched to your item master by item number (7th field).
+Results — success or failure — always appear in <strong>Admin → EDI
+Transactions</strong>, whether triggered by a real partner or a manual
+test.</p>
+<h3 data-number="1.10.2"
+id="edi-outbound-shipping-notices-856-and-invoices-810"><span
+class="header-section-number">1.10.2</span> 9.2 EDI — Outbound: Shipping
+Notices (856) and Invoices (810)</h3>
+<p>Outbound works the other direction, and is simpler because
+<em>you</em> control when it happens:</p>
+<pre><code>GET /edi/outbound/856/{so_id}      → generates an X12 856 (ASN) for a shipped Sales Order
+GET /edi/outbound/810/{invoice_id} → generates an X12 810 (Invoice) for an AR Invoice</code></pre>
+<p>Visiting either URL (with a valid login) downloads a ready-to-send
+X12 text file built from that specific order or invoice’s real data.</p>
+<p><strong>Routing it to the trading partner is, again, not something
+OpenERP does for you.</strong> Just like inbound, OpenERP’s job stops at
+<em>generating a correctly-formatted document</em> — actually
+transmitting it requires the same kind of VAN, AS2, or SFTP connection
+used for inbound, just in reverse: you (or your EDI provider’s software)
+take the generated file and drop it into your VAN’s outbound mailbox, or
+push it through your AS2 software, addressed using the ISA/GS
+identifiers you set up for that partner. In practice this is usually
+automated too: after a shipment or invoice is created, a script (yours
+or your EDI provider’s) calls the download URL and hands the result to
+your VAN/AS2 tool.</p>
+<h3 data-number="1.10.3"
+id="webhooks-letting-another-system-push-data-into-openerp"><span
+class="header-section-number">1.10.3</span> 9.3 Webhooks — Letting
+Another System Push Data Into OpenERP</h3>
+<p><strong>A webhook is the opposite of the usual “go check for updates”
+pattern.</strong> Instead of OpenERP repeatedly asking your e-commerce
+platform “any new orders yet?”, you configure your e-commerce platform
+to immediately call a specific OpenERP web address the moment a new
+order happens — it pushes the order to you in real time, the instant
+it’s placed, instead of you polling for it.</p>
+<h4 data-number="1.10.3.1"
+id="how-to-reach-openerp-with-a-webhook"><span
+class="header-section-number">1.10.3.1</span> How to reach OpenERP with
+a webhook</h4>
+<p>Configure your e-commerce platform (Shopify, WooCommerce, or any
+custom storefront) to send an HTTP POST to:</p>
+<pre><code>POST https://&lt;your-openerp-server&gt;/ecomm/webhook
+Content-Type: application/json</code></pre>
+<p><strong>No login/authentication token is required on this one
+endpoint</strong> — that’s what makes it a true webhook, since your
+e-commerce platform has no OpenERP account of its own to log in with.
+Because of that, treat the webhook URL itself as something to keep
+semi-private, and if your platform supports it, restrict which IP
+addresses are allowed to reach this endpoint at your firewall/reverse
+proxy.</p>
+<h4 data-number="1.10.3.2" id="what-payload-openerp-expects"><span
+class="header-section-number">1.10.3.2</span> What payload OpenERP
+expects</h4>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;SHOPIFY&quot;</span><span class="fu">,</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;external_id&quot;</span><span class="fu">:</span> <span class="st">&quot;order_12345&quot;</span><span class="fu">,</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;customer&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;buyer@example.com&quot;</span><span class="fu">,</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jane Buyer&quot;</span><span class="fu">,</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;address1&quot;</span><span class="fu">:</span> <span class="st">&quot;123 Main St&quot;</span><span class="fu">,</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Springfield&quot;</span><span class="fu">,</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;IL&quot;</span><span class="fu">,</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="st">&quot;62704&quot;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lines&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;item_number&quot;</span><span class="fu">:</span> <span class="st">&quot;WIDGET-A&quot;</span><span class="fu">,</span> <span class="dt">&quot;qty&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">9.99</span> <span class="fu">}</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<ul>
+<li><code>source</code> — a short label for which platform sent it (used
+for filtering in the order list, and for duplicate detection — see
+below).</li>
+<li><code>external_id</code> — that platform’s own order number/ID.
+Required.</li>
+<li><code>customer.email</code> — required; OpenERP looks up an existing
+customer by this email, or creates a new one automatically if none
+matches.</li>
+<li><code>lines[].item_number</code> — matched against your item master;
+if no match is found, the line is still created using whatever
+<code>description</code> (optional field) you send instead.</li>
+</ul>
+<h4 data-number="1.10.3.3" id="what-happens-when-it-fires"><span
+class="header-section-number">1.10.3.3</span> What happens when it
+fires</h4>
+<p>OpenERP finds-or-creates the customer, creates a new Sales Order with
+the given lines, and records the import under <strong>Admin → E-Commerce
+Import</strong> with a status of Imported, Pending, or Error (with the
+reason, if one failed). <strong>It’s safe for your e-commerce platform
+to send the same webhook call twice</strong> (a common real-world
+occurrence — platforms often retry on any hint of a failed delivery):
+OpenERP checks <code>source</code> + <code>external_id</code> together,
+and if that combination was already successfully imported, it returns a
+“duplicate” response and does not create a second Sales Order.</p>
+<h3 data-number="1.10.4" id="recurring-purchase-orders"><span
+class="header-section-number">1.10.4</span> 9.4 Recurring Purchase
+Orders</h3>
+<h4 data-number="1.10.4.1" id="why-a-business-would-want-this"><span
+class="header-section-number">1.10.4.1</span> Why a business would want
+this</h4>
+<p>Think of anything you order from the same vendor, in roughly the same
+quantity, on a predictable schedule — shop supplies, cleaning contract
+materials, a raw material a manufacturer buys every week, office
+consumables reordered monthly. Today, without this feature, someone in
+Purchasing has to remember to do it, recall (or look up) the vendor,
+remember every line item and quantity, re-type it all into a new PO, and
+hope they didn’t fat-finger a quantity or forget an item. Miss it
+entirely one cycle, and a production line or a shop can run out of
+something basic.</p>
+<p><strong>A Recurring PO Template solves this by letting you build the
+order once and re-issue it either with one click or fully
+automatically</strong>, on whatever schedule you choose — weekly,
+bi-weekly, monthly, quarterly, or annually. Each time it runs, it
+advances itself to the next due date, so it’s always ready for the
+following cycle without anyone touching it.</p>
+<h4 data-number="1.10.4.2" id="how-to-set-it-up"><span
+class="header-section-number">1.10.4.2</span> How to set it up</h4>
+<p>Go to <strong>Purchasing → Recurring POs → + New Template</strong>
+and fill in: - <strong>Template Code</strong> — a short internal name
+(e.g. <code>SHOP-SUPPLIES-MONTHLY</code>) - <strong>Vendor</strong>,
+<strong>Terms</strong>, <strong>Warehouse</strong> (optional) — same as
+a normal PO - <strong>Frequency</strong> — how often it should re-fire -
+<strong>Next Run Date</strong> — the first date it becomes due -
+<strong>Lines</strong> — the items, quantities, and unit costs that make
+up the standing order</p>
+<h4 data-number="1.10.4.3"
+id="running-it-by-hand-or-automatically"><span
+class="header-section-number">1.10.4.3</span> Running it — by hand or
+automatically</h4>
+<ul>
+<li><p><strong>By hand:</strong> click <strong>Run Now</strong> on a due
+template. This immediately creates a real, normal Purchase Order — it
+shows up in your regular PO list, gets received and billed exactly like
+any manually-created PO — and advances the template’s Next Run Date
+forward by its frequency.</p></li>
+<li><p><strong>Fully automatically:</strong> run this command (it finds
+every active template whose Next Run Date has arrived, generates a PO
+from each, and advances each one):</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
+<p>Just like the Scheduled Reports runner in §8.11, this command does
+nothing on its own until something triggers it on a schedule. Set it up
+the same way, in <strong>Windows Task Scheduler</strong>:</p>
+<ol type="1">
+<li><strong>Create Task…</strong> → name it “OpenERP Recurring
+POs.”</li>
+<li><strong>Triggers → New:</strong> Daily (or however often you want it
+checked — running it more often than any of your templates’ frequencies
+is harmless, since it only acts on templates that are actually
+due).</li>
+<li><strong>Actions → New:</strong> Program <code>C:\php\php.exe</code>,
+arguments
+<code>-c C:\php\php_sapads.ini C:\OpenERP\tools\run_po_recurring.php</code>.</li>
+</ol>
+<p>From then on, a recurring order for shop supplies (or anything else
+you template) generates itself right on schedule — nobody has to
+remember it.</p></li>
+</ul>
 <hr />
 <h2 data-number="1.11" id="management-operating-procedures"><span
 class="header-section-number">1.11</span> 10. Management Operating
