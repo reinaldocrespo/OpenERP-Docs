@@ -566,32 +566,41 @@ entered in Company Settings</label></li>
 <code>gl_*_account</code> keys) are set</label></li>
 <li><label><input type="checkbox" />Fiscal year and all 12 periods are
 created</label></li>
-<li><label><input type="checkbox" />Chart of accounts is imported or
-built</label></li>
+<li><label><input type="checkbox" />Chart of accounts is imported (Admin
+→ Import Tool → Chart of Accounts) or built by hand</label></li>
 <li><label><input type="checkbox" />Payment terms are created and
 assigned to customers and vendors</label></li>
 <li><label><input type="checkbox" />Tax codes or sales tax jurisdictions
 are configured</label></li>
-<li><label><input type="checkbox" />Item master is loaded (items,
-categories, UOM, price lists)</label></li>
+<li><label><input type="checkbox" />Item master is loaded — categories,
+UOM, warehouses/bins, then items, then price lists (all importable, in
+that order — see §8.12)</label></li>
 <li><label><input type="checkbox" />Customer master is loaded with
-credit limits and terms</label></li>
+credit limits and terms (importable)</label></li>
 <li><label><input type="checkbox" />Vendor master is loaded with 1099
-flags and terms</label></li>
+flags and terms (importable), then the vendor item catalog if
+used</label></li>
 <li><label><input type="checkbox" />Admin user password changed from
 default</label></li>
 <li><label><input type="checkbox" />Non-admin user accounts and groups
 are created</label></li>
 <li><label><input type="checkbox" />Warehouse and bin locations are
-created</label></li>
+created (importable)</label></li>
 <li><label><input type="checkbox" />Opening inventory balances are
 entered via manual adjustments</label></li>
-<li><label><input type="checkbox" />Opening AR balances are entered as
-invoices</label></li>
-<li><label><input type="checkbox" />Opening AP balances are entered as
-bills</label></li>
+<li><label><input type="checkbox" />Open AR invoices are entered or
+imported (Admin → Import Tool → AR Invoices — does not post to
+GL)</label></li>
+<li><label><input type="checkbox" />Open AP bills are entered or
+imported (Admin → Import Tool → AP Bills — does not post to
+GL)</label></li>
+<li><label><input type="checkbox" />In-flight Sales Orders / Purchase
+Orders are imported if migrating mid-cycle (Admin → Import
+Tool)</label></li>
 <li><label><input type="checkbox" />Opening GL balances are imported
-(Admin → Import → GL Balances)</label></li>
+(Admin → Import Tool → GL Opening Balances) — do this LAST, after AR/AP
+invoices/bills are loaded, since those import types don’t post to GL
+themselves</label></li>
 </ul>
 <hr />
 <h2 data-number="1.3" id="how-the-modules-connect"><span
@@ -2018,40 +2027,353 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-
 desired interval (e.g., daily at 7:00 AM).</p>
 <h3 data-number="1.9.12" id="csv-import"><span
 class="header-section-number">1.9.12</span> 8.12 CSV Import</h3>
-<p><strong>Admin → Import Tool</strong> — bulk-load master data:</p>
+<p><strong>Admin → Import Tool</strong> — bulk-load data instead of
+hand-keying it. There are two situations where this is worth doing
+rather than typing records in one at a time:</p>
+<ul>
+<li><strong>Go-live conversion.</strong> A new company coming onto
+OpenERP almost always already has this data somewhere — an old
+accounting system, a spreadsheet, an export from the previous ERP.
+Re-typing a chart of accounts, a customer list, or an item catalog by
+hand is slow and error-prone (a mistyped credit limit or GL account
+number is a silent, expensive mistake). Importing it is faster and lets
+you validate the data once, in bulk, instead of trusting hundreds of
+individual manual entries.</li>
+<li><strong>Bulk additions to a live system.</strong> Even after
+go-live, data keeps arriving in bulk from outside the system — a vendor
+sends a 500-line price list, a new warehouse needs its bin layout
+loaded, a sales rep hands over a spreadsheet of open quotes to convert.
+The Import Tool handles these the same way, and is always safe to run
+against a system that already has data in it (see the rule below).</li>
+</ul>
+<p>Every import type shares the same rule:</p>
+<blockquote>
+<p><strong>A row whose natural key already exists is left untouched and
+reported as “skipped — already exists.” Imports never overwrite existing
+records.</strong> It is always safe to re-run the same file (e.g. after
+fixing a few rows) — anything already loaded is simply skipped the
+second time.</p>
+</blockquote>
+<h4 data-number="1.9.12.1" id="preparing-your-data-in-excel"><span
+class="header-section-number">1.9.12.1</span> 8.12.1 Preparing Your Data
+in Excel</h4>
+<p>The Import Tool takes one CSV file per import type, but there’s
+nothing wrong with building all of your source data in a single Excel
+workbook first — it’s the easiest way to keep everything organized while
+you assemble it, cross-check codes between tabs, and fix mistakes before
+anything touches the live system.</p>
+<ol type="1">
+<li><strong>One tab per import type</strong>, named to match the Import
+Tool’s dropdown (e.g. <code>Customers</code>,
+<code>Chart of Accounts</code>, <code>Sales Orders</code>). This keeps
+the workbook organized and makes it obvious which tab feeds which
+import.</li>
+<li><strong>Row 1 of every tab is the header row</strong>, with column
+names copied exactly from the Import Tool page for that import type
+(letter case doesn’t matter — the importer lowercases everything — but
+spelling and underscores must match, e.g. <code>customer_number</code>
+not <code>Customer Number</code>). Use the <strong>Download Template
+CSV</strong> button on the Import Tool page to get a ready-made header
+row for any import type; paste it into row 1 of the matching tab.</li>
+<li><strong>One row per record</strong> on flat sheets (Customers,
+Vendors, Items, Chart of Accounts, Categories, UOM, Warehouses, Bins,
+Price Lists, Price List Items, Vendor Catalog, GL Opening Balances).
+<strong>One row per line item</strong> on the four multi-line document
+sheets (Sales Orders, Purchase Orders, AR Invoices, AP Bills) — see
+§8.12.3.</li>
+</ol>
+<p><strong>Formatting gotchas that cause otherwise-correct data to fail
+on import:</strong></p>
 <table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th>Import type</th>
-<th>Natural key (for upsert)</th>
-<th>Notes</th>
+<th>Problem</th>
+<th>What happens</th>
+<th>Fix</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Customers</td>
-<td><code>customer_number</code></td>
-<td>Upserts: creates or updates</td>
+<td>Dates in a regional/auto format</td>
+<td>Excel may store a different date than what’s displayed, and the CSV
+holds the stored value</td>
+<td>Format date columns as plain <strong>Text</strong>, or type dates as
+<code>YYYY-MM-DD</code> (e.g. <code>2026-07-01</code>)</td>
 </tr>
 <tr class="even">
-<td>Vendors</td>
-<td><code>vendor_number</code></td>
-<td>Upserts</td>
+<td>Codes that look numeric (<code>account_number</code>,
+<code>zip</code>, <code>uom_code</code>, item numbers like
+<code>6E10</code>)</td>
+<td>Excel drops leading zeros or converts to scientific notation</td>
+<td>Format the column as <strong>Text</strong> <em>before</em> typing
+values into it</td>
 </tr>
 <tr class="odd">
-<td>Items</td>
-<td><code>item_number</code></td>
-<td>Upserts</td>
+<td>Percentages (<code>discount_pct</code>, tax rates)</td>
+<td>A cell formatted as “5%” is stored as <code>0.05</code>, not
+<code>5</code></td>
+<td>Format the column as a plain <strong>Number</strong>, and type the
+percent value itself (<code>5</code> for 5%)</td>
 </tr>
 <tr class="even">
-<td>GL Balances</td>
-<td><code>account_id + period_id</code></td>
-<td>Upserts opening balances</td>
+<td>Trailing/leading spaces on codes used for lookups
+(<code>warehouse_code</code>, <code>terms_code</code>)</td>
+<td><code>"MAIN"</code> and <code>"MAIN "</code> look identical to a
+person but fail to match in the importer</td>
+<td>Use Excel’s <code>TRIM()</code> function on a helper column, then
+paste the result back as values</td>
+</tr>
+<tr class="odd">
+<td>Non-ASCII characters (accented names, curly quotes pasted from
+Word)</td>
+<td>Can get mangled if saved with the wrong CSV encoding</td>
+<td>Save as <strong>CSV UTF-8</strong>, not plain <strong>CSV</strong>
+(see below)</td>
 </tr>
 </tbody>
 </table>
-<p>Download the column template from the Import Tool page. Required
-columns are documented in the template header row.</p>
+<p><strong>Exporting a tab to CSV:</strong> CSV is a single-sheet format
+— Excel cannot export a whole workbook to one CSV, only the
+<em>active</em> tab. To export each tab you plan to import:</p>
+<ol type="1">
+<li>Click the tab you want to export so it’s the active sheet.</li>
+<li><strong>File → Save As</strong> → choose **CSV UTF-8 (Comma
+delimited) (*.csv)** as the file type (not plain “CSV” — UTF-8 avoids
+mangled characters).</li>
+<li>Give it a name you’ll recognize (e.g. <code>customers.csv</code>,
+<code>sales-orders.csv</code>) and save.</li>
+<li>Excel will warn that “the selected file type does not support
+workbooks with multiple sheets” — click <strong>OK</strong>; this only
+means it’s exporting the current tab, which is exactly what you
+want.</li>
+<li>Repeat once per tab. Keep your master workbook (with all tabs) as
+the source of truth — re-export a fresh CSV from it any time you need to
+fix and re-run an import.</li>
+</ol>
+<h4 data-number="1.9.12.2" id="what-each-import-type-is-for"><span
+class="header-section-number">1.9.12.2</span> 8.12.2 What Each Import
+Type Is For</h4>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Import type</th>
+<th>Sheet contents</th>
+<th>Why import it</th>
+<th>Natural key</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Master Data</strong></td>
+<td>Customers</td>
+<td>One row per customer: name, address, credit limit, terms, tax
+exemption</td>
+<td>The core of every sale — load your existing customer list instead of
+re-typing it during onboarding</td>
+<td><code>customer_number</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Vendors</td>
+<td>One row per vendor: name, address, tax ID, 1099 flag, terms</td>
+<td>Needed before you can enter POs or bills; brings your existing
+vendor list over as-is</td>
+<td><code>vendor_number</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Items</td>
+<td>One row per item/SKU: description, category, UOM, cost, price</td>
+<td>Usually the largest single import for a new company — a catalog of
+hundreds or thousands of SKUs is impractical to key by hand</td>
+<td><code>item_number</code></td>
+</tr>
+<tr class="even">
+<td><strong>Setup &amp; Lookups</strong></td>
+<td>Chart of Accounts</td>
+<td>One row per GL account: number, name, type, normal balance,
+parent</td>
+<td>The financial backbone of the system — import it once from your
+existing books rather than re-building it by hand</td>
+<td><code>account_number</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Item Categories</td>
+<td>One row per category, optionally nested via
+<code>parent_code</code></td>
+<td>Only useful if items are imported afterward and reference these
+codes; lets you preserve an existing category hierarchy</td>
+<td><code>category_code</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Units of Measure</td>
+<td>One row per UOM (EA, CS, BX, etc.)</td>
+<td>A short list, but items reference it — load it before Items if you
+use non-default UOM codes</td>
+<td><code>uom_code</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Warehouses</td>
+<td>One row per warehouse: code, name, address</td>
+<td>Needed before importing bins or any inventory-aware transaction</td>
+<td><code>warehouse_code</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Bin Locations</td>
+<td>One row per bin: warehouse, bin code, aisle/rack/shelf</td>
+<td>Lets you bring in an existing rack layout instead of creating bins
+one at a time in the UI</td>
+<td><code>warehouse_code</code> + <code>bin_code</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Price Lists</td>
+<td>One row per price list (RETAIL, WHOLESALE, etc.)</td>
+<td>Needed before Price List Items</td>
+<td><code>price_list_code</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Price List Items</td>
+<td>One row per item price on a list</td>
+<td>Brings in existing customer/tier pricing instead of re-keying every
+price</td>
+<td><code>price_list_code</code> + <code>item_number</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Vendor Item Catalog</td>
+<td>One row per vendor/item pairing: vendor SKU, lead time, MOQ,
+cost</td>
+<td>Common in purchasing-heavy conversions where a vendor’s SKU differs
+from your own</td>
+<td><code>vendor_number</code> + <code>item_number</code></td>
+</tr>
+<tr class="even">
+<td><strong>Opening Balances</strong></td>
+<td>GL Opening Balances</td>
+<td>One row per account/period: debit or credit amount</td>
+<td>The standard way to convert an accounting system — load the trial
+balance as of cutover instead of replaying every historical journal
+entry. <strong>Do this last</strong> — see §8.12.4</td>
+<td><code>account_number</code> + <code>period_code</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Transactions</strong></td>
+<td>Sales Orders</td>
+<td>One row per SO line, grouped by <code>so_number</code></td>
+<td>For orders that are still open when you cut over — they need to
+exist in OpenERP so they can be shipped/invoiced going forward</td>
+<td><code>so_number</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Purchase Orders</td>
+<td>One row per PO line, grouped by <code>po_number</code></td>
+<td>Same idea for open purchase orders still awaiting receipt at
+cutover</td>
+<td><code>po_number</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>AR Invoices</td>
+<td>One row per invoice line, grouped by
+<code>invoice_number</code></td>
+<td>Brings in <em>open</em> customer invoices so collections/aging work
+correctly after cutover, without re-entering each one by hand</td>
+<td><code>invoice_number</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>AP Bills</td>
+<td>One row per bill line, grouped by <code>bill_number</code></td>
+<td>Same idea for open vendor bills still awaiting payment</td>
+<td><code>bill_number</code></td>
+</tr>
+</tbody>
+</table>
+<p>Required and optional columns for the selected import type are always
+listed on the Import Tool page itself, and in the header row of its
+downloadable template.</p>
+<h4 data-number="1.9.12.3" id="multi-line-document-sheets"><span
+class="header-section-number">1.9.12.3</span> 8.12.3 Multi-line Document
+Sheets</h4>
+<p>Sales Orders, Purchase Orders, AR Invoices, and AP Bills are
+<strong>multi-line documents</strong> — the CSV has <strong>one row per
+line item</strong>, not one row per document. Rows that share the same
+document number (<code>so_number</code>, <code>po_number</code>,
+<code>invoice_number</code>, or <code>bill_number</code>) are grouped
+into a single document; header fields (customer/vendor, dates, terms)
+are read only from the <strong>first</strong> row of each group, so
+repeat them on every line for clarity but know that only the first is
+used. If any line in a document fails validation, the whole document is
+rejected — nothing is partially imported. Sales Orders have no
+credit-hold/credit-limit check on import (that check applies when a user
+creates an order by hand).</p>
+<h4 data-number="1.9.12.4"
+id="recommended-order-for-a-full-conversion"><span
+class="header-section-number">1.9.12.4</span> 8.12.4 Recommended Order
+for a Full Conversion</h4>
+<p>When loading an entire new company’s data, import in this order —
+each step depends on data from the one before it:</p>
+<ol type="1">
+<li><strong>Chart of Accounts</strong> (and Payment Terms / Tax Codes,
+entered manually under Admin — see §1.5)</li>
+<li><strong>Item Categories</strong> and <strong>Units of
+Measure</strong></li>
+<li><strong>Warehouses</strong>, then <strong>Bin
+Locations</strong></li>
+<li><strong>Customers</strong> and <strong>Vendors</strong></li>
+<li><strong>Items</strong></li>
+<li><strong>Price Lists</strong>, then <strong>Price List
+Items</strong>; <strong>Vendor Item Catalog</strong> if used</li>
+<li>Open <strong>Sales Orders</strong> / <strong>Purchase
+Orders</strong> still in flight at cutover</li>
+<li>Open <strong>AR Invoices</strong> / <strong>AP Bills</strong> still
+outstanding at cutover</li>
+<li><strong>GL Opening Balances</strong>, sized to include the AR/AP
+control account balances that step 8 just created</li>
+</ol>
+<p><strong>Why GL Opening Balances goes last, and why AR Invoices/AP
+Bills don’t post to GL on import:</strong> creating an invoice or bill
+by hand in the app automatically posts it to the General Ledger (DR
+AR/CR Revenue, DR Expense/CR AP). Imported invoices/bills deliberately
+skip that step, because the opening trial balance in step 9 is loaded as
+a single lump sum per account — it already reflects the net effect of
+every open invoice and bill from step 8. Posting them individually on
+top of that lump sum would double-count the AR/AP and revenue/expense
+balances. This was a deliberate design choice for the conversion
+scenario; it means an import can never be used to feed GL-posted
+transactions into an already-live, already-balanced ledger — only manual
+entry (or the SO ship / PO receive / payment-apply flows) posts to GL
+after go-live.</p>
+<h4 data-number="1.9.12.5" id="reading-the-import-report"><span
+class="header-section-number">1.9.12.5</span> 8.12.5 Reading the Import
+Report</h4>
+<p>After each import, the page shows tiles for Total / Imported /
+Skipped / Failed, followed by a detail table (one row per document for
+multi-line types, one row per CSV row otherwise) with the natural key, a
+status badge, and a message explaining <em>why</em> — e.g. “Customer
+number CUST-1002 already exists” (skipped) or “Item ITM-500 not found”
+(failed). Check “Hide successfully imported rows” off to review the full
+file, including the successes.</p>
 <h3 data-number="1.9.13" id="csv-export"><span
 class="header-section-number">1.9.13</span> 8.13 CSV Export</h3>
 <p>Most list screens have an <strong>Export CSV</strong> button that
