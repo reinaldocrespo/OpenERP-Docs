@@ -268,14 +268,16 @@ class="toc-section-number">1.7.9</span> 6.9 Item
 Cross-References</a></li>
 <li><a href="#item-substitutes" id="toc-item-substitutes"><span
 class="toc-section-number">1.7.10</span> 6.10 Item Substitutes</a></li>
+<li><a href="#item-vendors" id="toc-item-vendors"><span
+class="toc-section-number">1.7.11</span> 6.11 Item Vendors</a></li>
 <li><a href="#item-supersession" id="toc-item-supersession"><span
-class="toc-section-number">1.7.11</span> 6.11 Item Supersession</a></li>
+class="toc-section-number">1.7.12</span> 6.12 Item Supersession</a></li>
 <li><a href="#kitting-bom" id="toc-kitting-bom"><span
-class="toc-section-number">1.7.12</span> 6.12 Kitting / BOM</a></li>
+class="toc-section-number">1.7.13</span> 6.13 Kitting / BOM</a></li>
 <li><a href="#barcode-scanning" id="toc-barcode-scanning"><span
-class="toc-section-number">1.7.13</span> 6.13 Barcode Scanning</a></li>
+class="toc-section-number">1.7.14</span> 6.14 Barcode Scanning</a></li>
 <li><a href="#inbound-shipments" id="toc-inbound-shipments"><span
-class="toc-section-number">1.7.14</span> 6.14 Inbound Shipments</a></li>
+class="toc-section-number">1.7.15</span> 6.15 Inbound Shipments</a></li>
 </ul></li>
 <li><a href="#financials" id="toc-financials"><span
 class="toc-section-number">1.8</span> 7. Financials</a>
@@ -459,6 +461,10 @@ admin account created at install time is <code>admin</code> /
 under Admin → Users before going live.</p>
 <p>The session token expires after 8 hours. You will be redirected to
 the login screen automatically when it expires.</p>
+<figure>
+<img src="docs-style/images/login.png" alt="OpenERP login screen" />
+<figcaption aria-hidden="true">OpenERP login screen</figcaption>
+</figure>
 <h3 data-number="1.2.2" id="dashboard"><span
 class="header-section-number">1.2.2</span> 1.2 Dashboard</h3>
 <p>The Dashboard shows live KPIs pulled from the database:</p>
@@ -505,6 +511,12 @@ class="header-section-number">1.2.2</span> 1.2 Dashboard</h3>
 a flat Cash balance is an early warning that collections need attention.
 A rising AP Balance approaching its due dates means a check run is
 due.</p>
+<figure>
+<img src="docs-style/images/dashboard.png"
+alt="OpenERP dashboard with KPI tiles, recent GL batches, and quick links" />
+<figcaption aria-hidden="true">OpenERP dashboard with KPI tiles, recent
+GL batches, and quick links</figcaption>
+</figure>
 <h3 data-number="1.2.3" id="company-setup"><span
 class="header-section-number">1.2.3</span> 1.3 Company Setup</h3>
 <p>Go to <strong>Admin → Company Settings</strong> to configure:</p>
@@ -823,6 +835,12 @@ shipment.</p>
 <h3 data-number="1.4.3" id="sales-orders"><span
 class="header-section-number">1.4.3</span> 3.3 Sales Orders</h3>
 <p><strong>Sales → Orders</strong> — the core transaction.</p>
+<figure>
+<img src="docs-style/images/sales-orders.png"
+alt="Sales Orders list showing order status, totals, and per-row actions" />
+<figcaption aria-hidden="true">Sales Orders list showing order status,
+totals, and per-row actions</figcaption>
+</figure>
 <h4 data-number="1.4.3.1" id="creating-a-sales-order"><span
 class="header-section-number">1.4.3.1</span> Creating a Sales Order</h4>
 <ol type="1">
@@ -958,6 +976,12 @@ shipped automatically — no warehouse inventory movement occurs.</p>
 class="header-section-number">1.4.4</span> 3.4 AR Invoices</h3>
 <p><strong>AR → Invoices</strong> — invoices can be created standalone
 or from an SO (§3.3).</p>
+<figure>
+<img src="docs-style/images/ar-invoices.png"
+alt="AR Invoices list with status filter and per-row Void/Write-off actions" />
+<figcaption aria-hidden="true">AR Invoices list with status filter and
+per-row Void/Write-off actions</figcaption>
+</figure>
 <p>Standalone invoice creation: 1. Choose customer, invoice number,
 dates, period, payment terms. 2. Add lines: item, description, qty, unit
 price, tax rate, and optionally a jurisdiction override. 3. The system
@@ -1309,6 +1333,8 @@ Catalog</h3>
 part numbers, lead times, MOQ, packing quantities, and last cost per
 item. Mark one vendor as “preferred” per item — the preferred vendor’s
 cost auto-fills on PO lines.</p>
+<p>You don’t have to come to Purchasing to manage this — see §6.11 for
+the same data reached from the Items screen instead.</p>
 <h3 data-number="1.5.12" id="blanket-pos"><span
 class="header-section-number">1.5.12</span> 4.12 Blanket POs</h3>
 <p><strong>Purchasing → Blanket POs</strong> — standing contracts with a
@@ -1545,6 +1571,13 @@ class="header-section-number">1.7</span> 6. Item Master</h2>
 <h3 data-number="1.7.1" id="items"><span
 class="header-section-number">1.7.1</span> 6.1 Items</h3>
 <p><strong>Inventory → Items</strong> — the central item catalog.</p>
+<figure>
+<img src="docs-style/images/items-list.png"
+alt="Items list with on-hand quantity, reorder point, cost/price, and per-row Adjust/Lots/Xrefs/Subs actions" />
+<figcaption aria-hidden="true">Items list with on-hand quantity, reorder
+point, cost/price, and per-row Adjust/Lots/Xrefs/Subs
+actions</figcaption>
+</figure>
 <p>Key fields: - <strong>Item number</strong> — unique; used on all
 documents - <strong>Description</strong> - <strong>Category</strong> —
 for reporting and matrix pricing - <strong>UOM</strong> — stocking unit
@@ -1652,25 +1685,44 @@ class="header-section-number">1.7.10</span> 6.10 Item Substitutes</h3>
 define substitute items with priority ranking. When a flagged-superseded
 item is selected on an SO, the system prompts with available
 substitutes.</p>
-<h3 data-number="1.7.11" id="item-supersession"><span
-class="header-section-number">1.7.11</span> 6.11 Item Supersession</h3>
+<h3 data-number="1.7.11" id="item-vendors"><span
+class="header-section-number">1.7.11</span> 6.11 Item Vendors</h3>
+<p><strong>Inventory → Items</strong> → <strong>Vendors</strong> modal —
+record which vendors supply this part. Most parts can be bought from
+more than one supplier, so this isn’t a single “vendor” field on the
+item — it’s a list: pick a vendor from the dropdown, then capture that
+vendor’s own SKU for this item, lead time, minimum order quantity (MOQ),
+packing quantity, and last cost. Add as many vendors as actually supply
+the part, and star one as <strong>preferred</strong>.</p>
+<p>This is the same underlying data as the Vendor Item Catalog (§4.11) —
+the two screens are just two ways of looking at it, and either one can
+add, edit, or remove a link: - <strong>Inventory → Items →
+Vendors</strong> answers “which vendors supply <em>this</em> part” — you
+start from the item. - <strong>Purchasing → Vendor Catalog</strong>
+answers “everything <em>this</em> vendor supplies” — you start from the
+vendor.</p>
+<p>Use whichever direction matches the question you’re actually asking;
+changes made from one show up in the other immediately, since nothing is
+duplicated behind the scenes.</p>
+<h3 data-number="1.7.12" id="item-supersession"><span
+class="header-section-number">1.7.12</span> 6.12 Item Supersession</h3>
 <p><strong>Inventory → Items</strong> → <strong>Supersession</strong>
 history — record when one item replaces another (old item → new item,
 reason, effective date). SO entry warns the user when a superseded item
 is selected.</p>
-<h3 data-number="1.7.12" id="kitting-bom"><span
-class="header-section-number">1.7.12</span> 6.12 Kitting / BOM</h3>
+<h3 data-number="1.7.13" id="kitting-bom"><span
+class="header-section-number">1.7.13</span> 6.13 Kitting / BOM</h3>
 <p><strong>Inventory → Kitting</strong> — bill-of-materials for kit
 items. Defines component items and required quantities. When a kit item
 is shipped, the system pulls FIFO cost from the components.</p>
-<h3 data-number="1.7.13" id="barcode-scanning"><span
-class="header-section-number">1.7.13</span> 6.13 Barcode Scanning</h3>
+<h3 data-number="1.7.14" id="barcode-scanning"><span
+class="header-section-number">1.7.14</span> 6.14 Barcode Scanning</h3>
 <p>The endpoint <code>GET /items/barcode/{code}</code> checks
 <code>item_number</code> first, then cross-reference numbers (UPC, MPN,
 etc.). Returns the matching item. Useful for integrating mobile scan
 devices or the WH app.</p>
-<h3 data-number="1.7.14" id="inbound-shipments"><span
-class="header-section-number">1.7.14</span> 6.14 Inbound Shipments</h3>
+<h3 data-number="1.7.15" id="inbound-shipments"><span
+class="header-section-number">1.7.15</span> 6.15 Inbound Shipments</h3>
 <p><strong>Purchasing → Inbound Shipments</strong> — track ocean or air
 freight containers with vessel, voyage, carrier, origin/destination
 ports, ETA, ATA, and customs status (PENDING → IN_TRANSIT → ARRIVED →
@@ -1691,12 +1743,22 @@ class="header-section-number">1.8.1</span> 7.1 General Ledger</h3>
 <p><strong>GL → Fiscal Years / Periods</strong> — set up the accounting
 calendar. Closing a period prevents any further posting to it. Fiscal
 year close (§7.7) is a separate workflow.</p>
-<p><strong>GL → Journals</strong> — manual journal entry: 1. Create a
-batch (batch number, description, period). 2. Add a journal entry (entry
-number, date, source, reference, description). 3. Add debit and credit
-lines. The batch will not post unless total debits = total credits. 4.
-<strong>Post</strong> the batch. Once posted, entries cannot be edited;
-a reversing entry is required.</p>
+<p><strong>GL → Journals</strong> — manual journal entry:</p>
+<figure>
+<img src="docs-style/images/gl-journals.png"
+alt="Journal Batches list showing batch number, source, description, and POSTED status" />
+<figcaption aria-hidden="true">Journal Batches list showing batch
+number, source, description, and POSTED status</figcaption>
+</figure>
+<ol type="1">
+<li>Create a batch (batch number, description, period).</li>
+<li>Add a journal entry (entry number, date, source, reference,
+description).</li>
+<li>Add debit and credit lines. The batch will not post unless total
+debits = total credits.</li>
+<li><strong>Post</strong> the batch. Once posted, entries cannot be
+edited; a reversing entry is required.</li>
+</ol>
 <blockquote>
 <p><strong>When to use manual journals:</strong> - Depreciation not
 handled by the Fixed Assets module - Accruals (record an expense
@@ -2024,6 +2086,12 @@ as recipients when you set up the schedule. There is no automatic
 distribution list or “send to all users” option: you type in the exact
 email addresses that should receive each report, and only those
 addresses get it.</p>
+<figure>
+<img src="docs-style/images/scheduled-reports.png"
+alt="Scheduled Reports page with the CLI runner command shown" />
+<figcaption aria-hidden="true">Scheduled Reports page with the CLI
+runner command shown</figcaption>
+</figure>
 <h4 data-number="1.9.11.1" id="how-to-set-who-gets-what-report"><span
 class="header-section-number">1.9.11.1</span> How to set who gets what
 report</h4>
@@ -2159,6 +2227,13 @@ loaded, a sales rep hands over a spreadsheet of open quotes to convert.
 The Import Tool handles these the same way, and is always safe to run
 against a system that already has data in it (see the rule below).</li>
 </ul>
+<figure>
+<img src="docs-style/images/import-tool.png"
+alt="CSV Import Tool showing the Customers import type with required/optional columns and file upload area" />
+<figcaption aria-hidden="true">CSV Import Tool showing the Customers
+import type with required/optional columns and file upload
+area</figcaption>
+</figure>
 <p>Every import type shares the same rule:</p>
 <blockquote>
 <p><strong>A row whose natural key already exists is left untouched and
@@ -2562,6 +2637,12 @@ at <em>which</em> trading partner sent the document to pick the right
 vendor. This works fine if you only receive EDI from one source, but if
 you’re setting this up for multiple trading partners, verify the vendor
 on each resulting PO before acting on it until this is refined.</p>
+<figure>
+<img src="docs-style/images/edi-transactions.png"
+alt="EDI Transactions page with direction/set/status filters and the Manage Partners button" />
+<figcaption aria-hidden="true">EDI Transactions page with
+direction/set/status filters and the Manage Partners button</figcaption>
+</figure>
 <h4 data-number="1.10.1.1"
 id="how-an-inbound-edi-document-actually-reaches-openerp"><span
 class="header-section-number">1.10.1.1</span> How an inbound EDI
