@@ -110,17 +110,21 @@ class="toc-section-number">1.2</span> 1. Getting Started</a>
 class="toc-section-number">1.2.1</span> 1.1 First Login</a></li>
 <li><a href="#dashboard" id="toc-dashboard"><span
 class="toc-section-number">1.2.2</span> 1.2 Dashboard</a></li>
+<li><a href="#working-with-lists-grids"
+id="toc-working-with-lists-grids"><span
+class="toc-section-number">1.2.3</span> 1.3 Working with Lists
+(Grids)</a></li>
 <li><a href="#company-setup" id="toc-company-setup"><span
-class="toc-section-number">1.2.3</span> 1.3 Company Setup</a></li>
+class="toc-section-number">1.2.4</span> 1.4 Company Setup</a></li>
 <li><a href="#chart-of-accounts" id="toc-chart-of-accounts"><span
-class="toc-section-number">1.2.4</span> 1.4 Chart of Accounts</a></li>
+class="toc-section-number">1.2.5</span> 1.5 Chart of Accounts</a></li>
 <li><a href="#payment-terms-and-tax-codes"
 id="toc-payment-terms-and-tax-codes"><span
-class="toc-section-number">1.2.5</span> 1.5 Payment Terms and Tax
+class="toc-section-number">1.2.6</span> 1.6 Payment Terms and Tax
 Codes</a></li>
 <li><a href="#go-live-setup-checklist"
 id="toc-go-live-setup-checklist"><span
-class="toc-section-number">1.2.6</span> 1.6 Go-Live Setup
+class="toc-section-number">1.2.7</span> 1.7 Go-Live Setup
 Checklist</a></li>
 </ul></li>
 <li><a href="#how-the-modules-connect"
@@ -170,6 +174,8 @@ class="toc-section-number">1.4.7</span> 3.7 AR Aging and
 Collections</a></li>
 <li><a href="#customer-statements" id="toc-customer-statements"><span
 class="toc-section-number">1.4.8</span> 3.8 Customer Statements</a></li>
+<li><a href="#counter-sales" id="toc-counter-sales"><span
+class="toc-section-number">1.4.9</span> 3.9 Counter Sales</a></li>
 </ul></li>
 <li><a href="#procure-to-pay" id="toc-procure-to-pay"><span
 class="toc-section-number">1.5</span> 4. Procure-to-Pay</a>
@@ -517,8 +523,52 @@ alt="OpenERP dashboard with KPI tiles, recent GL batches, and quick links" />
 <figcaption aria-hidden="true">OpenERP dashboard with KPI tiles, recent
 GL batches, and quick links</figcaption>
 </figure>
-<h3 data-number="1.2.3" id="company-setup"><span
-class="header-section-number">1.2.3</span> 1.3 Company Setup</h3>
+<h3 data-number="1.2.3" id="working-with-lists-grids"><span
+class="header-section-number">1.2.3</span> 1.3 Working with Lists
+(Grids)</h3>
+<p>Every list screen — Items, Sales Orders, Vendors, the reports — uses
+the same spreadsheet-style grid, so what you learn once applies
+everywhere:</p>
+<ul>
+<li><strong>Sort</strong> by clicking any column header; click again to
+reverse the order.</li>
+<li><strong>Select a row</strong> by clicking it (it highlights light
+blue). All row actions — Edit, Detail, Ship, Post, Void, and so on —
+live in the <strong>action bar</strong> directly under the grid and act
+on the selected row, like a spreadsheet status bar.</li>
+<li><strong>Column filters (Excel-style)</strong> — columns that show a
+small <strong>▼</strong> button in the header can be filtered like
+Excel’s AutoFilter: click the button, then check or uncheck values in
+the list. The popup has a <strong>search box</strong> for long value
+lists and a <strong>(Select all)</strong> toggle. Filters on several
+columns combine — e.g. Type = STOCK <em>and</em> Vendor = a specific
+supplier. A column with an active filter shows its title and ▼ in blue.
+To clear a filter, re-check <strong>(Select all)</strong>.</li>
+<li><strong>Page size</strong> — paginated lists offer <strong>25 to
+1000 rows per page</strong> in the selector at the bottom right. Column
+filters work on the rows currently loaded, so choose a large page size
+(500 or 1000) when you want a filter to cover the entire list rather
+than one page.</li>
+<li><strong>Export CSV</strong>, where offered in the page header,
+downloads the current list.</li>
+</ul>
+<figure>
+<img src="docs-style/images/grid-excel-filter.png"
+alt="Excel-style column filter open on the Sales Orders Status column, showing the value checklist and the filtered result" />
+<figcaption aria-hidden="true">Excel-style column filter open on the
+Sales Orders Status column, showing the value checklist and the filtered
+result</figcaption>
+</figure>
+<blockquote>
+<p><strong>Tip:</strong> Combining the two features is the fastest way
+to answer ad-hoc questions. Example: on the Items list, set the page
+size to 500, then filter the <strong>Vendor</strong> column to one
+supplier and the <strong>Type</strong> column to STOCK — the grid now
+shows exactly that vendor’s stocked catalog, and Export CSV gives you
+the file.</p>
+</blockquote>
+<h3 data-number="1.2.4" id="company-setup"><span
+class="header-section-number">1.2.4</span> 1.4 Company Setup</h3>
 <p>Go to <strong>Admin → Company Settings</strong> to configure:</p>
 <ul>
 <li><strong>Company name, address, phone, website</strong> — printed on
@@ -543,8 +593,8 @@ it finds. If your chart of accounts has multiple accounts of the same
 subtype, the wrong account may receive the entry. Set the mappings
 before processing any transactions.</p>
 </blockquote>
-<h3 data-number="1.2.4" id="chart-of-accounts"><span
-class="header-section-number">1.2.4</span> 1.4 Chart of Accounts</h3>
+<h3 data-number="1.2.5" id="chart-of-accounts"><span
+class="header-section-number">1.2.5</span> 1.5 Chart of Accounts</h3>
 <p>Before processing any transactions, import or manually create your
 chart of accounts under <strong>GL → Accounts</strong>.</p>
 <p>Each account has: - <strong>Account number</strong> — user-defined
@@ -559,8 +609,8 @@ amounts; they exist only for subtotaling in financial statements.</p>
 year, then <strong>GL → Periods</strong> to create the twelve monthly
 periods inside it. The system will not allow posting to a closed
 period.</p>
-<h3 data-number="1.2.5" id="payment-terms-and-tax-codes"><span
-class="header-section-number">1.2.5</span> 1.5 Payment Terms and Tax
+<h3 data-number="1.2.6" id="payment-terms-and-tax-codes"><span
+class="header-section-number">1.2.6</span> 1.6 Payment Terms and Tax
 Codes</h3>
 <ul>
 <li><strong>Admin → Payment Terms</strong> — define NET30, NET60,
@@ -571,8 +621,8 @@ at 6.25%). Assigned to items and overridable per invoice line. For US
 sales tax with multi-jurisdiction support, use the Sales Tax engine
 (Admin → Sales Tax).</li>
 </ul>
-<h3 data-number="1.2.6" id="go-live-setup-checklist"><span
-class="header-section-number">1.2.6</span> 1.6 Go-Live Setup
+<h3 data-number="1.2.7" id="go-live-setup-checklist"><span
+class="header-section-number">1.2.7</span> 1.7 Go-Live Setup
 Checklist</h3>
 <p>Before your first live transaction, confirm the following:</p>
 <ul class="task-list">
@@ -1081,28 +1131,147 @@ Many customers use the statement (not individual invoices) to schedule
 their payments. A statement shows all open invoices, any credits, and
 the total balance due.</p>
 </blockquote>
+<h3 data-number="1.4.9" id="counter-sales"><span
+class="header-section-number">1.4.9</span> 3.9 Counter Sales</h3>
+<p><strong>Sales → Counter Sales</strong> — one-screen entry for walk-in
+customers: creates the sales order, ships it, invoices it, and records
+the payment in a single step.</p>
+<ol type="1">
+<li>Pick the customer, enter SO #, date, and period; add line items —
+prices auto-fill from the customer’s price list, and totals update
+live.</li>
+<li>In the <strong>Payment</strong> panel, choose the method (CASH /
+CREDIT_CARD / CHECK), enter invoice # and payment #, and the amount
+tendered — <strong>Change Due</strong> is computed automatically.</li>
+<li><strong>Complete Sale</strong> runs the whole chain (SO → ship →
+invoice → payment → apply) and shows the resulting invoice and payment
+numbers. <strong>New Sale</strong> clears the screen for the next
+customer.</li>
+</ol>
+<p>The Order Details and Payment panels sit side by side on a wide
+screen; on a narrower window the Payment panel moves below Order Details
+— the page never scrolls sideways, so the Complete Sale button is always
+reachable.</p>
 <hr />
 <h2 data-number="1.5" id="procure-to-pay"><span
 class="header-section-number">1.5</span> 4. Procure-to-Pay</h2>
 <pre><code>Vendor → Requisition → RFQ → PO → Receipt → AP Bill → Payment → Applied → Reconciled</code></pre>
 <h3 data-number="1.5.1" id="vendor-master"><span
 class="header-section-number">1.5.1</span> 4.1 Vendor Master</h3>
-<p><strong>AP → Vendors</strong> — create vendors before entering bills
-or POs.</p>
-<p>Key fields: - <strong>Tax ID + Is 1099</strong> — populated on the
-1099 report at year end - <strong>Currency</strong> — if not USD, bills
-are entered in the vendor’s currency; FX gain/loss is computed when
-payment is applied - <strong>Payment terms</strong> — defaulted onto
-bills</p>
+<p><strong>Purchasing → Vendor Management → Vendor Master</strong> — the
+central supplier database. Every PO, bill, RFQ, rebate, and payment
+references a Vendor Master record: enter each company once and every
+module reuses it.</p>
+<figure>
+<img src="docs-style/images/vendor-master.png"
+alt="Vendor Master grid with an agent’s detail open on the Manufacturers tab" />
+<figcaption aria-hidden="true">Vendor Master grid with an agent’s detail
+open on the Manufacturers tab</figcaption>
+</figure>
+<p><strong>Vendor types.</strong> Each vendor is typed to reflect its
+real role in the supply chain:</p>
+<table>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AGENT</td>
+<td>Managing office / trading partner you deal with commercially</td>
+</tr>
+<tr class="even">
+<td>MANUFACTURER</td>
+<td>An actual factory</td>
+</tr>
+<tr class="odd">
+<td>TRADING_COMPANY</td>
+<td>Trading company (may also have factories under it)</td>
+</tr>
+<tr class="even">
+<td>LOGISTICS / INSPECTION / WAREHOUSE_3PL / CUSTOMS_BROKER</td>
+<td>Service providers</td>
+</tr>
+<tr class="odd">
+<td>UNKNOWN_MFG</td>
+<td>Placeholder for a factory whose identity is not yet known</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Agents and manufacturers.</strong> An <strong>agent</strong>
+is the commercial front door: specs and RFQs go to the agent, the agent
+decides which of its factories builds the part, and POs/bills/payments
+are placed with the agent. Each manufacturer record carries an
+<strong>Agent</strong> field pointing at its agent; a manufacturer with
+no agent is a <strong>direct</strong> relationship. The Vendor Master
+grid shows an <strong>Agent column with an Excel-style filter
+(§1.3)</strong>, plus an agent dropdown above the grid, so you can pull
+up any agent’s stable of factories in one click.</p>
+<p><strong>Agents page.</strong> <strong>Purchasing → Vendor Management
+→ Agents</strong> lists every agent with its manufacturer count. Select
+an agent to see its factories, <strong>Link</strong> an existing vendor
+to the agent, or <strong>Unlink</strong> one. Create new agents here (or
+retype an existing vendor as AGENT in the Vendor Master edit form).</p>
+<figure>
+<img src="docs-style/images/agents-page.png"
+alt="Agents page with the selected agent’s manufacturers listed below" />
+<figcaption aria-hidden="true">Agents page with the selected agent’s
+manufacturers listed below</figcaption>
+</figure>
+<p><strong>Status.</strong> Every vendor carries a status:
+<code>APPROVED</code> → normal; <code>CONDITIONAL</code> /
+<code>PROBATION</code> → visible warnings; <code>INACTIVE</code> → not
+used for new business; <strong><code>BLOCKED</code> → the system refuses
+to create new purchase orders for this vendor</strong> (existing POs and
+bills are unaffected, so you can still receive and pay what is already
+committed).</p>
+<p><strong>Vendor detail tabs.</strong> Select a vendor and click
+<strong>Detail</strong>: - <strong>Overview</strong> — commercial
+profile: trade name, website, incoterms, year established, employees,
+lead-time notes, plus <strong>Internal Notes</strong> visible only to
+your team (highlighted yellow) - <strong>Contacts</strong> — multiple
+contacts per vendor by department (Sales, Engineering, Quality,
+Production, Logistics, Accounting, Management) with email, phone,
+<strong>WeChat and WhatsApp</strong>; one contact is starred as primary
+- <strong>Factory</strong> (manufacturers only) — factory code,
+plant/quality/production managers, time zone, language, and free-form
+capacity/equipment/quality notes - <strong>Manufacturers</strong>
+(agents only) — the factories linked to this agent</p>
+<p><strong>Unknown manufacturers.</strong> When you buy through an agent
+but don’t yet know which factory produces the part, create a vendor
+typed <code>UNKNOWN_MFG</code> under that agent (e.g. “Unknown
+Manufacturer (Agent X)”). When the factory is later identified, simply
+rename and retype that same record to MANUFACTURER — its ID never
+changes, so all purchasing history stays attached.</p>
+<p><strong>Financial fields</strong> (also editable under <strong>AP →
+Vendors</strong>, the accounting view of the same records): -
+<strong>Tax ID + Is 1099</strong> — populated on the 1099 report at year
+end - <strong>Currency</strong> — if not USD, bills are entered in the
+vendor’s currency; FX gain/loss is computed when payment is applied -
+<strong>Payment terms</strong> — defaulted onto bills</p>
 <p><strong>Vendor bank accounts</strong> — under <strong>AP → Vendor
 Bank Accounts</strong>; used for ACH/EFT export.</p>
 <blockquote>
-<p><strong>What to do next after adding a vendor:</strong> Set payment
-terms and, if applicable, the currency. If the vendor is a US sole
-proprietor or LLC who provides services (not goods), check the
-<strong>Is 1099</strong> box and enter their Tax ID (EIN or SSN) — you
-will need this at year end. Set a default expense GL account if all
-purchases from this vendor hit the same expense line.</p>
+<p><strong>What to do next after adding a vendor:</strong> Set the
+vendor type and, for manufacturers, the agent. Set payment terms and, if
+applicable, the currency. If the vendor is a US sole proprietor or LLC
+who provides services (not goods), check the <strong>Is 1099</strong>
+box and enter their Tax ID (EIN or SSN) — you will need this at year
+end. Add at least one contact per department you actually talk to —
+future RFQs, quality issues, and shipment questions all start from this
+list.</p>
+</blockquote>
+<blockquote>
+<p><strong>Loading many vendors at once:</strong> don’t key them by hand
+— build the vendor spreadsheet described in <strong>§8.12.6</strong>
+(one row per company, agents and factories in the same sheet) and load
+it through Admin → CSV Import.</p>
 </blockquote>
 <h3 data-number="1.5.2" id="purchase-requisitions"><span
 class="header-section-number">1.5.2</span> 4.2 Purchase
@@ -1578,6 +1747,12 @@ alt="Items list with on-hand quantity, reorder point, cost/price, and per-row Ad
 point, cost/price, and per-row Adjust/Lots/Xrefs/Subs
 actions</figcaption>
 </figure>
+<p>The list includes a <strong>Vendor</strong> column showing each
+item’s preferred vendor (managed under Item Vendors, §6.11 — the ★
+preferred entry wins). Like Type and Category, it carries an Excel-style
+▼ filter (§1.3), so “show me everything we buy from vendor X” — or items
+with <strong>no</strong> vendor assigned, via <strong>(Blanks)</strong>
+— is one click.</p>
 <p>Key fields: - <strong>Item number</strong> — unique; used on all
 documents - <strong>Description</strong> - <strong>Category</strong> —
 for reporting and matrix pricing - <strong>UOM</strong> — stocking unit
@@ -1739,7 +1914,7 @@ make manual corrections, and produce financial statements for management
 and external reporting.</p>
 <h3 data-number="1.8.1" id="general-ledger"><span
 class="header-section-number">1.8.1</span> 7.1 General Ledger</h3>
-<p><strong>GL → Accounts</strong> — chart of accounts (see §1.4).</p>
+<p><strong>GL → Accounts</strong> — chart of accounts (see §1.5).</p>
 <p><strong>GL → Fiscal Years / Periods</strong> — set up the accounting
 calendar. Closing a period prevents any further posting to it. Fiscal
 year close (§7.7) is a separate workflow.</p>
@@ -2523,7 +2698,7 @@ for a Full Conversion</h4>
 each step depends on data from the one before it:</p>
 <ol type="1">
 <li><strong>Chart of Accounts</strong> (and Payment Terms / Tax Codes,
-entered manually under Admin — see §1.5)</li>
+entered manually under Admin — see §1.6)</li>
 <li><strong>Item Categories</strong> and <strong>Units of
 Measure</strong></li>
 <li><strong>Warehouses</strong>, then <strong>Bin
@@ -2562,6 +2737,241 @@ status badge, and a message explaining <em>why</em> — e.g. “Customer
 number CUST-1002 already exists” (skipped) or “Item ITM-500 not found”
 (failed). Check “Hide successfully imported rows” off to review the full
 file, including the successes.</p>
+<h4 data-number="1.9.12.6"
+id="preparing-the-vendor-master-spreadsheet"><span
+class="header-section-number">1.9.12.6</span> 8.12.6 Preparing the
+Vendor Master Spreadsheet</h4>
+<p>The Vendors import loads the full Vendor Master (§4.1) — agents,
+manufacturers, and service providers — from a single spreadsheet. Build
+one Excel tab named <code>Vendors</code>, <strong>one row per
+company</strong> (an agent is a row; each of its factories is its own
+row), with the columns below in row 1. Only the first two columns are
+required; leave any cell blank to accept the default or skip the field.
+The <strong>Download Template CSV</strong> button on the Import Tool
+page produces this exact header row.</p>
+<p><strong>Identity (required):</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What to enter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>vendor_number</code></td>
+<td>Your unique code for the company, e.g. <code>AGT-WENZHOU</code> or
+<code>MFG-RUIAN</code>. This is the key used everywhere else — pick a
+scheme you can live with</td>
+</tr>
+<tr class="even">
+<td><code>company_name</code></td>
+<td>Legal business name</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Classification and the agent relationship:</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What to enter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>vendor_type</code></td>
+<td><code>AGENT</code>, <code>MANUFACTURER</code> (default if blank),
+<code>TRADING_COMPANY</code>, <code>LOGISTICS</code>,
+<code>INSPECTION</code>, <code>WAREHOUSE_3PL</code>,
+<code>CUSTOMS_BROKER</code>, or <code>UNKNOWN_MFG</code></td>
+</tr>
+<tr class="even">
+<td><code>status</code></td>
+<td><code>APPROVED</code> (default), <code>CONDITIONAL</code>,
+<code>PROBATION</code>, <code>INACTIVE</code>, or
+<code>BLOCKED</code></td>
+</tr>
+<tr class="odd">
+<td><code>agent_vendor_number</code></td>
+<td>On a manufacturer row: the <code>vendor_number</code> of its agent.
+The agent’s own row can be anywhere in the same file — order doesn’t
+matter. Leave blank for direct manufacturers and for the agents
+themselves</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Company profile:</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What to enter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>trade_name</code></td>
+<td>Trading/brand name if different from the legal name</td>
+</tr>
+<tr class="even">
+<td><code>address1</code>, <code>address2</code>, <code>city</code>,
+<code>state</code>, <code>zip</code></td>
+<td>Street address</td>
+</tr>
+<tr class="odd">
+<td><code>country</code></td>
+<td>2-letter code: <code>CN</code>, <code>TW</code>, <code>US</code>,
+…</td>
+</tr>
+<tr class="even">
+<td><code>phone</code>, <code>email</code>, <code>website</code></td>
+<td>Main company channels</td>
+</tr>
+<tr class="odd">
+<td><code>contact_name</code></td>
+<td>The main contact person (department contacts — Sales, Quality,
+Engineering… — are added on the vendor’s Contacts tab after import)</td>
+</tr>
+<tr class="even">
+<td><code>incoterms</code></td>
+<td>Default shipping terms: <code>FOB</code>, <code>CIF</code>,
+<code>EXW</code>, <code>DDP</code>, …</td>
+</tr>
+<tr class="odd">
+<td><code>year_established</code></td>
+<td>e.g. <code>1998</code></td>
+</tr>
+<tr class="even">
+<td><code>employee_count</code></td>
+<td>Approximate headcount</td>
+</tr>
+<tr class="odd">
+<td><code>lead_time_notes</code></td>
+<td>Free text, e.g. <code>45-60 days after PO</code></td>
+</tr>
+<tr class="even">
+<td><code>company_description</code></td>
+<td>What they make / specialties</td>
+</tr>
+<tr class="odd">
+<td><code>internal_notes</code></td>
+<td>Your private notes — never visible to the vendor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Financial:</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What to enter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tax_id</code></td>
+<td>EIN/SSN — needed for 1099 vendors</td>
+</tr>
+<tr class="even">
+<td><code>is_1099</code></td>
+<td><code>1</code> = yes, <code>0</code> = no (default)</td>
+</tr>
+<tr class="odd">
+<td><code>is_active</code></td>
+<td><code>1</code> = active (default), <code>0</code> = inactive</td>
+</tr>
+<tr class="even">
+<td><code>terms_code</code></td>
+<td>Must match a Terms Code under Admin → Payment Terms,
+e.g. <code>NET30</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Factory profile (manufacturer rows only — filling any of
+these creates the factory profile automatically):</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What to enter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>factory_code</code></td>
+<td>Your short code for the plant, e.g. <code>RPC-1</code></td>
+</tr>
+<tr class="even">
+<td><code>province_state</code></td>
+<td>e.g. <code>Zhejiang</code></td>
+</tr>
+<tr class="odd">
+<td><code>time_zone</code></td>
+<td>e.g. <code>CST +8</code></td>
+</tr>
+<tr class="even">
+<td><code>primary_language</code></td>
+<td>e.g. <code>Mandarin</code></td>
+</tr>
+<tr class="odd">
+<td><code>plant_manager</code>, <code>quality_manager</code>,
+<code>production_manager</code></td>
+<td>Names of the key people</td>
+</tr>
+<tr class="even">
+<td><code>capacity_notes</code></td>
+<td>Lines, monthly tonnage, max part size…</td>
+</tr>
+<tr class="odd">
+<td><code>equipment_notes</code></td>
+<td>CNC count, presses, furnaces, CMM…</td>
+</tr>
+<tr class="even">
+<td><code>quality_notes</code></td>
+<td>ISO/API certifications held, inspection and lab capabilities</td>
+</tr>
+</tbody>
+</table>
+<p>A minimal example — one agent with two factories (one still
+unidentified) and one direct manufacturer:</p>
+<pre><code>vendor_number,company_name,vendor_type,agent_vendor_number,country,city,incoterms
+AGT-WENZHOU,Wenzhou Sourcing Partners,AGENT,,CN,Wenzhou,FOB
+MFG-RUIAN,Ruian Precision Casting Co,MANUFACTURER,AGT-WENZHOU,CN,Ruian,
+UNK-WENZHOU,Unknown Manufacturer (Wenzhou SP),UNKNOWN_MFG,AGT-WENZHOU,CN,,
+MFG-NINGBO,Ningbo Dongxin Valve,MANUFACTURER,,CN,Ningbo,FOB</code></pre>
+<blockquote>
+<p><strong>Tips:</strong> Keep <code>vendor_type</code>,
+<code>status</code>, and <code>agent_vendor_number</code> spelled
+exactly as shown (case doesn’t matter, but <code>MANUFACTURE</code> or a
+typo’d agent number won’t match — a bad agent number shows as a
+<em>failed</em> “(agent link)” row in the import report while the vendor
+itself is still created, so you can fix the link on the vendor’s edit
+form). Format the <code>vendor_number</code> and <code>zip</code>
+columns as <strong>Text</strong> in Excel before typing, per the gotchas
+in §8.12.1. Re-running the same file is safe: existing vendor numbers
+are skipped, never overwritten.</p>
+</blockquote>
 <h3 data-number="1.9.13" id="csv-export"><span
 class="header-section-number">1.9.13</span> 8.13 CSV Export</h3>
 <p>Most list screens have an <strong>Export CSV</strong> button that
@@ -2765,22 +3175,22 @@ proxy.</p>
 <h4 data-number="1.10.3.2" id="what-payload-openerp-expects"><span
 class="header-section-number">1.10.3.2</span> What payload OpenERP
 expects</h4>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;SHOPIFY&quot;</span><span class="fu">,</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;external_id&quot;</span><span class="fu">:</span> <span class="st">&quot;order_12345&quot;</span><span class="fu">,</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;customer&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;buyer@example.com&quot;</span><span class="fu">,</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jane Buyer&quot;</span><span class="fu">,</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;address1&quot;</span><span class="fu">:</span> <span class="st">&quot;123 Main St&quot;</span><span class="fu">,</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Springfield&quot;</span><span class="fu">,</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;IL&quot;</span><span class="fu">,</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="st">&quot;62704&quot;</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lines&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;item_number&quot;</span><span class="fu">:</span> <span class="st">&quot;WIDGET-A&quot;</span><span class="fu">,</span> <span class="dt">&quot;qty&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">9.99</span> <span class="fu">}</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;SHOPIFY&quot;</span><span class="fu">,</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;external_id&quot;</span><span class="fu">:</span> <span class="st">&quot;order_12345&quot;</span><span class="fu">,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;customer&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;buyer@example.com&quot;</span><span class="fu">,</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jane Buyer&quot;</span><span class="fu">,</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;address1&quot;</span><span class="fu">:</span> <span class="st">&quot;123 Main St&quot;</span><span class="fu">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Springfield&quot;</span><span class="fu">,</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;IL&quot;</span><span class="fu">,</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="st">&quot;62704&quot;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lines&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;item_number&quot;</span><span class="fu">:</span> <span class="st">&quot;WIDGET-A&quot;</span><span class="fu">,</span> <span class="dt">&quot;qty&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">9.99</span> <span class="fu">}</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <ul>
 <li><code>source</code> — a short label for which platform sent it (used
 for filtering in the order list, and for duplicate detection — see
@@ -2850,8 +3260,8 @@ forward by its frequency.</p></li>
 <li><p><strong>Fully automatically:</strong> run this command (it finds
 every active template whose Next Run Date has arrived, generates a PO
 from each, and advances each one):</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
 <p>Just like the Scheduled Reports runner in §8.11, this command does
 nothing on its own until something triggers it on a schedule. Set it up
 the same way, in <strong>Windows Task Scheduler</strong>:</p>
