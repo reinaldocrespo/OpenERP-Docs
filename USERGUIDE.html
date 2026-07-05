@@ -1239,10 +1239,43 @@ your team (highlighted yellow) - <strong>Contacts</strong> — multiple
 contacts per vendor by department (Sales, Engineering, Quality,
 Production, Logistics, Accounting, Management) with email, phone,
 <strong>WeChat and WhatsApp</strong>; one contact is starred as primary
-- <strong>Factory</strong> (manufacturers only) — factory code,
-plant/quality/production managers, time zone, language, and free-form
-capacity/equipment/quality notes - <strong>Manufacturers</strong>
-(agents only) — the factories linked to this agent</p>
+- <strong>Capabilities</strong> — check off what the vendor can do from
+a controlled list of 28 manufacturing processes grouped by family
+(Casting, Forging, Machining, Forming, Molding, Finishing, Testing),
+plus the <strong>materials</strong> they work in (stainless, duplex,
+super duplex, titanium, …). Because these are structured checkboxes
+rather than free text, they power the sourcing filters described below -
+<strong>Certifications</strong> — ISO/API/PED/ASME and other
+certificates with number, issuing body, and issue/expiry dates. Expiry
+dates within 90 days show in red - <strong>Documents</strong> — upload
+audit reports, factory photos, NDAs, banking information, quality
+manuals and more (25 MB per file, typed from a controlled list, with
+optional expiry and notes). Download returns the original file; Remove
+keeps the file archived on the server but hides it from the list -
+<strong>Performance</strong> — six live metrics computed from actual
+transactions (POs, total spend, fill rate, on-time delivery, average
+lead days, defect rate — the same math as the Vendor Scorecard, §4.13)
+alongside <strong>manual scores</strong> (Quality / Delivery /
+Commercial, 0–100) that you enter based on judgment; the Overall score
+is their average, color-coded green/amber/red. Use the manual scores to
+record what the numbers can’t see — responsiveness, engineering support,
+how they handle problems - <strong>Factory</strong> (manufacturers only)
+— factory code, plant/quality/production managers, time zone, language,
+and free-form capacity/equipment/quality notes -
+<strong>Manufacturers</strong> (agents only) — the factories linked to
+this agent</p>
+<p><strong>Finding the right supplier.</strong> Above the grid, the
+<strong>Any capability</strong> and <strong>Any material</strong>
+dropdowns filter the list server-side — combined with the
+Type/Status/Agent/Country column filters, questions like <em>“approved
+stainless investment casters under agent X”</em> are a few clicks. The
+grid’s <strong>Capabilities</strong> and <strong>Certs</strong> columns
+show profile completeness at a glance, so you can spot vendors whose
+knowledge base still needs filling in.</p>
+<p><strong>Certificate expiry warnings.</strong> An amber banner at the
+top of the Vendor Master lists every certification that is expired or
+expiring within 90 days, so renewals can be requested from the vendor
+before an audit catches the gap.</p>
 <p><strong>Unknown manufacturers.</strong> When you buy through an agent
 but don’t yet know which factory produces the part, create a vendor
 typed <code>UNKNOWN_MFG</code> under that agent (e.g. “Unknown
