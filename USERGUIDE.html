@@ -2159,7 +2159,11 @@ class="header-section-number">1.9</span> 8. Administration</h2>
 class="header-section-number">1.9.1</span> 8.1 Users and Groups</h3>
 <p><strong>Admin → Users</strong>: - Create users with a username,
 password (minimum 6 characters), full name, and group assignment. -
-Deactivate users to block login without deleting records. -
+<strong>Email</strong> is optional but recommended for every user — it’s
+validated for a proper email format and is stored for the user’s
+account, ready for future features (e.g., reminders/notifications) that
+need somewhere to send them. It is not currently used to send anything.
+- Deactivate users to block login without deleting records. -
 <strong>Change Password</strong> — bumps <code>token_version</code> to
 immediately invalidate all active sessions for that user. - <strong>⊘
 Force Logout</strong> — invalidates all active tokens for the user
@@ -3143,30 +3147,44 @@ rather than guessing.</p>
 <h4 data-number="1.9.14.1" id="setting-it-up-administrator"><span
 class="header-section-number">1.9.14.1</span> 8.14.1 Setting It Up
 (Administrator)</h4>
-<p>The assistant is powered by Anthropic’s Claude models and needs an
-API key. One-time setup:</p>
+<p>The assistant can be powered by <strong>Anthropic (Claude) or OpenAI
+(GPT) models</strong> — configuration lives on its own page,
+<strong>Admin → Setup → AI Setup</strong>, not under Company Settings.
+You can store more than one model config (e.g., one Anthropic key and
+one OpenAI key) but only <strong>one is active</strong> at a time;
+that’s the one the ✦ AI Help button uses.</p>
 <ol type="1">
-<li>Create an account at <strong>console.anthropic.com</strong>, add
-billing, and generate an API key (starts with
-<code>sk-ant-</code>).</li>
-<li>In OpenERP go to <strong>Admin → Setup → Company</strong>, scroll to
-the <strong>AI Assistant</strong> card.</li>
-<li>Paste the key into <strong>Anthropic API Key</strong>, set
-<strong>Enable AI Help</strong> to <em>Enabled</em>, pick a
-<strong>Model</strong>, and click <strong>Save Changes</strong>.</li>
-<li>Reload the page — the <strong>✦ AI Help</strong> button appears
-bottom-right for all users.</li>
+<li>Get an API key: <strong>console.anthropic.com</strong> for Claude
+(starts with <code>sk-ant-</code>), or
+<strong>platform.openai.com</strong> for GPT (starts with
+<code>sk-</code>). Either provider requires billing on file — neither
+offers a free tier.</li>
+<li>In OpenERP go to <strong>Admin → Setup → AI Setup</strong> and click
+<strong>+ Add Model</strong>.</li>
+<li>Pick the <strong>Provider</strong>, give it a <strong>Label</strong>
+(e.g. “Production Claude”), enter the <strong>Model ID</strong> (the
+field shows examples for the selected provider —
+<code>claude-opus-4-8</code> for Anthropic, <code>gpt-4o</code> for
+OpenAI), paste the <strong>API Key</strong>, and
+<strong>Save</strong>.</li>
+<li>In the grid, click the <strong>Active</strong> column (○) on the row
+you want live — it turns into a green ✓ and any previously active row is
+turned off automatically. The ✦ AI Help button appears for all users as
+soon as a row is active.</li>
 </ol>
-<p>The key is stored server-side only and is never sent to browsers;
-after saving, the settings page shows only a masked value
-(<code>••••</code> plus the last 4 characters). Leave the masked value
-as-is to keep the existing key, or paste a new key over it to replace
-it.</p>
-<p><strong>Model choice.</strong> <em>Claude Opus 4.8</em> (the default)
-gives the best answers. <em>Claude Sonnet 5</em> and <em>Claude Haiku
-4.5</em> are progressively cheaper and faster. Typical cost is a few
-cents per question with Opus — repeat questions within a few minutes are
-cheaper because the reference material is cached by the provider.</p>
+<p>Click the ✓ on the active row again to turn AI Help off entirely (no
+active row = disabled) without deleting the configuration. API keys are
+stored server-side only and are never sent back to the browser in full —
+the grid and edit form always show a masked value (<code>••••</code>
+plus the last 4 characters); leave that as-is when editing to keep the
+existing key, or paste a new one to replace it.</p>
+<p><strong>Model choice.</strong> On Anthropic, <em>Claude Opus 4.8</em>
+gives the best answers; <em>Claude Sonnet 5</em> and <em>Claude Haiku
+4.5</em> are progressively cheaper and faster. On OpenAI,
+<em>gpt-4o</em> is the comparable general-purpose choice, with
+<em>gpt-4o-mini</em> as the cheaper/faster option. Typical cost is a few
+cents per question — repeat questions within a few minutes are cheaper
+on Anthropic because the reference material is cache-eligible there.</p>
 <p><strong>Limits.</strong> Each user can ask up to 60 questions per
 hour. Every question is recorded in the Audit Log (Admin → Audit Log,
 table <code>ai_chat</code>) with the user and a snippet of the question,
