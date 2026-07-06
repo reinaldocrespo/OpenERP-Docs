@@ -355,6 +355,8 @@ class="toc-section-number">1.9.11</span> 8.11 Scheduled Reports</a></li>
 class="toc-section-number">1.9.12</span> 8.12 CSV Import</a></li>
 <li><a href="#csv-export" id="toc-csv-export"><span
 class="toc-section-number">1.9.13</span> 8.13 CSV Export</a></li>
+<li><a href="#ai-help-assistant" id="toc-ai-help-assistant"><span
+class="toc-section-number">1.9.14</span> 8.14 AI Help Assistant</a></li>
 </ul></li>
 <li><a href="#integration" id="toc-integration"><span
 class="toc-section-number">1.10</span> 9. Integration</a>
@@ -517,6 +519,12 @@ class="header-section-number">1.2.2</span> 1.2 Dashboard</h3>
 a flat Cash balance is an early warning that collections need attention.
 A rising AP Balance approaching its due dates means a check run is
 due.</p>
+<blockquote>
+<p><strong>Stuck on any screen?</strong> If your administrator has
+enabled it, a floating <strong>✦ AI Help</strong> button in the
+bottom-right corner answers “how do I…” questions from this guide — see
+§8.14.</p>
+</blockquote>
 <figure>
 <img src="docs-style/images/dashboard.png"
 alt="OpenERP dashboard with KPI tiles, recent GL batches, and quick links" />
@@ -1339,12 +1347,18 @@ vendors for the same items.</p>
 <li>Create an RFQ with line items (item, description, qty).</li>
 <li><strong>Send</strong> changes status to SENT.</li>
 <li>Use <strong>Record Quote</strong> to enter each vendor’s response
-(price per line, lead time, availability).</li>
-<li>The comparison grid highlights the lowest price per line in
-green.</li>
+(price per line, lead time, availability). When the quoting vendor is an
+<strong>agent</strong>, a <strong>Proposed Factory</strong> dropdown
+appears listing that agent’s manufacturers — record which factory the
+agent proposes to build at.</li>
+<li>The comparison grid highlights the lowest price per line in green; a
+🏭 line under the vendor’s name shows each quote’s proposed factory, so
+you can compare not just prices but <em>who would actually make the
+part</em>.</li>
 <li><strong>Select</strong> the winning vendor’s quote.</li>
 <li><strong>Convert to PO</strong> creates the purchase order at the
-quoted prices.</li>
+quoted prices. The winning quote’s proposed factory is carried onto the
+PO as its factory attribution (§4.4).</li>
 </ol>
 <blockquote>
 <p><strong>When to use RFQs:</strong> Use RFQs for any purchase where
@@ -1361,8 +1375,22 @@ transaction.</p>
 <p>Creating a PO is similar to SO creation: choose vendor, dates,
 period, terms, warehouse, and add lines (item, qty, unit cost). The PO
 starts in <code>OPEN</code> status.</p>
-<h4 data-number="1.5.4.1" id="po-statuses"><span
-class="header-section-number">1.5.4.1</span> PO Statuses</h4>
+<h4 data-number="1.5.4.1" id="factory-attribution-agent-pos"><span
+class="header-section-number">1.5.4.1</span> Factory Attribution (agent
+POs)</h4>
+<p>When the selected vendor is an <strong>agent</strong> (Vendor Master
+§4.1), a <strong>Factory (built by)</strong> dropdown appears on the
+form, listing the manufacturers linked to that agent. The PO’s
+commercial party stays the agent — the agent gets the order, the bill,
+and the payment — but the factory field records <em>which plant actually
+builds the parts</em>. It appears as a <strong>Factory</strong> column
+on the PO list and can be set or corrected later via
+<strong>Edit</strong> (e.g., when the agent tells you after the fact
+which factory got the job). POs converted from an RFQ inherit the
+winning quote’s proposed factory automatically. Leave it blank if the
+factory isn’t known yet.</p>
+<h4 data-number="1.5.4.2" id="po-statuses"><span
+class="header-section-number">1.5.4.2</span> PO Statuses</h4>
 <table>
 <colgroup>
 <col style="width: 27%" />
@@ -1404,8 +1432,8 @@ class="header-section-number">1.5.4.1</span> PO Statuses</h4>
 </tr>
 </tbody>
 </table>
-<h4 data-number="1.5.4.2" id="receiving-goods"><span
-class="header-section-number">1.5.4.2</span> Receiving Goods</h4>
+<h4 data-number="1.5.4.3" id="receiving-goods"><span
+class="header-section-number">1.5.4.3</span> Receiving Goods</h4>
 <p>Click <strong>Receive</strong> on an OPEN or PARTIAL PO. Enter
 receipt number, receipt date, period, and warehouse (+ optional bin).
 The system: - Creates <code>RECEIPT</code> inventory transactions
@@ -1421,8 +1449,8 @@ invoice in hand and have matched it against what you actually received
 </blockquote>
 <p>For drop-ship POs (ship_to = customer address), receiving does not
 touch inventory — it marks the linked SO lines SHIPPED instead.</p>
-<h4 data-number="1.5.4.3" id="creating-an-ap-bill-from-a-po"><span
-class="header-section-number">1.5.4.3</span> Creating an AP Bill from a
+<h4 data-number="1.5.4.4" id="creating-an-ap-bill-from-a-po"><span
+class="header-section-number">1.5.4.4</span> Creating an AP Bill from a
 PO</h4>
 <p>Click <strong>Bill</strong> on a RECEIVED or PARTIAL PO. Enter bill
 number, bill date, due date, period, and terms. The system creates an AP
@@ -2591,13 +2619,23 @@ vendor list over as-is</td>
 </tr>
 <tr class="odd">
 <td></td>
+<td>Vendor Contacts</td>
+<td>One row per person: vendor, name, title, department,
+email/phone/WhatsApp/WeChat</td>
+<td>Loads each vendor’s department contacts (Sales, Quality,
+Engineering…) in bulk instead of adding them one at a time on the
+Contacts tab</td>
+<td><code>vendor_number</code> + <code>contact_name</code></td>
+</tr>
+<tr class="even">
+<td></td>
 <td>Items</td>
 <td>One row per item/SKU: description, category, UOM, cost, price</td>
 <td>Usually the largest single import for a new company — a catalog of
 hundreds or thousands of SKUs is impractical to key by hand</td>
 <td><code>item_number</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Setup &amp; Lookups</strong></td>
 <td>Chart of Accounts</td>
 <td>One row per GL account: number, name, type, normal balance,
@@ -2606,7 +2644,7 @@ parent</td>
 existing books rather than re-building it by hand</td>
 <td><code>account_number</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td>Item Categories</td>
 <td>One row per category, optionally nested via
@@ -2615,7 +2653,7 @@ existing books rather than re-building it by hand</td>
 codes; lets you preserve an existing category hierarchy</td>
 <td><code>category_code</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td>Units of Measure</td>
 <td>One row per UOM (EA, CS, BX, etc.)</td>
@@ -2623,14 +2661,14 @@ codes; lets you preserve an existing category hierarchy</td>
 use non-default UOM codes</td>
 <td><code>uom_code</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td>Warehouses</td>
 <td>One row per warehouse: code, name, address</td>
 <td>Needed before importing bins or any inventory-aware transaction</td>
 <td><code>warehouse_code</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td>Bin Locations</td>
 <td>One row per bin: warehouse, bin code, aisle/rack/shelf</td>
@@ -2638,14 +2676,14 @@ use non-default UOM codes</td>
 one at a time in the UI</td>
 <td><code>warehouse_code</code> + <code>bin_code</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td>Price Lists</td>
 <td>One row per price list (RETAIL, WHOLESALE, etc.)</td>
 <td>Needed before Price List Items</td>
 <td><code>price_list_code</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td>Price List Items</td>
 <td>One row per item price on a list</td>
@@ -2653,7 +2691,7 @@ one at a time in the UI</td>
 price</td>
 <td><code>price_list_code</code> + <code>item_number</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td>Vendor Item Catalog</td>
 <td>One row per vendor/item pairing: vendor SKU, lead time, MOQ,
@@ -2662,7 +2700,7 @@ cost</td>
 from your own</td>
 <td><code>vendor_number</code> + <code>item_number</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Opening Balances</strong></td>
 <td>GL Opening Balances</td>
 <td>One row per account/period: debit or credit amount</td>
@@ -2671,7 +2709,7 @@ balance as of cutover instead of replaying every historical journal
 entry. <strong>Do this last</strong> — see §8.12.4</td>
 <td><code>account_number</code> + <code>period_code</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Transactions</strong></td>
 <td>Sales Orders</td>
 <td>One row per SO line, grouped by <code>so_number</code></td>
@@ -2679,7 +2717,7 @@ entry. <strong>Do this last</strong> — see §8.12.4</td>
 exist in OpenERP so they can be shipped/invoiced going forward</td>
 <td><code>so_number</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td>Purchase Orders</td>
 <td>One row per PO line, grouped by <code>po_number</code></td>
@@ -2687,7 +2725,7 @@ exist in OpenERP so they can be shipped/invoiced going forward</td>
 cutover</td>
 <td><code>po_number</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td>AR Invoices</td>
 <td>One row per invoice line, grouped by
@@ -2696,7 +2734,7 @@ cutover</td>
 correctly after cutover, without re-entering each one by hand</td>
 <td><code>invoice_number</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td>AP Bills</td>
 <td>One row per bill line, grouped by <code>bill_number</code></td>
@@ -2876,7 +2914,8 @@ themselves</td>
 <tr class="odd">
 <td><code>contact_name</code></td>
 <td>The main contact person (department contacts — Sales, Quality,
-Engineering… — are added on the vendor’s Contacts tab after import)</td>
+Engineering… — are loaded afterward with the Vendor Contacts import,
+§8.12.7, or added on the vendor’s Contacts tab)</td>
 </tr>
 <tr class="even">
 <td><code>incoterms</code></td>
@@ -3005,12 +3044,189 @@ columns as <strong>Text</strong> in Excel before typing, per the gotchas
 in §8.12.1. Re-running the same file is safe: existing vendor numbers
 are skipped, never overwritten.</p>
 </blockquote>
+<h4 data-number="1.9.12.7"
+id="preparing-the-vendor-contacts-spreadsheet"><span
+class="header-section-number">1.9.12.7</span> 8.12.7 Preparing the
+Vendor Contacts Spreadsheet</h4>
+<p>The <strong>Vendor Contacts</strong> import bulk-loads each vendor’s
+people — the department contacts shown on the vendor’s Contacts tab
+(§4.1). Import Vendors first; build one sheet with <strong>one row per
+person</strong>:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What to enter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>vendor_number</code> <em>(required)</em></td>
+<td>The vendor the person belongs to — must already exist</td>
+</tr>
+<tr class="even">
+<td><code>contact_name</code> <em>(required)</em></td>
+<td>Full name. A vendor’s existing contact with the same name is
+skipped, never overwritten</td>
+</tr>
+<tr class="odd">
+<td><code>title</code></td>
+<td>e.g. <code>Sales Manager</code></td>
+</tr>
+<tr class="even">
+<td><code>department</code></td>
+<td><code>SALES</code>, <code>ENGINEERING</code>, <code>QUALITY</code>,
+<code>PRODUCTION</code>, <code>LOGISTICS</code>,
+<code>ACCOUNTING</code>, or <code>MANAGEMENT</code></td>
+</tr>
+<tr class="odd">
+<td><code>email</code>, <code>phone</code>, <code>mobile</code></td>
+<td>Contact channels</td>
+</tr>
+<tr class="even">
+<td><code>whatsapp</code>, <code>wechat</code></td>
+<td>Common for overseas vendors — WhatsApp number / WeChat ID</td>
+</tr>
+<tr class="odd">
+<td><code>preferred_method</code></td>
+<td><code>EMAIL</code>, <code>PHONE</code>, <code>WHATSAPP</code>, or
+<code>WECHAT</code></td>
+</tr>
+<tr class="even">
+<td><code>is_primary</code></td>
+<td><code>1</code> marks this person as the vendor’s primary contact
+(clears any prior primary)</td>
+</tr>
+<tr class="odd">
+<td><code>notes</code></td>
+<td>Free text</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><code>vendor_number,contact_name,title,department,email,preferred_method,is_primary
+AGT-WENZHOU,Li Wei,Sales Manager,SALES,liwei@wzsourcing.cn,WECHAT,1
+AGT-WENZHOU,Chen Fang,QA Coordinator,QUALITY,chen@wzsourcing.cn,EMAIL,0
+MFG-NINGBO,Zhang Ming,Plant Manager,MANAGEMENT,zhang@dongxin.cn,WHATSAPP,1</code></pre>
+<p>The natural key is <code>vendor_number</code> +
+<code>contact_name</code>, so re-running the same file is safe — rows
+already loaded are reported as <em>skipped</em>. An unknown
+<code>vendor_number</code> fails just that row; the rest of the file
+still imports.</p>
 <h3 data-number="1.9.13" id="csv-export"><span
 class="header-section-number">1.9.13</span> 8.13 CSV Export</h3>
 <p>Most list screens have an <strong>Export CSV</strong> button that
 downloads the current filtered/paginated view as a CSV file. Available
 on: AR Invoices, AR Customers, AP Vendors, AP Bills, Sales Orders, and
 the Inventory Valuation report.</p>
+<h3 data-number="1.9.14" id="ai-help-assistant"><span
+class="header-section-number">1.9.14</span> 8.14 AI Help Assistant</h3>
+<p>Every page can show a floating <strong>✦ AI Help</strong> button
+(bottom-right corner). Clicking it opens a chat panel where any user can
+ask questions in plain English — <em>“How do I receive a purchase
+order?”</em>, <em>“What does the BLOCKED vendor status do?”</em>,
+<em>“How do I post a physical count?”</em> — and get an answer drawn
+from this User Guide, with the relevant section number cited.</p>
+<p><strong>What it knows — and what it can’t see.</strong> The assistant
+answers from two sources that are sent along with every question: this
+User Guide, and an auto-generated <em>schema digest</em> describing the
+structure of the database (table and column names with their meanings —
+never any data). It has <strong>no access to your live business
+data</strong>: it cannot see customers, prices, balances, vendors, or
+any transaction. It also cannot perform actions — it only explains how
+<em>you</em> can. If a question isn’t covered by the guide, it says so
+rather than guessing.</p>
+<h4 data-number="1.9.14.1" id="setting-it-up-administrator"><span
+class="header-section-number">1.9.14.1</span> 8.14.1 Setting It Up
+(Administrator)</h4>
+<p>The assistant is powered by Anthropic’s Claude models and needs an
+API key. One-time setup:</p>
+<ol type="1">
+<li>Create an account at <strong>console.anthropic.com</strong>, add
+billing, and generate an API key (starts with
+<code>sk-ant-</code>).</li>
+<li>In OpenERP go to <strong>Admin → Setup → Company</strong>, scroll to
+the <strong>AI Assistant</strong> card.</li>
+<li>Paste the key into <strong>Anthropic API Key</strong>, set
+<strong>Enable AI Help</strong> to <em>Enabled</em>, pick a
+<strong>Model</strong>, and click <strong>Save Changes</strong>.</li>
+<li>Reload the page — the <strong>✦ AI Help</strong> button appears
+bottom-right for all users.</li>
+</ol>
+<p>The key is stored server-side only and is never sent to browsers;
+after saving, the settings page shows only a masked value
+(<code>••••</code> plus the last 4 characters). Leave the masked value
+as-is to keep the existing key, or paste a new key over it to replace
+it.</p>
+<p><strong>Model choice.</strong> <em>Claude Opus 4.8</em> (the default)
+gives the best answers. <em>Claude Sonnet 5</em> and <em>Claude Haiku
+4.5</em> are progressively cheaper and faster. Typical cost is a few
+cents per question with Opus — repeat questions within a few minutes are
+cheaper because the reference material is cached by the provider.</p>
+<p><strong>Limits.</strong> Each user can ask up to 60 questions per
+hour. Every question is recorded in the Audit Log (Admin → Audit Log,
+table <code>ai_chat</code>) with the user and a snippet of the question,
+so usage is visible.</p>
+<h4 data-number="1.9.14.2" id="using-it"><span
+class="header-section-number">1.9.14.2</span> 8.14.2 Using It</h4>
+<ul>
+<li>Click <strong>✦ AI Help</strong>, type a question, press
+<strong>Enter</strong> (or click <strong>Send</strong>).</li>
+<li>Follow-up questions keep the conversation context — you can ask
+<em>“and how do I void it?”</em> after asking about invoices.</li>
+<li>The assistant knows which page you’re on and can tailor the answer
+to it.</li>
+<li><strong>⟲</strong> clears the conversation; <strong>✕</strong>
+closes the panel (the conversation is kept until you log out or
+reload).</li>
+<li>If the button doesn’t appear, the assistant hasn’t been enabled —
+see 8.14.1.</li>
+</ul>
+<h4 data-number="1.9.14.3" id="keeping-its-knowledge-current"><span
+class="header-section-number">1.9.14.3</span> 8.14.3 Keeping Its
+Knowledge Current</h4>
+<p>The assistant’s knowledge lives in two places on the server:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>What it covers</th>
+<th>How to update</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>USERGUIDE.md</code></td>
+<td>Everything in this guide</td>
+<td>Edit the guide — picked up automatically on the next question</td>
+</tr>
+<tr class="even">
+<td><code>docs/ai-context/*.md</code></td>
+<td>Schema digest + any extra notes you add</td>
+<td>See below</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>schema digest</strong>
+(<code>docs/ai-context/schema-digest.md</code>) is generated from the
+SQL schema files by a script. After adding or changing tables,
+regenerate it:</p>
+<pre><code>C:\php\php.exe F:\OpenERP\tools\generate_ai_schema_digest.php</code></pre>
+<p>It extracts table names, column names/types, and the comments already
+written in the DDL — structure only, no data — so there is nothing
+confidential in it. You can also drop additional Markdown files into
+<code>docs/ai-context/</code> (e.g. company-specific workflow notes,
+naming conventions, “who to call” lists) and the assistant will use them
+immediately; each file is included on every question.</p>
 <hr />
 <h2 data-number="1.10" id="integration"><span
 class="header-section-number">1.10</span> 9. Integration</h2>
@@ -3208,22 +3424,22 @@ proxy.</p>
 <h4 data-number="1.10.3.2" id="what-payload-openerp-expects"><span
 class="header-section-number">1.10.3.2</span> What payload OpenERP
 expects</h4>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;SHOPIFY&quot;</span><span class="fu">,</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;external_id&quot;</span><span class="fu">:</span> <span class="st">&quot;order_12345&quot;</span><span class="fu">,</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;customer&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;buyer@example.com&quot;</span><span class="fu">,</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jane Buyer&quot;</span><span class="fu">,</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;address1&quot;</span><span class="fu">:</span> <span class="st">&quot;123 Main St&quot;</span><span class="fu">,</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Springfield&quot;</span><span class="fu">,</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;IL&quot;</span><span class="fu">,</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="st">&quot;62704&quot;</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lines&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;item_number&quot;</span><span class="fu">:</span> <span class="st">&quot;WIDGET-A&quot;</span><span class="fu">,</span> <span class="dt">&quot;qty&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">9.99</span> <span class="fu">}</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;SHOPIFY&quot;</span><span class="fu">,</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;external_id&quot;</span><span class="fu">:</span> <span class="st">&quot;order_12345&quot;</span><span class="fu">,</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;customer&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;buyer@example.com&quot;</span><span class="fu">,</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jane Buyer&quot;</span><span class="fu">,</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;address1&quot;</span><span class="fu">:</span> <span class="st">&quot;123 Main St&quot;</span><span class="fu">,</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Springfield&quot;</span><span class="fu">,</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;IL&quot;</span><span class="fu">,</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="st">&quot;62704&quot;</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lines&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;item_number&quot;</span><span class="fu">:</span> <span class="st">&quot;WIDGET-A&quot;</span><span class="fu">,</span> <span class="dt">&quot;qty&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">9.99</span> <span class="fu">}</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <ul>
 <li><code>source</code> — a short label for which platform sent it (used
 for filtering in the order list, and for duplicate detection — see
@@ -3293,8 +3509,8 @@ forward by its frequency.</p></li>
 <li><p><strong>Fully automatically:</strong> run this command (it finds
 every active template whose Next Run Date has arrived, generates a PO
 from each, and advances each one):</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
 <p>Just like the Scheduled Reports runner in §8.11, this command does
 nothing on its own until something triggers it on a schedule. Set it up
 the same way, in <strong>Windows Task Scheduler</strong>:</p>
