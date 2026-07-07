@@ -2158,21 +2158,27 @@ class="header-section-number">1.9</span> 8. Administration</h2>
 <h3 data-number="1.9.1" id="users-and-groups"><span
 class="header-section-number">1.9.1</span> 8.1 Users and Groups</h3>
 <p><strong>Admin → Users</strong>: - Create users with a username,
-password (minimum 6 characters), full name, and group assignment. -
-<strong>Email</strong> is optional but recommended for every user — it’s
-validated for a proper email format and is stored for the user’s
-account, ready for future features (e.g., reminders/notifications) that
-need somewhere to send them. It is not currently used to send anything.
-- Deactivate users to block login without deleting records. -
-<strong>Change Password</strong> — bumps <code>token_version</code> to
-immediately invalidate all active sessions for that user. - <strong>⊘
-Force Logout</strong> — invalidates all active tokens for the user
-without changing the password.</p>
-<p><strong>Admin → Groups</strong>: - Groups bundle permissions. Every
-user belongs to exactly one group. - Create groups with a name and
+password (minimum 6 characters), full name, and <strong>one or more
+groups</strong> — check every group that applies in the scrollable
+Groups checklist. At least one group is required. - The Users list shows
+all of a user’s assigned groups, comma-separated, in the
+<strong>Groups</strong> column. - <strong>Email</strong> is optional but
+recommended for every user — it’s validated for a proper email format
+and is stored for the user’s account, ready for future features (e.g.,
+reminders/notifications) that need somewhere to send them. It is not
+currently used to send anything. - Deactivate users to block login
+without deleting records. - <strong>Change Password</strong> — bumps
+<code>token_version</code> to immediately invalidate all active sessions
+for that user. - <strong>⊘ Force Logout</strong> — invalidates all
+active tokens for the user without changing the password.</p>
+<p><strong>Admin → Groups</strong>: - Groups bundle permissions. A
+user’s effective permissions are the <strong>union</strong> of every
+group they’re assigned to — checking a second group only ever adds
+access, it never takes any away. - Create groups with a name and
 description, then check the permissions to grant. - Changing a group’s
 permissions takes effect on the user’s next request (token is
-re-validated per request).</p>
+re-validated per request); adding or removing a group from a user takes
+effect the next time that user logs in.</p>
 <blockquote>
 <p><strong>Recommended group structure:</strong></p>
 <table>
@@ -2219,6 +2225,11 @@ re-validated per request).</p>
 <p>Separate AR and AP access so that no single employee can both record
 a payment receipt AND apply it to an invoice without a second person
 reviewing. This is a basic internal control.</p>
+<p>For staff who genuinely cover more than one role (e.g. an office
+manager who does both AR and light warehouse work), assign both groups
+directly to that one user rather than creating a new combined group — it
+keeps the group list itself small and each group’s purpose
+single-purpose and auditable.</p>
 </blockquote>
 <h3 data-number="1.9.2" id="permissions-reference"><span
 class="header-section-number">1.9.2</span> 8.2 Permissions
