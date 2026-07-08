@@ -176,6 +176,8 @@ Collections</a></li>
 class="toc-section-number">1.4.8</span> 3.8 Customer Statements</a></li>
 <li><a href="#counter-sales" id="toc-counter-sales"><span
 class="toc-section-number">1.4.9</span> 3.9 Counter Sales</a></li>
+<li><a href="#inquiry-master" id="toc-inquiry-master"><span
+class="toc-section-number">1.4.10</span> 3.10 Inquiry Master</a></li>
 </ul></li>
 <li><a href="#procure-to-pay" id="toc-procure-to-pay"><span
 class="toc-section-number">1.5</span> 4. Procure-to-Pay</a>
@@ -284,6 +286,10 @@ class="toc-section-number">1.7.13</span> 6.13 Kitting / BOM</a></li>
 class="toc-section-number">1.7.14</span> 6.14 Barcode Scanning</a></li>
 <li><a href="#inbound-shipments" id="toc-inbound-shipments"><span
 class="toc-section-number">1.7.15</span> 6.15 Inbound Shipments</a></li>
+<li><a href="#engineering-data-and-part-documents"
+id="toc-engineering-data-and-part-documents"><span
+class="toc-section-number">1.7.16</span> 6.16 Engineering Data and Part
+Documents</a></li>
 </ul></li>
 <li><a href="#financials" id="toc-financials"><span
 class="toc-section-number">1.8</span> 7. Financials</a>
@@ -383,21 +389,25 @@ id="toc-management-operating-procedures"><span
 class="toc-section-number">1.11</span> 10. Management Operating
 Procedures</a>
 <ul>
+<li><a href="#the-analytics-section-pillar-dashboards"
+id="toc-the-analytics-section-pillar-dashboards"><span
+class="toc-section-number">1.11.1</span> 10.0 The Analytics Section
+(Pillar Dashboards)</a></li>
 <li><a href="#daily-routines" id="toc-daily-routines"><span
-class="toc-section-number">1.11.1</span> 10.1 Daily Routines</a></li>
+class="toc-section-number">1.11.2</span> 10.1 Daily Routines</a></li>
 <li><a href="#weekly-routines" id="toc-weekly-routines"><span
-class="toc-section-number">1.11.2</span> 10.2 Weekly Routines</a></li>
+class="toc-section-number">1.11.3</span> 10.2 Weekly Routines</a></li>
 <li><a href="#monthly-period-end-checklist"
 id="toc-monthly-period-end-checklist"><span
-class="toc-section-number">1.11.3</span> 10.3 Monthly Period-End
+class="toc-section-number">1.11.4</span> 10.3 Monthly Period-End
 Checklist</a></li>
 <li><a href="#quarterly-procedures" id="toc-quarterly-procedures"><span
-class="toc-section-number">1.11.4</span> 10.4 Quarterly
+class="toc-section-number">1.11.5</span> 10.4 Quarterly
 Procedures</a></li>
 <li><a href="#annual-procedures" id="toc-annual-procedures"><span
-class="toc-section-number">1.11.5</span> 10.5 Annual Procedures</a></li>
+class="toc-section-number">1.11.6</span> 10.5 Annual Procedures</a></li>
 <li><a href="#exception-handling" id="toc-exception-handling"><span
-class="toc-section-number">1.11.6</span> 10.6 Exception
+class="toc-section-number">1.11.7</span> 10.6 Exception
 Handling</a></li>
 </ul></li>
 <li><a href="#reference" id="toc-reference"><span
@@ -469,6 +479,11 @@ admin account created at install time is <code>admin</code> /
 under Admin → Users before going live.</p>
 <p>The session token expires after 8 hours. You will be redirected to
 the login screen automatically when it expires.</p>
+<p><strong>Collapsing the menu:</strong> the <strong>☰</strong> button
+at the top of the sidebar collapses it to a narrow icon rail, freeing
+screen width for the grids. While collapsed, hovering over the rail
+temporarily expands the full menu over the page; click ☰ again to pin it
+open. The choice is remembered per browser.</p>
 <figure>
 <img src="docs-style/images/login.png" alt="OpenERP login screen" />
 <figcaption aria-hidden="true">OpenERP login screen</figcaption>
@@ -862,16 +877,50 @@ flagged as default; it auto-selects on the SO form.</p>
 <p><strong>Contacts:</strong> Click <strong>Contacts</strong> to add
 named contacts with phone and email. Contacts flagged “primary” receive
 emailed documents.</p>
+<p><strong>Customer Detail (Requirements / Timeline /
+Documents):</strong> Click <strong>Detail</strong> on a selected
+customer to open the customer’s operational record — three tabs that
+turn the Customer Master into a complete knowledge base rather than a
+contact list:</p>
+<ul>
+<li><strong>Requirements</strong> — the customer’s standing operational
+rules, visible to every department: shipping preferences (carrier,
+freight terms), packaging / labeling / inspection requirements, quality
+expectations, inventory strategy, and flags for Vendor-Managed Inventory
+and Stock &amp; Release programs. Enter them once here instead of
+re-explaining them in emails; anyone shipping or quoting for this
+customer can look them up.</li>
+<li><strong>Timeline</strong> — the relationship history: dated, typed
+entries (Visit, Business Review, Engineering, Quality Issue, Corrective
+Action, Commercial, Milestone) with a summary and optional details. Add
+an entry after every customer visit or review — the timeline is
+permanent (removing an entry hides it but never destroys it) and
+survives personnel changes.</li>
+<li><strong>Documents</strong> — file attachments up to 25 MB each:
+tax-exempt certificates, contracts, NDAs, quality agreements,
+packaging/labeling specs, routing guides. Certificates carry an
+<strong>expiration date</strong>; dates within 90 days (or past) show in
+red so an expired resale certificate never surprises you at invoice
+time. Removing a document deactivates it; the file stays on disk.</li>
+</ul>
 <blockquote>
 <p><strong>What to do next after adding a customer:</strong> Set the
 credit limit and payment terms before their first order. A customer with
 no credit limit will never be blocked by the credit check, regardless of
-how much they owe.</p>
+how much they owe. Then open <strong>Detail → Requirements</strong> and
+record their packaging/labeling/inspection rules while they’re fresh
+from onboarding.</p>
 </blockquote>
 <h3 data-number="1.4.2" id="sales-quotes"><span
 class="header-section-number">1.4.2</span> 3.2 Sales Quotes</h3>
 <p><strong>Sales → Quotes</strong> — optional step before creating a
 firm order.</p>
+<blockquote>
+<p>For opportunities involving parts that don’t exist in the Item Master
+yet (custom-engineered components needing supplier sourcing first),
+start from the <strong>Inquiry Master</strong> (§3.10) instead — it can
+spawn this quote for you once sourcing is done.</p>
+</blockquote>
 <p>Statuses: <code>DRAFT</code> → <code>SENT</code> →
 <code>ACCEPTED</code> or <code>EXPIRED</code> or
 <code>CANCELLED</code></p>
@@ -1160,6 +1209,103 @@ customer.</li>
 screen; on a narrower window the Payment panel moves below Order Details
 — the page never scrolls sideways, so the Complete Sale button is always
 reachable.</p>
+<h3 data-number="1.4.10" id="inquiry-master"><span
+class="header-section-number">1.4.10</span> 3.10 Inquiry Master</h3>
+<p><strong>Inquiries</strong> (top-level sidebar link) — tracks a
+customer opportunity from the moment it arrives, <em>before</em> a part
+number or quote exists. Traditional flows in this guide start from an
+existing item; the Inquiry Master starts from a request — often for a
+custom-engineered part you have never sourced — and carries it through
+supplier sourcing and customer quoting to a win or a loss. Either way,
+the record is preserved: <strong>lost inquiries are never
+deleted</strong>, so the sourcing knowledge (who quoted, at what price,
+why the business was lost) stays searchable for the next
+opportunity.</p>
+<p>Statuses: <code>DRAFT</code> → <code>QUOTING</code> →
+<code>AWARDED</code> or <code>LOST</code> or <code>CANCELLED</code></p>
+<h4 data-number="1.4.10.1" id="creating-an-inquiry"><span
+class="header-section-number">1.4.10.1</span> Creating an Inquiry</h4>
+<ol type="1">
+<li>Click <strong>+ New Inquiry</strong>. Enter the inquiry #,
+<strong>customer</strong> (contact and sales rep optional), <strong>date
+received</strong>, and target quote date. Industry, application, and
+estimated annual volume are free-form context for later reporting.</li>
+<li>Add <strong>lines</strong>. Each line describes one part being
+requested:
+<ul>
+<li>Leave <strong>Existing Item</strong> at “— new part —” when the part
+doesn’t exist yet, and fill in the engineering identity instead:
+<strong>customer part #</strong>, description, <strong>drawing
+#</strong>, <strong>revision</strong>, and <strong>material
+spec</strong>.</li>
+<li>Or select an existing item for repeat business — description and UOM
+auto-fill.</li>
+<li><strong>Target price</strong> records what the customer hopes to
+pay; it pre-fills the quote and award forms later.</li>
+</ul></li>
+<li>Save. The inquiry is created in <code>DRAFT</code>.</li>
+</ol>
+<p>The <strong>Notes (Operational Intelligence)</strong> box on the
+Overview tab is for contextual knowledge that doesn’t fit a field —
+“customer prefers castings from Taiwan”, “drawing rev B expected next
+month”. It is editable any time before award/loss.</p>
+<h4 data-number="1.4.10.2"
+id="the-engineering-package-documents-tab"><span
+class="header-section-number">1.4.10.2</span> The Engineering Package
+(Documents tab)</h4>
+<p>Upload drawings, spec sheets, CAD models, material certs, and
+customer correspondence on the <strong>Documents</strong> tab (max 25 MB
+per file). These files are the technical foundation suppliers quote
+against. Download or remove them from the same tab; removed documents
+are deactivated, not destroyed.</p>
+<h4 data-number="1.4.10.3" id="sourcing-spawn-rfq-and-spawn-quote"><span
+class="header-section-number">1.4.10.3</span> Sourcing: Spawn RFQ and
+Spawn Quote</h4>
+<ul>
+<li><strong>Spawn RFQ</strong> creates a supplier RFQ (§4.3) pre-loaded
+with the inquiry’s lines. Work the RFQ as usual — send to vendors,
+record quotes, compare prices in the comparison grid. The inquiry’s
+<strong>Sourcing</strong> tab shows the RFQ’s status and vendor-quote
+count with a <strong>View RFQ →</strong> link straight into it.</li>
+<li><strong>Spawn Quote</strong> creates a customer Sales Quote (§3.2)
+from the inquiry’s lines. Enter your selling price per line (pre-filled
+from target price); the quote then follows its normal life — send,
+accept into an SO, or expire. The Sourcing tab links to it the same
+way.</li>
+</ul>
+<p>Either action moves the inquiry to <code>QUOTING</code>. An inquiry
+can have at most one RFQ and one quote.</p>
+<h4 data-number="1.4.10.4" id="award-or-loss"><span
+class="header-section-number">1.4.10.4</span> Award or Loss</h4>
+<ul>
+<li><strong>Award</strong> — the customer gave you the business. For
+each line, either select the existing item or let the system
+<strong>create a new Item Master record</strong> from the part details.
+Enter the winning <strong>vendor</strong> and <strong>unit
+cost</strong>. On award the system:
+<ul>
+<li>creates the <code>items</code> row (type STOCK, standard cost = the
+awarded cost) for new parts,</li>
+<li>records the <strong>customer part number</strong> as a CUSTOMER
+cross-reference on the item (§6.9),</li>
+<li>adds the winning vendor to the item’s <strong>vendor
+catalog</strong> (§4.11) as preferred, at the awarded cost,</li>
+<li>links each inquiry line to its item and marks the inquiry
+<code>AWARDED</code>.</li>
+</ul></li>
+<li><strong>Mark Lost</strong> — enter the reason (competitor, price,
+timing…). The inquiry, its lines, engineering package, RFQ, and quote
+all remain on file. Six months later, when the same drawing comes back
+around, search the Inquiries list and you have the full sourcing
+history.</li>
+</ul>
+<blockquote>
+<p><strong>What comes next after an award:</strong> the new item exists
+in the Item Master, priced and vendor-linked, so the normal flows take
+over — accept the spawned quote into a <strong>Sales Order</strong>
+(§3.3) and convert the RFQ’s winning quote into a <strong>PO</strong>
+(§4.3), or create both directly.</p>
+</blockquote>
 <hr />
 <h2 data-number="1.5" id="procure-to-pay"><span
 class="header-section-number">1.5</span> 4. Procure-to-Pay</h2>
@@ -1824,7 +1970,12 @@ min qty / max qty</strong> — drive reorder suggestions - <strong>ABC
 class</strong> — A, B, or C (updated by ABC classification run) -
 <strong>HTS code, country of origin, tariff rate</strong> — for import
 cost calculations - <strong>Is kit</strong> — if checked, the item is
-exploded into BOM components on SO entry</p>
+exploded into BOM components on SO entry - <strong>Drawing #, revision,
+material spec, manufacturing method</strong> — the part’s engineering
+identity (see §6.16); shown as a Drawing # column in the list -
+<strong>Specifications / critical characteristics</strong> — free-text
+engineering notes captured at creation or edited later via the
+<strong>Eng</strong> button</p>
 <h3 data-number="1.7.2" id="categories-and-uom"><span
 class="header-section-number">1.7.2</span> 6.2 Categories and UOM</h3>
 <ul>
@@ -1964,6 +2115,31 @@ freight containers with vessel, voyage, carrier, origin/destination
 ports, ETA, ATA, and customs status (PENDING → IN_TRANSIT → ARRIVED →
 CLEARED → HELD).</p>
 <p>Attach POs to a shipment to group expected receipts by container.</p>
+<h3 data-number="1.7.16" id="engineering-data-and-part-documents"><span
+class="header-section-number">1.7.16</span> 6.16 Engineering Data and
+Part Documents</h3>
+<p>For custom-engineered parts, an item is defined by its drawing, not
+just its number. Select an item and click <strong>Eng</strong> in the
+action bar to open the Engineering panel:</p>
+<ul>
+<li><strong>Engineering fields</strong> — drawing #, current revision,
+material spec, manufacturing method, plus free-text specifications and
+critical characteristics. Editable here at any time (the New Item form
+also captures them at creation). The list grid shows a <strong>Drawing
+#</strong> column with the current rev.</li>
+<li><strong>Part documents</strong> — upload drawings, spec sheets, CAD
+models, material certs, quality docs, and photos (max 25 MB each). Each
+file can carry its own <strong>Rev</strong> tag, so when the drawing
+moves from rev C to rev D you keep both PDFs and can tell them apart.
+Removing a document deactivates it; nothing is destroyed.</li>
+</ul>
+<blockquote>
+<p><strong>Inquiry Master hand-off:</strong> when an inquiry is awarded
+(§3.10) and a new item is created, the drawing #, revision, and material
+spec entered on the inquiry line are copied onto the item automatically
+— the engineering identity established during quoting follows the part
+into production without re-typing.</p>
+</blockquote>
 <hr />
 <h2 data-number="1.8" id="financials"><span
 class="header-section-number">1.8</span> 7. Financials</h2>
@@ -3568,10 +3744,55 @@ Procedures</h2>
 the system efficiently. These are operating procedures, not software
 instructions — they describe <em>when</em> and <em>why</em> to perform
 tasks, not just <em>how</em>.</p>
-<h3 data-number="1.11.1" id="daily-routines"><span
-class="header-section-number">1.11.1</span> 10.1 Daily Routines</h3>
-<h4 data-number="1.11.1.1" id="finance-controller"><span
-class="header-section-number">1.11.1.1</span> Finance / Controller</h4>
+<h3 data-number="1.11.1"
+id="the-analytics-section-pillar-dashboards"><span
+class="header-section-number">1.11.1</span> 10.0 The Analytics Section
+(Pillar Dashboards)</h3>
+<p>The <strong>Analytics</strong> sidebar section holds one executive
+dashboard per master-record pillar. Each combines KPI tiles, charts, and
+a detail table. Check them weekly (or before customer/vendor reviews)
+rather than daily:</p>
+<ul>
+<li><strong>Inquiry Dashboard</strong> — the business-development
+pipeline. Tiles: open pipeline count and potential value (line qty ×
+target price for DRAFT/QUOTING inquiries), <strong>win rate</strong>
+(awarded ÷ (awarded + lost) — cancelled inquiries don’t count against
+you), awarded value, and average days from receipt to award. Charts:
+inquiries by status, monthly received/awarded/lost. Table: most active
+customers with per-customer win rate. A falling win rate or an aging
+pipeline is the early signal to review pricing or supplier response
+times.</li>
+<li><strong>Customer Dashboard</strong> — relationship health. Tiles:
+revenue for the selected invoice-date range, <strong>AR
+exposure</strong> (open + partial invoice balances), open SO backlog,
+and customer quote win rate (with an on-credit-hold badge when any
+customer is held). Chart: top customers by revenue. Table: per-customer
+revenue, AR balance (amber when nonzero), and open SO value — customer
+concentration is visible at a glance.</li>
+<li><strong>Part Dashboard</strong> — the production portfolio. Tiles:
+active parts, <strong>engineered parts</strong> (carrying a drawing
+number), preferred-vendor coverage, and <strong>single-source
+risk</strong> (engineered parts with only one vendor in the catalog —
+the tile turns amber when nonzero; find a backup supplier). Charts:
+parts by manufacturing method, top parts by shipped revenue. Table: top
+parts with drawing numbers.</li>
+<li><strong>Vendor Scorecard</strong> — supplier performance (§4.1);
+linked here so all four pillars’ dashboards live in one place.</li>
+</ul>
+<blockquote>
+<p><strong>Charts blank after an upgrade?</strong> The dashboards use
+the Chart.js library, which is installed automatically by
+<code>setup.ps1</code> (or <code>npm install</code> in the
+<code>frontend</code> folder). If the KPI tiles show numbers but the
+chart areas are empty — with an import error in the browser console —
+the frontend dependencies were not refreshed after the upgrade: re-run
+<code>setup.ps1</code> (or <code>npm install</code>) and restart the
+frontend. See INSTALL.md Step 9.</p>
+</blockquote>
+<h3 data-number="1.11.2" id="daily-routines"><span
+class="header-section-number">1.11.2</span> 10.1 Daily Routines</h3>
+<h4 data-number="1.11.2.1" id="finance-controller"><span
+class="header-section-number">1.11.2.1</span> Finance / Controller</h4>
 <ul>
 <li><strong>Check the Dashboard.</strong> Review cash, open AR, open AP,
 and overdue AR tiles. Any sharp movements overnight indicate
@@ -3585,8 +3806,8 @@ correct period and GL account.</li>
 <li><strong>Review the Audit Log</strong> (if anomalies are suspected).
 Filter by yesterday’s date to see all transactions.</li>
 </ul>
-<h4 data-number="1.11.1.2" id="warehouse-receiving"><span
-class="header-section-number">1.11.1.2</span> Warehouse / Receiving</h4>
+<h4 data-number="1.11.2.2" id="warehouse-receiving"><span
+class="header-section-number">1.11.2.2</span> Warehouse / Receiving</h4>
 <ul>
 <li><strong>Receive open POs.</strong> For each delivery that arrives,
 locate the PO in <strong>Purchasing → Orders</strong> and click
@@ -3596,8 +3817,8 @@ the receipt for the packing file.</li>
 <strong>Inventory → Reorder Suggestions</strong> to see if any items
 have dropped below reorder point. Notify purchasing.</li>
 </ul>
-<h4 data-number="1.11.1.3" id="sales-customer-service"><span
-class="header-section-number">1.11.1.3</span> Sales / Customer
+<h4 data-number="1.11.2.3" id="sales-customer-service"><span
+class="header-section-number">1.11.2.3</span> Sales / Customer
 Service</h4>
 <ul>
 <li><strong>Check the back-order report.</strong> Review <strong>Sales →
@@ -3606,11 +3827,11 @@ customers about delays and update promise dates.</li>
 <li><strong>Process new orders.</strong> Enter customer orders promptly
 — the ATP check gives the customer real-time availability.</li>
 </ul>
-<h3 data-number="1.11.2" id="weekly-routines"><span
-class="header-section-number">1.11.2</span> 10.2 Weekly Routines</h3>
-<h4 data-number="1.11.2.1"
+<h3 data-number="1.11.3" id="weekly-routines"><span
+class="header-section-number">1.11.3</span> 10.2 Weekly Routines</h3>
+<h4 data-number="1.11.3.1"
 id="ar-collections-every-monday-or-first-business-day-of-the-week"><span
-class="header-section-number">1.11.2.1</span> AR Collections (every
+class="header-section-number">1.11.3.1</span> AR Collections (every
 Monday, or first business day of the week)</h4>
 <ol type="1">
 <li>Run <strong>AR → Aging</strong>. Sort by the 61–90 and 91+ columns
@@ -3627,9 +3848,9 @@ received or a payment plan is agreed.</li>
 <li>Discuss write-off candidates with management. Write-offs over a
 threshold (e.g., $1,000) should require controller approval.</li>
 </ol>
-<h4 data-number="1.11.2.2"
+<h4 data-number="1.11.3.2"
 id="ap-check-run-typically-wednesday-or-thursday"><span
-class="header-section-number">1.11.2.2</span> AP Check Run (typically
+class="header-section-number">1.11.3.2</span> AP Check Run (typically
 Wednesday or Thursday)</h4>
 <ol type="1">
 <li>Run <strong>AP → Aging</strong>. Identify all bills due within the
@@ -3642,8 +3863,8 @@ vendor.</li>
 <li>After the bank processes the payments, match them in <strong>Bank
 Reconciliation</strong> when the statement updates.</li>
 </ol>
-<h4 data-number="1.11.2.3" id="purchasing-review"><span
-class="header-section-number">1.11.2.3</span> Purchasing Review</h4>
+<h4 data-number="1.11.3.3" id="purchasing-review"><span
+class="header-section-number">1.11.3.3</span> Purchasing Review</h4>
 <ol type="1">
 <li>Review open POs past their expected delivery date
 (<strong>Purchasing → Orders</strong>, filter OPEN/PARTIAL, sort by
@@ -3655,8 +3876,8 @@ shortfalls.</li>
 <li>Process any RFQs that have received all vendor responses — compare
 and convert the winner to a PO.</li>
 </ol>
-<h4 data-number="1.11.2.4" id="sales-commission-review"><span
-class="header-section-number">1.11.2.4</span> Sales Commission
+<h4 data-number="1.11.3.4" id="sales-commission-review"><span
+class="header-section-number">1.11.3.4</span> Sales Commission
 Review</h4>
 <ol type="1">
 <li>Run <strong>Sales → Commissions</strong> for the current
@@ -3666,8 +3887,8 @@ quota.</li>
 <li>Commissions accrue on invoiced SOs only (not on orders or shipments)
 — remind reps to push customers to accept invoices promptly.</li>
 </ol>
-<h3 data-number="1.11.3" id="monthly-period-end-checklist"><span
-class="header-section-number">1.11.3</span> 10.3 Monthly Period-End
+<h3 data-number="1.11.4" id="monthly-period-end-checklist"><span
+class="header-section-number">1.11.4</span> 10.3 Monthly Period-End
 Checklist</h3>
 <p>Perform these steps in order, on or before the last business day of
 each month. Do not close the period until all steps are complete.</p>
@@ -3714,8 +3935,8 @@ Statement and Balance Sheet to management. - Send the AR Aging to the
 collections team. - Send the AP Aging to the controller / CFO. - Send
 the Sales Commission report to the sales manager. - Send the Inventory
 Valuation summary to the operations manager.</p>
-<h3 data-number="1.11.4" id="quarterly-procedures"><span
-class="header-section-number">1.11.4</span> 10.4 Quarterly
+<h3 data-number="1.11.5" id="quarterly-procedures"><span
+class="header-section-number">1.11.5</span> 10.4 Quarterly
 Procedures</h3>
 <p><strong>Sales Tax Filing:</strong> - Run <strong>Admin → Sales
 Tax</strong> reports for the quarter. - Calculate tax collected by
@@ -3735,10 +3956,10 @@ late deliveries. - Use this data in vendor negotiations.</p>
 Budget vs Actual</strong> for the quarter. - Identify accounts that are
 significantly over or under budget. - Adjust forecasts for the remainder
 of the year and communicate to department heads.</p>
-<h3 data-number="1.11.5" id="annual-procedures"><span
-class="header-section-number">1.11.5</span> 10.5 Annual Procedures</h3>
-<h4 data-number="1.11.5.1" id="year-end-financial-close"><span
-class="header-section-number">1.11.5.1</span> Year-End Financial
+<h3 data-number="1.11.6" id="annual-procedures"><span
+class="header-section-number">1.11.6</span> 10.5 Annual Procedures</h3>
+<h4 data-number="1.11.6.1" id="year-end-financial-close"><span
+class="header-section-number">1.11.6.1</span> Year-End Financial
 Close</h4>
 <ol type="1">
 <li><strong>Complete all December transactions</strong> using the
@@ -3765,8 +3986,8 @@ Earnings.</li>
 the new year’s first period. All balance sheet accounts should show the
 same closing balance as December 31.</li>
 </ol>
-<h4 data-number="1.11.5.2" id="preparation-us"><span
-class="header-section-number">1.11.5.2</span> 1099 Preparation (US)</h4>
+<h4 data-number="1.11.6.2" id="preparation-us"><span
+class="header-section-number">1.11.6.2</span> 1099 Preparation (US)</h4>
 <ol type="1">
 <li>In January, run <strong>AP → 1099 Report</strong> for the prior
 calendar year with a minimum of $600.</li>
@@ -3778,8 +3999,8 @@ Vendors</strong>.</li>
 31</strong>. Due to IRS: <strong>January 31</strong> (electronic) or
 <strong>February 28</strong> (paper).</li>
 </ol>
-<h4 data-number="1.11.5.3" id="price-list-and-contract-review"><span
-class="header-section-number">1.11.5.3</span> Price List and Contract
+<h4 data-number="1.11.6.3" id="price-list-and-contract-review"><span
+class="header-section-number">1.11.6.3</span> Price List and Contract
 Review</h4>
 <ol type="1">
 <li>Run a margin analysis by item category — pull Sales data vs. FIFO
@@ -3791,9 +4012,9 @@ Lists</strong>.</li>
 <li>Review and renew (or renegotiate) customer contracts in
 <strong>Sales → Contracts</strong>.</li>
 </ol>
-<h4 data-number="1.11.5.4"
+<h4 data-number="1.11.6.4"
 id="sales-rep-commission-reconciliation"><span
-class="header-section-number">1.11.5.4</span> Sales Rep Commission
+class="header-section-number">1.11.6.4</span> Sales Rep Commission
 Reconciliation</h4>
 <ul>
 <li>Pull the full-year <strong>Sales → Commissions</strong> report.</li>
@@ -3801,10 +4022,10 @@ Reconciliation</h4>
 the year.</li>
 <li>This is the basis for annual commission W-2 or 1099 reporting.</li>
 </ul>
-<h3 data-number="1.11.6" id="exception-handling"><span
-class="header-section-number">1.11.6</span> 10.6 Exception Handling</h3>
-<h4 data-number="1.11.6.1" id="customer-disputes-a-bill"><span
-class="header-section-number">1.11.6.1</span> Customer Disputes a
+<h3 data-number="1.11.7" id="exception-handling"><span
+class="header-section-number">1.11.7</span> 10.6 Exception Handling</h3>
+<h4 data-number="1.11.7.1" id="customer-disputes-a-bill"><span
+class="header-section-number">1.11.7.1</span> Customer Disputes a
 Bill</h4>
 <ol type="1">
 <li>Review the original SO, ship confirmation, and AR invoice — confirm
@@ -3817,8 +4038,8 @@ and the invoice PDF. Log the dispute in the Collections notes.</li>
 <li>Never adjust an invoice after it has been sent — create a credit
 memo instead. Changing a posted invoice creates audit issues.</li>
 </ol>
-<h4 data-number="1.11.6.2" id="vendor-overcharges-on-a-bill"><span
-class="header-section-number">1.11.6.2</span> Vendor Overcharges on a
+<h4 data-number="1.11.7.2" id="vendor-overcharges-on-a-bill"><span
+class="header-section-number">1.11.7.2</span> Vendor Overcharges on a
 Bill</h4>
 <ol type="1">
 <li>Do not pay the overcharged amount.</li>
@@ -3831,8 +4052,8 @@ the bill.</li>
 bill, enter the correct amount as a new bill, and document the situation
 in the notes.</li>
 </ol>
-<h4 data-number="1.11.6.3" id="inventory-discrepancy"><span
-class="header-section-number">1.11.6.3</span> Inventory Discrepancy</h4>
+<h4 data-number="1.11.7.3" id="inventory-discrepancy"><span
+class="header-section-number">1.11.7.3</span> Inventory Discrepancy</h4>
 <ol type="1">
 <li>Identify the item, warehouse, and bin.</li>
 <li>Count the actual quantity on hand.</li>
@@ -3844,8 +4065,8 @@ the investigation.</li>
 <li>If the discrepancy is large or unexplained: investigate before
 adjusting — unexplained shrinkage may indicate theft.</li>
 </ol>
-<h4 data-number="1.11.6.4" id="bank-nsf-returned-check"><span
-class="header-section-number">1.11.6.4</span> Bank NSF (Returned
+<h4 data-number="1.11.7.4" id="bank-nsf-returned-check"><span
+class="header-section-number">1.11.7.4</span> Bank NSF (Returned
 Check)</h4>
 <ol type="1">
 <li>The bank will debit your account for the returned check amount.</li>
