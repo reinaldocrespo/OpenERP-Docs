@@ -3334,31 +3334,103 @@ rather than guessing.</p>
 <h4 data-number="1.9.14.1" id="setting-it-up-administrator"><span
 class="header-section-number">1.9.14.1</span> 8.14.1 Setting It Up
 (Administrator)</h4>
-<p>The assistant can be powered by <strong>Anthropic (Claude) or OpenAI
-(GPT) models</strong> — configuration lives on its own page,
-<strong>Admin → Setup → AI Setup</strong>, not under Company Settings.
-You can store more than one model config (e.g., one Anthropic key and
-one OpenAI key) but only <strong>one is active</strong> at a time;
+<p>The assistant can be powered by any of <strong>seven
+providers</strong> — Anthropic (Claude), OpenAI (GPT), Google Gemini,
+Groq, Cerebras, NVIDIA, or OpenRouter — configuration lives on its own
+page, <strong>Admin → Setup → AI Setup</strong>, not under Company
+Settings. You can store more than one model config (e.g., one Anthropic
+key and one Groq key) but only <strong>one is active</strong> at a time;
 that’s the one the ✦ AI Help button uses.</p>
 <ol type="1">
-<li>Get an API key: <strong>console.anthropic.com</strong> for Claude
-(starts with <code>sk-ant-</code>), or
-<strong>platform.openai.com</strong> for GPT (starts with
-<code>sk-</code>). Either provider requires billing on file — neither
-offers a free tier.</li>
-<li>In OpenERP go to <strong>Admin → Setup → AI Setup</strong> and click
-<strong>+ Add Model</strong>.</li>
-<li>Pick the <strong>Provider</strong>, give it a <strong>Label</strong>
-(e.g. “Production Claude”), then pick a <strong>Model</strong> from the
-dropdown — it lists the current models for whichever provider you chose
-and always starts on the recommended one, so there’s nothing to type or
-mistype. Pick <strong>Other (type manually)…</strong> only if you need a
-specific model not in the list (e.g. a brand-new release). Paste the
-<strong>API Key</strong> and <strong>Save</strong>.</li>
-<li>In the grid, click the <strong>Active</strong> column (○) on the row
-you want live — it turns into a green ✓ and any previously active row is
-turned off automatically. The ✦ AI Help button appears for all users as
-soon as a row is active.</li>
+<li><p>Get an API key from the provider of your choice:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Provider</th>
+<th>Where to get a key</th>
+<th>Key looks like</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Anthropic</td>
+<td>console.anthropic.com</td>
+<td><code>sk-ant-…</code></td>
+<td>Paid (billing on file); best answer quality</td>
+</tr>
+<tr class="even">
+<td>OpenAI</td>
+<td>platform.openai.com</td>
+<td><code>sk-…</code></td>
+<td>Paid (billing on file)</td>
+</tr>
+<tr class="odd">
+<td>Google Gemini</td>
+<td>aistudio.google.com</td>
+<td><code>AIza…</code></td>
+<td>Free tier available</td>
+</tr>
+<tr class="even">
+<td>Groq</td>
+<td>console.groq.com</td>
+<td><code>gsk_…</code></td>
+<td>Very fast; free tier too small for this assistant — needs Dev Tier
+(see note below)</td>
+</tr>
+<tr class="odd">
+<td>Cerebras</td>
+<td>cloud.cerebras.ai</td>
+<td><code>csk-…</code></td>
+<td>Very fast; free tier has per-minute token limits (see note
+below)</td>
+</tr>
+<tr class="even">
+<td>NVIDIA</td>
+<td>build.nvidia.com</td>
+<td><code>nvapi-…</code></td>
+<td>Free API credits for developers</td>
+</tr>
+<tr class="odd">
+<td>OpenRouter</td>
+<td>openrouter.ai</td>
+<td><code>sk-or-v1-…</code></td>
+<td>One key, many models (incl. Claude/GPT); pay-as-you-go</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Free-tier token limits.</strong> Every question sends the
+full reference material (this guide plus the schema digest — roughly
+<strong>50,000 tokens</strong>) to the provider. Free tiers with small
+<em>tokens-per-minute</em> quotas cannot accept a request that large:
+Groq’s free tier (6k–12k TPM depending on model) rejects every question
+with <em>“AI request failed: Request too large…”</em> — verified in
+testing — and requires their paid <strong>Dev Tier</strong>. Gemini’s
+free tier (250k TPM on Flash models) is large enough. If you see a
+“Request too large” error, the key and setup are fine; the provider’s
+tier is the limit.</p>
+</blockquote></li>
+<li><p>In OpenERP go to <strong>Admin → Setup → AI Setup</strong> and
+click <strong>+ Add Model</strong>.</p></li>
+<li><p>Pick the <strong>Provider</strong>, give it a
+<strong>Label</strong> (e.g. “Production Claude”), then pick a
+<strong>Model</strong> from the dropdown — it lists the current models
+for whichever provider you chose and always starts on the recommended
+one, so there’s nothing to type or mistype. Pick <strong>Other (type
+manually)…</strong> only if you need a specific model not in the list
+(e.g. a brand-new release). Paste the <strong>API Key</strong> and
+<strong>Save</strong>.</p></li>
+<li><p>In the grid, click the <strong>Active</strong> column (○) on the
+row you want live — it turns into a green ✓ and any previously active
+row is turned off automatically. The ✦ AI Help button appears for all
+users as soon as a row is active.</p></li>
 </ol>
 <p>Click the ✓ on the active row again to turn AI Help off entirely (no
 active row = disabled) without deleting the configuration. API keys are
@@ -3369,11 +3441,17 @@ existing key, or paste a new one to replace it. Select any row to reveal
 <strong>Edit</strong> (change the label, model, or key) and
 <strong>Delete</strong> buttons below the grid.</p>
 <p><strong>Model choice.</strong> The dropdown’s top option per provider
-is the recommended default — currently <em>Claude Opus 4.8</em> for
-Anthropic and <em>GPT-5.5</em> for OpenAI — with a faster/cheaper and a
-cheapest/fastest tier below it for each. Typical cost is a few cents per
-question — repeat questions within a few minutes are cheaper on
-Anthropic because the reference material is cache-eligible there.</p>
+is the recommended default (e.g. <em>Claude Opus 4.8</em> for Anthropic,
+<em>GPT-5.5</em> for OpenAI, <em>Gemini 2.5 Flash</em> for Google), with
+faster/cheaper tiers below it. Use <strong>Other (type
+manually)…</strong> for any model the provider serves that isn’t listed
+— Groq, Cerebras, NVIDIA, and OpenRouter in particular add and retire
+hosted models frequently, so check the provider’s model list if a preset
+returns a “model not found” error. Typical cost ranges from free
+(Gemini’s free tier — the only free tier confirmed to fit the
+assistant’s large per-question context) to a few cents per question —
+repeat questions within a few minutes are cheaper on Anthropic because
+the reference material is cache-eligible there.</p>
 <p><strong>Limits.</strong> Each user can ask up to 60 questions per
 hour. Every question is recorded in the Audit Log (Admin → Audit Log,
 table <code>ai_chat</code>) with the user and a snippet of the question,
