@@ -367,6 +367,10 @@ class="toc-section-number">1.9.12</span> 8.12 CSV Import</a></li>
 class="toc-section-number">1.9.13</span> 8.13 CSV Export</a></li>
 <li><a href="#ai-help-assistant" id="toc-ai-help-assistant"><span
 class="toc-section-number">1.9.14</span> 8.14 AI Help Assistant</a></li>
+<li><a href="#message-log-the-outbound-message-queue"
+id="toc-message-log-the-outbound-message-queue"><span
+class="toc-section-number">1.9.15</span> 8.15 Message Log — the Outbound
+Message Queue</a></li>
 </ul></li>
 <li><a href="#integration" id="toc-integration"><span
 class="toc-section-number">1.10</span> 9. Integration</a>
@@ -1346,10 +1350,19 @@ per-customer opt-in, set on the customer form (AR → Customers → Edit): a
 <strong>Mobile Number</strong> (international format,
 e.g. <code>+19547440286</code>) with a <strong>Notify via Text /
 WhatsApp</strong> checkbox, and a <strong>Notify via Email</strong>
-checkbox (uses the customer’s email on file). Each send attempt —
-delivered, failed, or skipped with the reason — appears immediately
-under the entry and is kept per order, so you can always see exactly
-what the customer was told and when.</p>
+checkbox (uses the customer’s email on file).</p>
+<p><strong>Messages are queued, not sent instantly.</strong> Adding a
+status entry places the messages in the <strong>outbound message
+queue</strong> — the entry shows ⏳ <em>queued</em> immediately, and the
+queue worker sends within about a minute, retrying automatically on
+transient failures (see <strong>Max Send Attempts</strong> in the Twilio
+settings; default 3, backing off 1 / 5 / 15 minutes between tries).
+After a text is sent, the system also confirms <strong>actual
+delivery</strong> with Twilio — so the status you see progresses ⏳
+queued → ✓ sent → ✅ delivered (or ✖ failed with the exact provider
+error). The full history of every message — including its exact text —
+lives in <strong>Admin → Tools → Message Log</strong> (§8.15), and each
+order’s Status modal shows the same per-entry.</p>
 <p><strong>Setup (administrator).</strong> Email needs only the existing
 SMTP settings (§8.10). Text messages are sent through
 <strong>Twilio</strong> — configure it under <strong>Admin → Setup →
@@ -3738,6 +3751,67 @@ confidential in it. You can also drop additional Markdown files into
 <code>docs/ai-context/</code> (e.g. company-specific workflow notes,
 naming conventions, “who to call” lists) and the assistant will use them
 immediately; each file is included on every question.</p>
+<h3 data-number="1.9.15"
+id="message-log-the-outbound-message-queue"><span
+class="header-section-number">1.9.15</span> 8.15 Message Log — the
+Outbound Message Queue</h3>
+<p><strong>Admin → Tools → Message Log</strong> shows every customer
+text (SMS / WhatsApp) and notification email the system has queued: who
+it was addressed to, the exact message text, when it was
+scheduled/sent/delivered, how many send attempts were made, and the
+precise provider error when something failed.</p>
+<p><strong>How the queue works.</strong> Features that message customers
+(order-status updates today; more later) don’t send directly — they add
+a row to the queue. The <strong>queue worker</strong> then:</p>
+<ol type="1">
+<li>picks up due PENDING rows and sends them via the configured
+channel;</li>
+<li>on a transient failure, retries with a 1 / 5 / 15-minute backoff, up
+to <strong>Max Send Attempts</strong> (Twilio settings, default 3), then
+marks the message FAILED with the reason;</li>
+<li>after Twilio accepts a text, follows up to record <strong>actual
+delivery</strong> — statuses progress
+<code>PENDING → SENT → DELIVERED</code>, or end in <code>FAILED</code>
+with the carrier’s error code (e.g. <em>30034: A2P campaign not yet
+approved</em>).</li>
+</ol>
+<p><strong>Running the worker.</strong> Three interchangeable ways — all
+run the same code:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>How</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>▶ Process Queue Now</strong> button on the Message Log
+page</td>
+<td>On demand; also the easiest way to test</td>
+</tr>
+<tr class="even">
+<td><code>tools\run_message_queue.php</code> via Windows Task Scheduler
+/ cron (every minute)</td>
+<td>Unattended production use</td>
+</tr>
+<tr class="odd">
+<td>The planned OpenERP Windows service</td>
+<td>Future — will replace Task Scheduler</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Row actions.</strong> <strong>View</strong> opens the full
+detail (message text, provider SID, error). <strong>Resend</strong>
+re-queues a FAILED / CANCELLED / SKIPPED message with a fresh attempt
+counter (for SKIPPED rows that had no recipient, you’ll be asked for
+one). <strong>Cancel</strong> stops a PENDING message before the worker
+picks it up. Messages that were sent are never deleted — the log is the
+audit trail of what each customer was told.</p>
 <hr />
 <h2 data-number="1.10" id="integration"><span
 class="header-section-number">1.10</span> 9. Integration</h2>
