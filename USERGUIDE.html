@@ -178,6 +178,10 @@ class="toc-section-number">1.4.8</span> 3.8 Customer Statements</a></li>
 class="toc-section-number">1.4.9</span> 3.9 Counter Sales</a></li>
 <li><a href="#inquiry-master" id="toc-inquiry-master"><span
 class="toc-section-number">1.4.10</span> 3.10 Inquiry Master</a></li>
+<li><a href="#order-status-tracking-customer-notifications"
+id="toc-order-status-tracking-customer-notifications"><span
+class="toc-section-number">1.4.11</span> 3.11 Order Status Tracking
+&amp; Customer Notifications</a></li>
 </ul></li>
 <li><a href="#procure-to-pay" id="toc-procure-to-pay"><span
 class="toc-section-number">1.5</span> 4. Procure-to-Pay</a>
@@ -1305,6 +1309,97 @@ in the Item Master, priced and vendor-linked, so the normal flows take
 over — accept the spawned quote into a <strong>Sales Order</strong>
 (§3.3) and convert the RFQ’s winning quote into a <strong>PO</strong>
 (§4.3), or create both directly.</p>
+</blockquote>
+<h3 data-number="1.4.11"
+id="order-status-tracking-customer-notifications"><span
+class="header-section-number">1.4.11</span> 3.11 Order Status Tracking
+&amp; Customer Notifications</h3>
+<p>For imported/manufactured goods, weeks pass between “order placed”
+and “order shipped” — and customers call to ask where their order is.
+This module answers that proactively: each sales order carries a
+<strong>status timeline</strong> (vendor manufacturing stages, ship
+date, estimated arrival, exceptions like a customs hold, warehouse
+arrival), and every new entry can automatically message the customer as
+a <strong>text message</strong> (SMS or WhatsApp, via Twilio) and/or
+<strong>email</strong>.</p>
+<p><strong>Recording a status.</strong> On <strong>Sales → Sales
+Orders</strong>, select an order and click <strong>Status</strong>. The
+timeline modal shows the order’s history and an entry form:</p>
+<ul>
+<li><strong>Status</strong> — pick from the fixed list: Order confirmed,
+In production, Production complete, Shipped, In transit, On hold at
+customs, Cleared customs, Arrived at warehouse, Ready for delivery,
+Delivered, Delayed, or a free-form Update/note.</li>
+<li><strong>Status Date</strong> (defaults to today) and an optional
+<strong>Est. Arrival</strong> date.</li>
+<li><strong>Notes</strong> — free text, included in the customer message
+(e.g. <em>“vessel departed Ningbo”</em>).</li>
+<li><strong>Notify customer</strong> — checked by default. Uncheck it to
+record an internal-only entry.</li>
+</ul>
+<p>Entries are never destroyed — the ✕ button only hides one from the
+timeline (it stays in history and the audit log). Statuses and dates
+can’t be edited after the fact; post a new entry instead — the timeline
+<em>is</em> the record.</p>
+<p><strong>Who gets notified, and how.</strong> Notification is
+per-customer opt-in, set on the customer form (AR → Customers → Edit): a
+<strong>Mobile Number</strong> (international format,
+e.g. <code>+19547440286</code>) with a <strong>Notify via Text /
+WhatsApp</strong> checkbox, and a <strong>Notify via Email</strong>
+checkbox (uses the customer’s email on file). Each send attempt —
+delivered, failed, or skipped with the reason — appears immediately
+under the entry and is kept per order, so you can always see exactly
+what the customer was told and when.</p>
+<p><strong>Setup (administrator).</strong> Email needs only the existing
+SMTP settings (§8.10). Text messages are sent through
+<strong>Twilio</strong> — configure it under <strong>Admin → Setup →
+Company → Text / WhatsApp Notifications (Twilio)</strong>:</p>
+<ol type="1">
+<li><strong>Channel</strong> — <strong>SMS</strong> (the default) sends
+ordinary text messages and <strong>works immediately</strong> with any
+SMS-capable Twilio number; no Meta/Facebook account or approval is
+involved. <strong>WhatsApp</strong> requires your number to be
+registered as a WhatsApp sender first — a Meta business-verification
+process done from the Twilio Console — so the practical path is: run on
+SMS today, switch the channel to WhatsApp later if/when the sender is
+approved. Everything else (opt-ins, timeline, logging) stays the same
+when you switch.</li>
+<li><strong>Account SID</strong> and <strong>Auth Token</strong> — from
+the <strong>Account Info</strong> panel on your <a
+href="https://console.twilio.com">Twilio Console</a> home page. Use the
+<strong>Live</strong> credentials — Twilio also offers “Test
+credentials”, which authenticate but cannot send real messages (sends
+fail with error 20008 or 21606). The token is stored server-side and
+always displayed masked.</li>
+<li><strong>From Number</strong> — your Twilio number in international
+format (used for both channels). <em>WhatsApp-sandbox testing:</em> use
+<code>+14155238886</code> after joining the sandbox from your
+phone.</li>
+<li><strong>WhatsApp Template SID</strong> (optional; WhatsApp channel
+only) — WhatsApp only allows a business to message a customer
+<em>outside a 24-hour reply window</em> using a <strong>pre-approved
+template</strong>. Create one in Twilio (Content Template Builder), get
+it approved, and paste its <code>HX…</code> SID here. The template
+receives four variables: <code>{{1}}</code> order number,
+<code>{{2}}</code> status, <code>{{3}}</code> date, <code>{{4}}</code>
+ETA/notes. Ignored on the SMS channel — SMS always sends the plain
+message text (error 63016 on WhatsApp means a template is
+required).</li>
+<li><strong>Save</strong>, then use <strong>Send Test Message</strong>
+with your own number to confirm the credentials work. Note for Twilio
+<strong>trial</strong> accounts: SMS can only be delivered to phone
+numbers you’ve verified in the Twilio Console (Phone Numbers → Verified
+Caller IDs).</li>
+</ol>
+<blockquote>
+<p><strong>US SMS requires A2P 10DLC registration.</strong> US carriers
+require every business sending SMS from a regular local number to
+register an <strong>A2P 10DLC brand and campaign</strong> (done once, in
+the Twilio Console under Messaging → Regulatory Compliance). Until
+Twilio approves the campaign, messages to US numbers are blocked or
+filtered (commonly Twilio error 30034). This is a carrier rule, not an
+OpenERP or account problem — configure everything, then start sending
+once the campaign shows <em>approved</em>.</p>
 </blockquote>
 <hr />
 <h2 data-number="1.5" id="procure-to-pay"><span
@@ -3322,15 +3417,36 @@ ask questions in plain English — <em>“How do I receive a purchase
 order?”</em>, <em>“What does the BLOCKED vendor status do?”</em>,
 <em>“How do I post a physical count?”</em> — and get an answer drawn
 from this User Guide, with the relevant section number cited.</p>
-<p><strong>What it knows — and what it can’t see.</strong> The assistant
-answers from two sources that are sent along with every question: this
-User Guide, and an auto-generated <em>schema digest</em> describing the
-structure of the database (table and column names with their meanings —
-never any data). It has <strong>no access to your live business
-data</strong>: it cannot see customers, prices, balances, vendors, or
-any transaction. It also cannot perform actions — it only explains how
-<em>you</em> can. If a question isn’t covered by the guide, it says so
-rather than guessing.</p>
+<p><strong>What it knows.</strong> The assistant answers from two
+sources that are sent along with every question: this User Guide, and an
+auto-generated <em>schema digest</em> describing the structure of the
+database (table and column names with their meanings — never any data).
+If a question isn’t covered by the guide, it says so rather than
+guessing.</p>
+<p><strong>Live-data lookups (read-only).</strong> When the active
+provider is <strong>Anthropic, OpenAI, or Google Gemini</strong>, the
+assistant can additionally <em>look up</em> your live data to answer
+questions like <em>“What’s Aceco’s AR balance?”</em> or <em>“How many of
+item X do we have on hand?”</em>. These lookups are strictly
+<strong>read-only</strong> — the assistant itself cannot create, change,
+or delete anything — and they run under the signed-in user’s account, so
+every question is rate-limited and recorded in the Audit Log. The other
+four providers (Groq, Cerebras, NVIDIA, OpenRouter) answer how-to
+questions only, with no data access — this restriction is deliberate,
+because weaker models are less reliable at using lookups correctly. See
+§8.14.2 for what can be asked.</p>
+<p><strong>Drafting transactions (you confirm).</strong> With the same
+three providers, the assistant can also <em>prepare</em> three kinds of
+transactions from a plain-English request — a <strong>sales
+order</strong>, a <strong>customer (AR) payment</strong>, and an
+<strong>inventory adjustment</strong>. The assistant only fills in a
+draft; you see a confirmation card in the chat and <strong>nothing
+exists until you press Confirm</strong>. The Confirm click submits the
+transaction under <em>your</em> user account, through the same
+permission checks, validation, credit checks, audit logging, and GL
+posting as the regular screens — if you don’t have permission to create
+sales orders, Confirm is rejected exactly as the Sales Orders screen
+would reject you. See §8.14.2.</p>
 <h4 data-number="1.9.14.1" id="setting-it-up-administrator"><span
 class="header-section-number">1.9.14.1</span> 8.14.1 Setting It Up
 (Administrator)</h4>
@@ -3340,7 +3456,9 @@ Groq, Cerebras, NVIDIA, or OpenRouter — configuration lives on its own
 page, <strong>Admin → Setup → AI Setup</strong>, not under Company
 Settings. You can store more than one model config (e.g., one Anthropic
 key and one Groq key) but only <strong>one is active</strong> at a time;
-that’s the one the ✦ AI Help button uses.</p>
+that’s the one the ✦ AI Help button uses. Note that <strong>live-data
+lookups (§8.14.2) work only with Anthropic, OpenAI, and Gemini</strong>
+— the other four providers answer how-to questions only.</p>
 <ol type="1">
 <li><p>Get an API key from the provider of your choice:</p>
 <table>
@@ -3470,7 +3588,115 @@ closes the panel (the conversation is kept until you log out or
 reload).</li>
 <li>If the button doesn’t appear, the assistant hasn’t been enabled —
 see 8.14.1.</li>
+<li>When you open the chat, the welcome screen lists example questions
+grouped into <strong>📖 How-to questions</strong> and (when the active
+provider supports it) <strong>🔎 Your live data</strong> and <strong>📝
+Draft transactions</strong> — click an example to send it, or use it as
+a template (examples with a “…” placeholder fill the input box for you
+to complete). You can also just ask <em>“what can you do?”</em>.</li>
 </ul>
+<p><strong>Asking about your live data.</strong> With Anthropic, OpenAI,
+or Gemini active (see 8.14.1), the assistant can run these read-only
+lookups for you:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>You can ask about</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Customers</td>
+<td><em>“Find customers in Houston”</em>, <em>“What’s Aceco’s AR balance
+and credit limit?”</em>, <em>“Is customer X on credit hold?”</em></td>
+</tr>
+<tr class="even">
+<td>Vendors</td>
+<td><em>“Search vendors named Wenzhou”</em>, <em>“How much do we owe
+vendor Y? Which bills are open?”</em></td>
+</tr>
+<tr class="odd">
+<td>Items &amp; stock</td>
+<td><em>“Find items matching ‘ball valve’”</em>, <em>“How many of item
+10-370CTBALL21 are on hand?”</em> (on-hand, committed, on-order, ATP, by
+warehouse)</td>
+</tr>
+<tr class="even">
+<td>Orders</td>
+<td><em>“Show open purchase orders”</em>, <em>“List recent sales orders
+for customer Z”</em></td>
+</tr>
+</tbody>
+</table>
+<p>Things to know:</p>
+<ul>
+<li><strong>Read-only, always.</strong> The assistant cannot create a
+transaction, change a record, or post anything — if you ask it to, it
+will point you to the right screen instead. (A future phase may add
+transaction creation with an explicit confirm step; today it is
+lookup-only.)</li>
+<li><strong>Name it precisely for best results.</strong> If several
+records match (e.g. “valve” matches many items), the assistant lists the
+candidates and asks which one you meant — answering with the exact item
+or customer number gets you there fastest.</li>
+<li><strong>Answers show their work.</strong> Below each answer that
+used live data you’ll see a small <em>“🔎 Checked: …”</em> line listing
+which lookups ran. <strong>If that line is absent, the answer did not
+come from your data</strong> — treat any specific numbers in it with
+suspicion and ask again more precisely. Weaker/faster models
+occasionally “improvise” a plausible-looking answer instead of looking
+it up; this is why data access is limited to the three strongest
+providers.</li>
+<li>Lookup results are capped (top 10–20 rows) — ask a narrower question
+rather than “list all customers”.</li>
+<li>Each answer may run several lookups, and every lookup re-sends the
+reference material, so data questions consume more provider tokens than
+how-to questions — relevant on free tiers (see the token-limits note in
+8.14.1). On Anthropic this is much cheaper than it sounds: the reference
+material is cached after the first round, so extra lookup rounds only
+pay the (small) new tokens.</li>
+</ul>
+<p><strong>Drafting transactions — the Confirm card.</strong> Ask in
+plain English and the assistant prepares the transaction for you:</p>
+<ul>
+<li><em>“Create a sales order for Aceco: 10 of VLV-100 at $32
+each”</em></li>
+<li><em>“Record a $500 check payment from Aceco, check #10456”</em></li>
+<li><em>“Adjust ITEM-X by −2, damaged in handling”</em></li>
+</ul>
+<p>What happens next, every time:</p>
+<ol type="1">
+<li>The assistant looks up the customer/item to make sure it’s real
+(asking you to pick when several match), fills in defaults (list price,
+standard cost, today’s date, the open GL period, an auto-generated
+document number), and shows a <strong>📝 confirmation card</strong> in
+the chat with every figure spelled out.</li>
+<li><strong>Nothing has been created at this point.</strong> The card
+has <strong>Confirm</strong> and <strong>Cancel</strong> buttons; the
+assistant’s text will always say the draft is awaiting your review.</li>
+<li>Press <strong>Confirm</strong> and the transaction is submitted
+<em>as you</em> — same permissions, validation, duplicate checks,
+credit-limit block, audit trail, and GL auto-posting as the regular
+screen. The card turns into a green ✅ with the new document number, or
+shows the exact error (e.g. over credit limit) if the system rejects
+it.</li>
+<li>Press <strong>Cancel</strong> and the draft is discarded — nothing
+is created, nothing to clean up.</li>
+</ol>
+<p>Three transaction types are supported today: <strong>sales
+orders</strong>, <strong>AR customer payments</strong> (created
+unapplied — apply to invoices under AR → Payments), and
+<strong>inventory adjustments</strong>. For anything else (editing,
+voiding, posting, applying payments, purchase orders…), the assistant
+will point you to the right screen instead. Warnings appear on the card
+<em>before</em> you confirm — e.g. if the order would push the customer
+over their credit limit, the card says so (and Confirm would be
+rejected).</p>
 <h4 data-number="1.9.14.3" id="keeping-its-knowledge-current"><span
 class="header-section-number">1.9.14.3</span> 8.14.3 Keeping Its
 Knowledge Current</h4>
