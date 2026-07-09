@@ -182,6 +182,8 @@ class="toc-section-number">1.4.10</span> 3.10 Inquiry Master</a></li>
 id="toc-order-status-tracking-customer-notifications"><span
 class="toc-section-number">1.4.11</span> 3.11 Order Status Tracking
 &amp; Customer Notifications</a></li>
+<li><a href="#customer-budgets" id="toc-customer-budgets"><span
+class="toc-section-number">1.4.12</span> 3.12 Customer Budgets</a></li>
 </ul></li>
 <li><a href="#procure-to-pay" id="toc-procure-to-pay"><span
 class="toc-section-number">1.5</span> 4. Procure-to-Pay</a>
@@ -1414,6 +1416,34 @@ filtered (commonly Twilio error 30034). This is a carrier rule, not an
 OpenERP or account problem — configure everything, then start sending
 once the campaign shows <em>approved</em>.</p>
 </blockquote>
+<h3 data-number="1.4.12" id="customer-budgets"><span
+class="header-section-number">1.4.12</span> 3.12 Customer Budgets</h3>
+<p><strong>Sales → Customer Budgets</strong> — record the sales you
+forecast for each existing customer per year, then track how the year is
+actually going.</p>
+<p><strong>Edit Budgets</strong> view: pick the year, then enter a
+monthly budget amount per customer in the grid (row totals and column
+totals update live). Only changed cells are saved; clearing a cell to
+blank or zero removes it. Saving requires the
+<code>sales.pricing.manage</code> permission.</p>
+<p><strong>Performance</strong> view (the dashboard): -
+<strong>Tiles</strong> — total budget for the year (with the YTD
+portion), actual invoiced revenue with <strong>% of budget
+reached</strong>, a <strong>run-rate forecast</strong> (actual
+annualized over the months elapsed — for past years it equals the
+actual), and overall <strong>margin %</strong>. - <strong>Budget vs
+Actual by Month</strong> chart — budgeted vs invoiced revenue for all
+customers combined. - <strong>Per Customer</strong> table — budget, YTD
+budget, actual revenue, % of budget (green ≥ 100%, amber ≥ 75%, red
+below), % of the YTD budget, forecast, COGS, margin, and margin %.</p>
+<p>How the actuals are computed: revenue is AR invoice totals for the
+year (voided invoices excluded); COGS is the FIFO cost of SO shipments
+(which already includes posted landed costs — see §5.6), so
+<strong>margin % reflects true landed cost</strong>. Customers with
+revenue but no budget still appear in the table.</p>
+<p>The <strong>Customer Dashboard</strong> (Analytics section) shows the
+current year’s Budget vs Actual chart with the % reached / forecast /
+margin summary and a link to the detail page.</p>
 <hr />
 <h2 data-number="1.5" id="procure-to-pay"><span
 class="header-section-number">1.5</span> 4. Procure-to-Pay</h2>
@@ -1941,20 +1971,42 @@ total value. A summary endpoint returns the grand total.</p>
 <h3 data-number="1.6.6" id="landed-costs"><span
 class="header-section-number">1.6.6</span> 5.6 Landed Costs</h3>
 <p><strong>Purchasing → Landed Costs</strong> — allocate additional
-costs (ocean freight, customs duty, brokerage, insurance, tariff) to PO
-receipts.</p>
+costs to PO receipts, the “bump-up” step performed on an import cost
+worksheet. Component types cover the full worksheet charge list: ocean
+freight, customs duty, tariff, brokerage, inspection fee, trucking,
+handling, W/H handling, HMF, ISF filing, marine insurance, insurance,
+other.</p>
 <ol type="1">
 <li>Create a landed cost shipment linked to one or more PO
 receipts.</li>
-<li>Enter cost components by type and amount.</li>
+<li>Enter cost components by type and amount. <strong>Each component has
+its own allocation method</strong> — By Value, By Weight, or By Quantity
+— and an optional <strong>Payee / Ref #</strong> (the carrier, broker,
+or document number, e.g. “OEC SS26055797”). Ocean freight is typically
+allocated By Weight; misc charges and inspection fees By Value, matching
+how an FTZ bump-up worksheet spreads each charge column.</li>
 <li>For tariff costs, click <strong>Compute from item tariff
 rates</strong> to auto-calculate from the items’
 <code>tariff_rate</code> field.</li>
-<li><strong>Post</strong> distributes the costs proportionally across
-FIFO layers (by value or by qty), increasing the unit cost per layer. GL
-entries are not generated at this stage — the adjusted cost flows into
-COGS when items are shipped.</li>
+<li>Click <strong>Compute Bump-Up</strong> to see the per-item worksheet
+before posting: qty, weight, PO unit cost, invoice cost, each charge
+component’s per-item share, total added charges, <strong>adjusted unit
+price</strong>, total cost, and <strong>% of PO cost</strong> — plus a
+variance line confirming the charges entered equal the amounts spread to
+items.</li>
+<li><strong>Post</strong> distributes each component down to the
+receipt’s item lines by that component’s method and increases the FIFO
+layer unit cost per item to the adjusted unit price shown in the bump-up
+view. GL entries are not generated at this stage — the adjusted cost
+flows into COGS when items are shipped.</li>
 </ol>
+<blockquote>
+<p><strong>By Weight requires item weights.</strong> Weight allocation
+uses <code>weight_lbs</code> from the Item Master (Items → item form,
+Freight/Dims fields). If none of the received items have a weight,
+saving a By Weight allocation is rejected with a message telling you to
+set the weights or switch to By Value / By Quantity.</p>
+</blockquote>
 <blockquote>
 <p><strong>Why landed cost matters:</strong> If you import goods, the
 unit cost on the PO is typically just the supplier’s price. The true
