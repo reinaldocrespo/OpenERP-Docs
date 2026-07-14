@@ -254,6 +254,14 @@ Classification</a></li>
 <li><a href="#demand-forecasting" id="toc-demand-forecasting"><span
 class="toc-section-number">1.6.12</span> 5.12 Demand
 Forecasting</a></li>
+<li><a href="#warehouse-mode-barcode-scan-inquiry"
+id="toc-warehouse-mode-barcode-scan-inquiry"><span
+class="toc-section-number">1.6.13</span> 5.13 Warehouse Mode — Barcode
+Scan / Inquiry</a></li>
+<li><a href="#barcode-hardware-and-label-printing"
+id="toc-barcode-hardware-and-label-printing"><span
+class="toc-section-number">1.6.14</span> 5.14 Barcode Hardware and Label
+Printing</a></li>
 </ul></li>
 <li><a href="#item-master" id="toc-item-master"><span
 class="toc-section-number">1.7</span> 6. Item Master</a>
@@ -373,6 +381,8 @@ class="toc-section-number">1.9.14</span> 8.14 AI Help Assistant</a></li>
 id="toc-message-log-the-outbound-message-queue"><span
 class="toc-section-number">1.9.15</span> 8.15 Message Log — the Outbound
 Message Queue</a></li>
+<li><a href="#database-backups" id="toc-database-backups"><span
+class="toc-section-number">1.9.16</span> 8.16 Database Backups</a></li>
 </ul></li>
 <li><a href="#integration" id="toc-integration"><span
 class="toc-section-number">1.10</span> 9. Integration</a>
@@ -572,26 +582,61 @@ on the selected row, like a spreadsheet status bar.</li>
 <li><strong>Column filters (Excel-style)</strong> — columns that show a
 small <strong>▼</strong> button in the header can be filtered like
 Excel’s AutoFilter: click the button, then check or uncheck values in
-the list. The popup has a <strong>search box</strong> for long value
-lists and a <strong>(Select all)</strong> toggle. Filters on several
-columns combine — e.g. Type = STOCK <em>and</em> Vendor = a specific
-supplier. A column with an active filter shows its title and ▼ in blue.
-To clear a filter, re-check <strong>(Select all)</strong>.</li>
-<li><strong>Page size</strong> — paginated lists offer <strong>25 to
-1000 rows per page</strong> in the selector at the bottom right. Column
-filters work on the rows currently loaded, so choose a large page size
-(500 or 1000) when you want a filter to cover the entire list rather
-than one page.</li>
+the list. The popup has a search box for long value lists and a
+<strong>(Select all)</strong> toggle. Filters on several columns combine
+— e.g. Status = OPEN <em>and</em> Vendor = a specific supplier. A column
+with an active filter shows its title and ▼ in blue. To clear a filter,
+re-check <strong>(Select all)</strong>.</li>
+<li><strong>Date filters</strong> — date columns (Order Date, Invoice
+Date, Due, Ship By…) have the same ▼ button, but the popup offers
+<strong>From</strong> and <strong>To</strong> date pickers instead of a
+checkbox list. Leave one side blank for an open-ended range (“everything
+since June 1”). <strong>Clear</strong> resets it. Date and column
+filters combine, so “OPEN orders placed in the last two weeks” is two
+clicks.</li>
 <li><strong>Export CSV</strong>, where offered in the page header,
 downloads the current list.</li>
 </ul>
+<h4 data-number="1.2.3.1"
+id="the-two-kinds-of-list-and-where-to-type-when-youre-looking-for-something"><span
+class="header-section-number">1.2.3.1</span> The two kinds of list — and
+where to type when you’re looking for something</h4>
+<p>This matters, because it tells you <em>which box to use</em> to find
+a record:</p>
+<p><strong>Setup and master lists</strong> — Items, Customers, Vendors,
+Chart of Accounts, Warehouses, and most Admin setup tables (Payment
+Terms, Tax Codes, Customer Classes, Users, Groups…). These load
+<strong>every record at once</strong>, so there are no page buttons. The
+<strong>quick search</strong> box above the grid filters as you type,
+and the ▼ column filters apply to the <strong>entire list</strong>
+automatically. Nothing is hidden on another page.</p>
+<p><strong>Document and log lists</strong> — Sales Orders, Invoices,
+Bills, Payments, POs, Quotes, Requisitions, Transfers, Counts, GL
+Journals, the Audit/Message/Email logs, and Sales Tax jurisdictions.
+These grow without limit, so they load one page at a time (page buttons
+at the bottom). They each have a <strong>Search</strong> box above the
+grid that searches the <strong>whole table on the server</strong>, not
+just the page you’re looking at — type an order number, a customer or
+vendor name, a check number, and press Enter. Use that to <em>find</em>
+records; use the ▼ column filters to <em>refine</em> what’s on
+screen.</p>
+<p>You can always tell which kind you’re on at a glance: <strong>page
+buttons at the bottom means it’s a document list</strong>, so reach for
+the Search box rather than scrolling.</p>
 <blockquote>
-<p><strong>Tip:</strong> Combining the two features is the fastest way
-to answer ad-hoc questions. Example: on the Items list, set the page
-size to 500, then filter the <strong>Vendor</strong> column to one
-supplier and the <strong>Type</strong> column to STOCK — the grid now
-shows exactly that vendor’s stocked catalog, and Export CSV gives you
-the file.</p>
+<p><strong>In short:</strong> on a document list, the <strong>Search box
+finds across everything</strong>; the <strong>▼ filters narrow what
+you’re looking at</strong>. On a master list, both cover everything
+already.</p>
+</blockquote>
+<blockquote>
+<p><strong>Tip:</strong> Answering an ad-hoc question is usually two
+clicks. On the Items list, filter the <strong>Vendor</strong> column to
+one supplier and the <strong>Type</strong> column to STOCK — the grid
+now shows exactly that vendor’s stocked catalog, and Export CSV gives
+you the file. On Sales Orders, set the <strong>Order Date</strong>
+filter to last month and the <strong>Status</strong> filter to OPEN to
+see what’s still outstanding from that period.</p>
 </blockquote>
 <h3 data-number="1.2.4" id="company-setup"><span
 class="header-section-number">1.2.4</span> 1.4 Company Setup</h3>
@@ -1699,6 +1744,15 @@ The system: - Creates <code>RECEIPT</code> inventory transactions
 (increases on-hand) - Pushes a FIFO cost layer for each item received -
 Updates line statuses; sets header to PARTIAL or RECEIVED</p>
 <blockquote>
+<p><strong>Receiving at the dock with a barcode scanner:</strong> the
+desktop Receive button receives all remaining lines in full. For
+scan-driven receiving — partial quantities, per-line bin placement, and
+lot capture with labels printed at the dock — use <strong>Warehouse Mode
+→ 📦 Receive</strong> on a phone or scan terminal (§5.13, “Receiving
+with the scanner”). Both paths post the same transaction (inventory,
+FIFO, GL, PO status).</p>
+</blockquote>
+<blockquote>
 <p><strong>After receiving:</strong> The goods are now in inventory. The
 on-hand count on Items list will show the increase. The vendor’s bill
 has not yet been recorded — that happens when you click
@@ -2076,6 +2130,375 @@ class="header-section-number">1.6.12</span> 5.12 Demand Forecasting</h3>
 12-month moving average daily demand. Includes a projected date when
 current on-hand will reach the reorder point at the forecast demand
 rate.</p>
+<h3 data-number="1.6.13" id="warehouse-mode-barcode-scan-inquiry"><span
+class="header-section-number">1.6.13</span> 5.13 Warehouse Mode —
+Barcode Scan / Inquiry</h3>
+<p><strong>Inventory → Warehouses → 📱 Scan / Inquiry</strong> (or
+browse directly to <code>/wh</code>) — a mobile-first, scan-driven
+screen designed for a phone or an Android barcode terminal on the
+warehouse floor. It renders full-screen without the desktop menu; the
+<strong>Desktop ↗</strong> link in the header returns to the normal
+application.</p>
+<p>Scan (or type) any code into the input box and press Enter. The
+system identifies what the code is, checking in this order:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code scanned</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Item number</td>
+<td>Item card: on-hand, committed, on-order, and <strong>ATP</strong>
+tiles; on-hand by warehouse and bin; lots on hand (expiry dates within
+90 days highlighted)</td>
+</tr>
+<tr class="even">
+<td>Factory UPC / MPN (item cross-reference)</td>
+<td>Same item card — the screen notes it matched by cross-reference</td>
+</tr>
+<tr class="odd">
+<td>Bin code</td>
+<td>Bin card: warehouse, aisle/rack/shelf, and current contents. Tap any
+content row to jump to that item’s stock card</td>
+</tr>
+<tr class="even">
+<td>Lot or serial number</td>
+<td>Lot/serial card with a <strong>View item stock</strong> button</td>
+</tr>
+<tr class="odd">
+<td>SO / PO / transfer number</td>
+<td>Document card with status, date, amount, and an <strong>Open on
+desktop</strong> link</td>
+</tr>
+</tbody>
+</table>
+<p>If a code matches more than one record (the same bin code in two
+warehouses, the same lot number on two items), a pick list appears. If
+nothing matches, the screen tells you which lookups it tried. The last
+five scans appear as tappable chips at the bottom.</p>
+<h4 data-number="1.6.13.1"
+id="receiving-with-the-scanner-receive-tab"><span
+class="header-section-number">1.6.13.1</span> Receiving with the scanner
+(Receive tab)</h4>
+<p>The <strong>📦 Receive</strong> tab turns a PO receipt into a
+scan-driven dock workflow:</p>
+<ol type="1">
+<li><strong>Scan the PO number</strong> (from the barcoded paperwork, or
+type it). The screen shows the vendor and every open line with ordered /
+received / remaining quantities. Scanning an OPEN or PARTIAL PO from the
+Inquiry tab also offers a <strong>Receive this PO →</strong>
+shortcut.</li>
+<li><strong>Scan an item</strong> (item number or factory UPC) — or tap
+its line. An entry panel opens with the quantity defaulted to what’s
+still open on that line. Adjust for a partial receipt, and optionally
+enter a <strong>lot number and expiry</strong> (the lot record is
+created automatically).</li>
+<li><strong>Scan the destination bin</strong> while the panel is open.
+The first bin scanned also sets the receipt’s warehouse (or pick the
+warehouse from the dropdown if bins aren’t labeled yet); every later bin
+must belong to the same warehouse.</li>
+<li><strong>✓ Add to receipt</strong> stages the line — the PO list
+shows a “+n staged” badge. Repeat for the other cartons.</li>
+<li><strong>Post receipt</strong> writes everything in one transaction:
+inventory transactions with bin and lot, FIFO cost layers, PO
+line/header status, GL — the same posting the desktop Receive uses. The
+receipt number is generated automatically
+(<code>RCV-mmdd-nnnn</code>).</li>
+<li>If any lots were captured, the confirmation card offers <strong>lot
+labels</strong> — PDF sheet or straight to the label printer — so goods
+are labeled before they leave the dock.</li>
+</ol>
+<p>Over-receiving is blocked: a quantity above what’s open on the line
+is rejected both on the entry panel and by the server. Partial receipts
+leave the PO (and line) in PARTIAL status; scan the same PO next
+container to receive the rest.</p>
+<p><strong>Scanner hardware:</strong> any barcode gun that types its
+scan followed by Enter (a “keyboard wedge” — the default mode of Zebra
+DataWedge and similar Android terminals, and of USB scanners) works with
+no configuration: keep the cursor in the scan box and pull the trigger.
+On Android phones and scan terminals, a 📷 camera button also appears —
+point the camera at any barcode to scan without a gun. See §5.14 for
+recommended scanners, printers, and label media.</p>
+<blockquote>
+<p><strong>Barcode labeling practices</strong> — the scan screen is only
+as useful as your labels. Before rolling out scanning: - <strong>Label
+every bin.</strong> Walk the warehouse and settle an aisle–rack–shelf
+scheme first (e.g. <code>A-01-01</code>), create the bins under
+<strong>Inventory → Warehouses → Bins</strong>, then print a barcode
+label per bin. Use polypropylene thermal-transfer labels — they last
+years. - <strong>Every item needs a scannable identity.</strong> The
+item number is the natural barcode. If goods arrive with factory UPCs,
+record them as item cross-references (<strong>Items → Xrefs</strong>,
+type UPC) so either code resolves. - <strong>Pre-print carton labels for
+unlabeled imports.</strong> Print item labels from the PO
+<em>before</em> the container arrives, and label cartons as they are
+unloaded. - <strong>Label lots at receiving.</strong> A lot label
+carrying item, lot number, and expiry date makes later lot lookups a
+single scan. - <strong>Barcode your paperwork.</strong> Put the
+SO/PO/transfer number as a barcode on printed documents — one scan pulls
+up the transaction. - <strong>Nothing moves without a scan.</strong>
+Every putaway, pick, and relocation should be recorded (see Transfers,
+§5.4); accurate bins depend on it.</p>
+</blockquote>
+<h3 data-number="1.6.14" id="barcode-hardware-and-label-printing"><span
+class="header-section-number">1.6.14</span> 5.14 Barcode Hardware and
+Label Printing</h3>
+<p>Everything in Warehouse Mode is driven by two pieces of hardware:
+something that <strong>reads</strong> barcodes and something that
+<strong>prints</strong> them. Neither requires special drivers or
+integration — scanners type into the web page, and label printers accept
+jobs over the network.</p>
+<h4 data-number="1.6.14.1" id="recommended-equipment"><span
+class="header-section-number">1.6.14.1</span> Recommended equipment</h4>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Recommended</th>
+<th>Alternatives / notes</th>
+<th>Approx. cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mobile scan terminal (floor)</td>
+<td>Zebra TC22 — Android, built-in 2D imager, Wi-Fi</td>
+<td>Honeywell CT30 XP; any rugged Android terminal whose scanner runs in
+keyboard-wedge mode</td>
+<td>~$1,100</td>
+</tr>
+<tr class="even">
+<td>Pilot / backup scanner</td>
+<td>Any Android phone using the 📷 camera button</td>
+<td>A ~$60 Bluetooth 2D scanner paired to a phone or tablet also
+works</td>
+<td>$0–100</td>
+</tr>
+<tr class="odd">
+<td>Receiving / office station</td>
+<td>Corded USB 2D scanner (e.g. Zebra DS2208) plugged into the station
+PC</td>
+<td>Presents as a keyboard; scans land in whatever field has focus</td>
+<td>~$60</td>
+</tr>
+<tr class="even">
+<td>Label printer (desktop volume)</td>
+<td>Zebra ZD421, 4-inch, <strong>thermal transfer</strong></td>
+<td>Honeywell PC42t. Choose 300 dpi if you will print small labels or
+dense QR codes; 203 dpi is fine for 4×2-inch and larger</td>
+<td>~$500</td>
+</tr>
+<tr class="odd">
+<td>Label printer (heavy volume)</td>
+<td>Zebra ZT231 industrial</td>
+<td>Only needed above roughly a few thousand labels/week or in a
+dusty/hot dock environment</td>
+<td>~$1,300</td>
+</tr>
+<tr class="even">
+<td>Wi-Fi coverage</td>
+<td>Site-survey the warehouse; add access points until there are no dead
+aisles</td>
+<td>Warehouse Mode is online-only — a dead zone is a stopped worker</td>
+<td>varies</td>
+</tr>
+</tbody>
+</table>
+<p>Buy <strong>one terminal and one printer first</strong>, prove the
+workflow, then expand. A single 4-inch printer covers every label type
+below.</p>
+<h4 data-number="1.6.14.2"
+id="choosing-print-technology-and-label-media"><span
+class="header-section-number">1.6.14.2</span> Choosing print technology
+and label media</h4>
+<p>Thermal printers come in two flavors, and the choice is
+per-label-type, not per-printer (a thermal-transfer printer can do
+both):</p>
+<ul>
+<li><strong>Thermal transfer</strong> (ribbon) — the image is fused from
+a ribbon and does not fade. Required for anything that must survive
+years, sunlight, or abrasion: <strong>bin/rack/shelf
+labels</strong>.</li>
+<li><strong>Direct thermal</strong> (no ribbon) — cheaper per label, but
+the image fades in months, faster in heat or sun. Fine for anything with
+a short life: <strong>carton labels, lot labels, pick
+labels</strong>.</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Label type</th>
+<th>Media</th>
+<th>Size that works well</th>
+<th>Technology</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bin / rack / shelf</td>
+<td>Polypropylene, permanent adhesive</td>
+<td>4×2 in (bins), 4×6 in (rack ends)</td>
+<td>Thermal transfer, resin or wax-resin ribbon</td>
+</tr>
+<tr class="even">
+<td>Item / carton</td>
+<td>Paper, permanent adhesive</td>
+<td>4×2 in</td>
+<td>Direct thermal</td>
+</tr>
+<tr class="odd">
+<td>Lot (item + lot + expiry)</td>
+<td>Paper</td>
+<td>4×3 in</td>
+<td>Direct thermal</td>
+</tr>
+<tr class="even">
+<td>Pallet placard</td>
+<td>Paper or polypropylene</td>
+<td>4×6 in</td>
+<td>Either</td>
+</tr>
+<tr class="odd">
+<td>Document barcodes (SO/PO/transfer #)</td>
+<td>Printed on the document itself by the office laser printer</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Symbology:</strong> use <strong>Code 128</strong> for
+one-dimensional codes (compact, encodes the full item-number character
+set) or a <strong>QR code</strong> where labels are scanned at odd
+angles or from a distance — 2D imagers and the camera scanner read both.
+Be consistent per label type. Leave a quiet zone (blank margin) of at
+least 1/8 inch around every barcode, and always print the human-readable
+text under it — people still need to read labels when a battery
+dies.</p>
+<h4 data-number="1.6.14.3" id="printing-labels-from-openerp"><span
+class="header-section-number">1.6.14.3</span> Printing labels from
+OpenERP</h4>
+<p>Two label runs are built in, each with two outputs — <strong>PDF
+label sheets</strong> (Avery 5163: Letter sheets of ten 4×2-inch labels,
+printable on any office printer — works with no thermal printer at all)
+and <strong>direct thermal printing</strong> (sends ZPL to the
+configured network printer):</p>
+<ul>
+<li><strong>Bin labels</strong> — <strong>Inventory → Warehouses →
+Bins</strong>: the bins modal has <strong>🖨 Label Sheet (PDF)</strong>
+and, when a printer is configured, <strong>🏷 Send to Label
+Printer</strong>. Prints one label per active bin: barcode + bin code +
+warehouse + aisle/rack/shelf.</li>
+<li><strong>PO carton labels</strong> — <strong>Purchasing → Orders →
+select a PO → Labels</strong>: choose <em>Fixed count per line</em>
+(e.g. one per carton) or <em>One per unit ordered</em>, then PDF or
+direct print. Each label carries the item-number barcode, description,
+and the PO number/vendor. Per-unit runs of any size are fine on the
+thermal printer (the printer repeats the label); PDF sheets are capped
+at 1,000 labels per run.</li>
+</ul>
+<p>To enable direct printing, set the printer’s <strong>IP address, port
+(9100), and head DPI (203/300)</strong> under <strong>Admin → Setup →
+Company → Label Printing</strong>. Leave the IP blank to work PDF-only.
+The test of a correct setup: print one bin label and scan it in
+Warehouse Mode (§5.13).</p>
+<h4 data-number="1.6.14.4" id="when-each-label-gets-printed"><span
+class="header-section-number">1.6.14.4</span> When each label gets
+printed</h4>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>When</th>
+<th>What to print</th>
+<th>How</th>
+<th>Why then</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Warehouse setup (once), and whenever bins are added</td>
+<td>All bin labels for the warehouse</td>
+<td>Warehouses → Bins → Label Sheet / Send to Printer</td>
+<td>Bins must be scannable before any scan-driven putaway or counting
+can start</td>
+</tr>
+<tr class="even">
+<td>When a PO is placed — <strong>before the container
+arrives</strong></td>
+<td>One item label per carton expected, from the PO lines</td>
+<td>PO list → Labels</td>
+<td>The receiving crew labels cartons as they unload; unlabeled goods
+never enter the racks</td>
+</tr>
+<tr class="odd">
+<td>At receiving</td>
+<td>Lot labels (and pallet placards if palletized)</td>
+<td>Warehouse Mode → Receive: after posting, the confirmation card
+prints labels for the lots just captured</td>
+<td>Lot identity is only reliably known at the dock</td>
+</tr>
+<tr class="even">
+<td>When printing any SO/PO/transfer document</td>
+<td>The document number as a barcode on the page</td>
+<td>(planned)</td>
+<td>One scan at the floor opens the right transaction</td>
+</tr>
+</tbody>
+</table>
+<h4 data-number="1.6.14.5"
+id="placement-and-quality-best-practices"><span
+class="header-section-number">1.6.14.5</span> Placement and quality best
+practices</h4>
+<blockquote>
+<ul>
+<li><strong>Consistent placement.</strong> Bin labels on the same corner
+of every location (bottom-left of the beam is common), at eye height
+where possible; upper rack levels get labels angled downward or
+duplicated at eye level with an up-arrow. Carton labels on the same
+face/corner of every carton.</li>
+<li><strong>Scan-test every new batch.</strong> Print one label, scan it
+in Warehouse Mode, and confirm it resolves to the right record
+<em>before</em> printing hundreds.</li>
+<li><strong>Never hand-write over a barcode</strong> or wrap
+tape/stretch-film across one — reprint instead. A glossy overlay can
+defeat the scanner.</li>
+<li><strong>Replace, don’t patch.</strong> A damaged bin label is a
+reprint, not a marker touch-up; a label that scans wrong is worse than
+no label.</li>
+<li><strong>Keep ribbon and media stocked</strong> and matched
+(wax-resin ribbon on polypropylene, wax on paper). Order media when the
+last spare roll goes on the printer.</li>
+<li><strong>Network the printer.</strong> Put the label printer on the
+LAN with a static IP and configure it under Admin → Setup → Company →
+Label Printing. OpenERP sends plain ZPL to TCP port 9100 — no driver
+installation. Zebra’s free ZebraDesigner remains handy for one-off
+custom labels.</li>
+</ul>
+</blockquote>
 <hr />
 <h2 data-number="1.7" id="item-master"><span
 class="header-section-number">1.7</span> 6. Item Master</h2>
@@ -2227,9 +2650,25 @@ reason, effective date). SO entry warns the user when a superseded item
 is selected.</p>
 <h3 data-number="1.7.13" id="kitting-bom"><span
 class="header-section-number">1.7.13</span> 6.13 Kitting / BOM</h3>
-<p><strong>Inventory → Kitting</strong> — bill-of-materials for kit
-items. Defines component items and required quantities. When a kit item
-is shipped, the system pulls FIFO cost from the components.</p>
+<p><strong>Inventory → Kitting</strong> — the bill of materials for kit
+items: which component items go into a kit, and how many of each. When a
+kit is shipped, the system pulls FIFO cost from its components rather
+than from the kit itself.</p>
+<p><strong>Building a BOM:</strong> 1. Pick the kit item from the
+dropdown at the top. (Kits are items flagged as such; use <strong>Show
+all items</strong> if the one you want isn’t listed.) 2. If it has no
+BOM yet, click <strong>Create BOM</strong>. 3. Click <strong>+ Add
+Component</strong> to add each component item with its quantity per kit,
+unit of measure, and an optional-component flag. 4. <strong>Qty per Kit
+is editable in place</strong> — click the cell in the grid, type the new
+number, and press Enter. It saves immediately, so correcting a quantity
+doesn’t need the Add dialog. 5. To remove a component, select its row
+and click <strong>✕ Remove</strong> in the action bar.</p>
+<p><strong>Explode Kit…</strong> previews what building a given quantity
+of the kit would consume: each component, the quantity needed, what’s on
+hand, and whether you’re short. Run it before promising a build date —
+it’s the difference between “we can ship 50” and “we can ship 50 except
+for the seals.”</p>
 <h3 data-number="1.7.14" id="barcode-scanning"><span
 class="header-section-number">1.7.14</span> 6.14 Barcode Scanning</h3>
 <p>The endpoint <code>GET /items/barcode/{code}</code> checks
@@ -2574,13 +3013,20 @@ permission). Per-route permission enforcement is an active roadmap item
 class="header-section-number">1.9.3</span> 8.3 Audit Log</h3>
 <p><strong>Admin → Audit Log</strong> — every data-changing API call
 logs: table name, record ID, action (CREATE, UPDATE, DELETE, POST,
-APPLY, SHIP, etc.), changed-by username, and timestamp. Filter by table
-name, record ID, user, or date range.</p>
+APPLY, SHIP, etc.), changed-by username, and timestamp. Filter by table,
+user, or date range above the grid.</p>
+<p><strong>Seeing exactly what changed.</strong> Select any entry in the
+grid and a <strong>Before / After</strong> panel opens underneath it,
+showing the record’s field values as they were and as they became. This
+is the heart of an investigation: it’s not just <em>that</em> someone
+changed a credit limit, it’s that they changed it from 5,000 to 50,000
+at 4:58 PM on a Friday.</p>
 <blockquote>
 <p><strong>Using the audit log for investigations:</strong> If a balance
-is unexpectedly wrong, filter the audit log by the affected record ID
-and review the sequence of actions. You can see exactly who changed what
-and when. The audit log is append-only and cannot be edited.</p>
+is unexpectedly wrong, filter by the affected table and date range, then
+click through the entries for that record and read the Before/After
+panel on each. You can see exactly who changed what, when, and from what
+to what. The audit log is append-only and cannot be edited.</p>
 </blockquote>
 <h3 data-number="1.9.4" id="payment-terms"><span
 class="header-section-number">1.9.4</span> 8.4 Payment Terms</h3>
@@ -2722,12 +3168,26 @@ is today or earlier — running it twice in the same day does not
 double-send anything already sent, since each successful run pushes Next
 Run Date forward.</p></li>
 </ol>
-<h4 data-number="1.9.11.3"
-id="making-it-actually-automatic-with-windows-task-scheduler"><span
+<h4 data-number="1.9.11.3" id="making-it-actually-automatic"><span
 class="header-section-number">1.9.11.3</span> Making it actually
-automatic with Windows Task Scheduler</h4>
+automatic</h4>
 <p>The command above does nothing by itself unless something runs it on
-a schedule. To make reports genuinely “set and forget”:</p>
+a schedule. The recommended way is the <strong>OpenERP Worker
+Service</strong> (<code>service\OpenERPSvc.exe</code> — see
+<code>service\README.md</code>): a small Windows service that already
+ships configured to run this script daily at 6:30 AM (plus the
+message-queue worker every minute and the recurring-PO runner daily).
+Install it once as Administrator:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">&lt;</span>install <span class="fu">dir</span><span class="op">&gt;</span>\service</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\OpenERPSvc<span class="op">.</span><span class="fu">exe</span> I</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sc</span> <span class="fu">start</span> OpenERPSvc</span></code></pre></div>
+<p>It auto-starts with Windows, restarts itself after a crash, logs
+every run to <code>service\OpenERPSvc.log</code>, and its schedule is
+edited in plain <code>service\OpenERPSvc.ini</code> (changes take effect
+without a restart).</p>
+<p>If you prefer not to install the service, classic <strong>Windows
+Task Scheduler</strong> works too:</p>
 <ol type="1">
 <li>Open <strong>Task Scheduler</strong> (search for it in the Start
 menu).</li>
@@ -3796,13 +4256,16 @@ page</td>
 <td>On demand; also the easiest way to test</td>
 </tr>
 <tr class="even">
-<td><code>tools\run_message_queue.php</code> via Windows Task Scheduler
-/ cron (every minute)</td>
-<td>Unattended production use</td>
+<td>The <strong>OpenERP Worker Service</strong>
+(<code>service\OpenERPSvc.exe</code> — see
+<code>service\README.md</code>), which runs
+<code>tools\run_message_queue.php</code> every minute</td>
+<td><strong>Recommended</strong> for unattended production use</td>
 </tr>
 <tr class="odd">
-<td>The planned OpenERP Windows service</td>
-<td>Future — will replace Task Scheduler</td>
+<td><code>tools\run_message_queue.php</code> via Windows Task Scheduler
+/ cron (every minute)</td>
+<td>If you prefer not to install the service</td>
 </tr>
 </tbody>
 </table>
@@ -3813,6 +4276,105 @@ counter (for SKIPPED rows that had no recipient, you’ll be asked for
 one). <strong>Cancel</strong> stops a PENDING message before the worker
 picks it up. Messages that were sent are never deleted — the log is the
 audit trail of what each customer was told.</p>
+<h3 data-number="1.9.16" id="database-backups"><span
+class="header-section-number">1.9.16</span> 8.16 Database Backups</h3>
+<p><strong>Admin → Setup → Company → Database Backups</strong> —
+automatic nightly zip archives of your entire database plus all uploaded
+documents, with retention pruning and a run log. This is the difference
+between a bad day and a catastrophe: hardware fails, files get
+corrupted, people make mistakes. Configure it on day one.</p>
+<p><strong>How it works.</strong> On schedule, OpenERP asks the
+Advantage server for a <strong>hot snapshot</strong> of the data
+dictionary and every table (<code>sp_BackupDatabase</code>) — this is
+safe while users are connected and working; the snapshot is consistent
+as of the moment it started. The snapshot lands in the archive under
+<code>database\</code>, your uploaded documents (vendor/customer/part
+files) under <code>uploads\</code>, and the whole thing is written as
+one zip file, integrity-checked, then old archives beyond your
+keep-count are deleted.</p>
+<p><strong>Configuration</strong> (all in the Database Backups card;
+click <strong>Save Changes</strong> after editing):</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Backups Enabled</td>
+<td>Master switch for scheduled runs (Run Backup Now works
+regardless)</td>
+</tr>
+<tr class="even">
+<td>Destination Folder</td>
+<td>Where the zips go. A real path on the server — ideally a
+<strong>different physical disk</strong> than the data, or a network
+share. Never a mapped/subst drive letter</td>
+</tr>
+<tr class="odd">
+<td>Schedule / Days</td>
+<td>Daily with any subset of weekdays, or Weekly on one day</td>
+</tr>
+<tr class="even">
+<td>Start Time</td>
+<td>The backup fires on the first check at or after this time — pick a
+quiet hour (2:00 AM default)</td>
+</tr>
+<tr class="odd">
+<td>Backups to Keep</td>
+<td>Retention: oldest archives beyond this count are deleted after each
+successful backup</td>
+</tr>
+<tr class="even">
+<td>Source Folder</td>
+<td>Leave blank — the default (the data folder) is right for almost
+everyone</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What actually runs it.</strong> The schedule is executed by
+the <strong>OpenERP Worker Service</strong> (§8.11 /
+<code>service\README.md</code>), which checks every few minutes whether
+a backup is due. No service installed = no scheduled backups (the
+<strong>Run Backup Now</strong> button still works — it runs the backup
+immediately through the web server). Every attempt — scheduled or manual
+— appears in the <strong>Recent backups</strong> table with its status,
+size, file count, and archive name; failures show the error text.</p>
+<p><strong>Restoring.</strong> A backup is only as good as its restore.
+To restore:</p>
+<ol type="1">
+<li>Unzip the archive somewhere on the server
+(e.g. <code>C:\restore\</code>).</li>
+<li>In any SQL tool connected to Advantage (or a one-line PHP script),
+run:
+<code>EXECUTE PROCEDURE sp_RestoreDatabase('C:\restore\database\openerp.add', '', 'E:\OpenERP\data\openerp.add', NULL);</code>
+— the destination must be a <strong>new/empty</strong> location; never
+restore on top of a live database you might still need. Indexes are
+rebuilt automatically during restore.</li>
+<li>Copy the archive’s <code>uploads\</code> folder back into the
+restored data folder.</li>
+<li>Point <code>backend\php\config\database.local.php</code> (dd_path)
+at the restored <code>.add</code> if you’re switching over to it.</li>
+</ol>
+<p>Do a test restore once after setting backups up, and again after any
+major upgrade — five minutes of practice while calm beats learning the
+procedure during an outage.</p>
+<p><strong>The FILE fallback.</strong> If the hot snapshot isn’t
+possible (the connecting user lacks backup rights, or the ADS server
+runs on a different machine than the web server and can’t see the
+staging folder), the runner falls back to copying the raw data files
+into the zip. The run log shows Method = FILE, and files the database
+server had open at that moment are skipped (the note column says how
+many). A FILE backup of an in-use database is best-effort — if you see
+FILE instead of HOT, fix the cause (re-run
+<code>tools\create_dd.php</code>, which grants the backup right) rather
+than living with it.</p>
 <hr />
 <h2 data-number="1.10" id="integration"><span
 class="header-section-number">1.10</span> 9. Integration</h2>
@@ -4004,22 +4566,22 @@ proxy.</p>
 <h4 data-number="1.10.3.2" id="what-payload-openerp-expects"><span
 class="header-section-number">1.10.3.2</span> What payload OpenERP
 expects</h4>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;SHOPIFY&quot;</span><span class="fu">,</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;external_id&quot;</span><span class="fu">:</span> <span class="st">&quot;order_12345&quot;</span><span class="fu">,</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;customer&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;buyer@example.com&quot;</span><span class="fu">,</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jane Buyer&quot;</span><span class="fu">,</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;address1&quot;</span><span class="fu">:</span> <span class="st">&quot;123 Main St&quot;</span><span class="fu">,</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Springfield&quot;</span><span class="fu">,</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;IL&quot;</span><span class="fu">,</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="st">&quot;62704&quot;</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lines&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;item_number&quot;</span><span class="fu">:</span> <span class="st">&quot;WIDGET-A&quot;</span><span class="fu">,</span> <span class="dt">&quot;qty&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">9.99</span> <span class="fu">}</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;SHOPIFY&quot;</span><span class="fu">,</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;external_id&quot;</span><span class="fu">:</span> <span class="st">&quot;order_12345&quot;</span><span class="fu">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;customer&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;buyer@example.com&quot;</span><span class="fu">,</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Jane Buyer&quot;</span><span class="fu">,</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;address1&quot;</span><span class="fu">:</span> <span class="st">&quot;123 Main St&quot;</span><span class="fu">,</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Springfield&quot;</span><span class="fu">,</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;IL&quot;</span><span class="fu">,</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="st">&quot;62704&quot;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lines&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;item_number&quot;</span><span class="fu">:</span> <span class="st">&quot;WIDGET-A&quot;</span><span class="fu">,</span> <span class="dt">&quot;qty&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span> <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="fl">9.99</span> <span class="fu">}</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <ul>
 <li><code>source</code> — a short label for which platform sent it (used
 for filtering in the order list, and for duplicate detection — see
@@ -4089,11 +4651,14 @@ forward by its frequency.</p></li>
 <li><p><strong>Fully automatically:</strong> run this command (it finds
 every active template whose Next Run Date has arrived, generates a PO
 from each, and advances each one):</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\php\php<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>c C<span class="op">:</span>\php\php_sapads<span class="op">.</span><span class="fu">ini</span> C<span class="op">:</span>\OpenERP\tools\run_po_recurring<span class="op">.</span><span class="fu">php</span></span></code></pre></div>
 <p>Just like the Scheduled Reports runner in §8.11, this command does
-nothing on its own until something triggers it on a schedule. Set it up
-the same way, in <strong>Windows Task Scheduler</strong>:</p>
+nothing on its own until something triggers it on a schedule. The
+<strong>OpenERP Worker Service</strong> (see §8.11) already ships
+configured to run it daily at 6:00 AM — install the service once and
+this is covered. Alternatively, set it up in <strong>Windows Task
+Scheduler</strong>:</p>
 <ol type="1">
 <li><strong>Create Task…</strong> → name it “OpenERP Recurring
 POs.”</li>
