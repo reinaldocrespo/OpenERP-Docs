@@ -1320,10 +1320,12 @@ the comparison grid. The inquiry’s <strong>Sourcing</strong> tab shows
 the RFQ’s status and vendor-quote count with a <strong>View RFQ
 →</strong> link straight into it.</li>
 <li><strong>Spawn Quote</strong> creates a customer Sales Quote (§3.2)
-from the inquiry’s lines. Enter your selling price per line (pre-filled
-from target price); the quote then follows its normal life — send,
-accept into an SO, or expire. The Sourcing tab links to it the same
-way.</li>
+from the inquiry’s lines. Price each line either directly (pre-filled
+from target price) or as <strong>GP % / markup over cost</strong> — with
+the winning RFQ vendor’s quoted price offered as the cost basis (see
+§4.3, “Pricing the customer quote from vendor quotes”). The quote then
+follows its normal life — send, accept into an SO, or expire. The
+Sourcing tab links to it the same way.</li>
 </ul>
 <p>Either action moves the inquiry to <code>QUOTING</code>. An inquiry
 can have at most one RFQ and one quote.</p>
@@ -1701,6 +1703,38 @@ part</em>.</li>
 quoted prices. The winning quote’s proposed factory is carried onto the
 PO as its factory attribution (§4.4).</li>
 </ol>
+<h4 data-number="1.5.3.1"
+id="pricing-the-customer-quote-from-vendor-quotes-markup-over-cost"><span
+class="header-section-number">1.5.3.1</span> Pricing the customer quote
+from vendor quotes — markup over cost</h4>
+<p>When the RFQ came from an inquiry (§3.10), the customer quote is
+usually priced as <strong>the vendor’s quoted cost plus a
+margin</strong>. The inquiry’s <strong>Spawn Quote</strong> form
+supports this directly: each line has a <strong>Cost Basis</strong>
+selector — <strong>RFQ quote</strong> (the selected vendor’s quoted
+price; pre-selected when one exists), <strong>FIFO avg</strong> (current
+landed cost, §5.6), <strong>Standard cost</strong>, <strong>Vendor last
+cost</strong>, or Manual — plus two linked percentage fields:</p>
+<ul>
+<li><strong>GP %</strong> — gross profit as a percent of the selling
+price (how sales thinks: <em>“I want 26 points on this”</em>). Entering
+it derives the markup automatically (markup = GP ÷ (100 − GP)).</li>
+<li><strong>Mk %</strong> — the markup over cost. Entering it derives
+the GP % the other way.</li>
+</ul>
+<p>Either way, the <strong>unit price computes live</strong> (cost × (1
++ markup)), a small margin hint shows under the price, and typing a
+price directly simply overrides the markup (the price wins). The cost,
+markup, and cost source are <strong>stored on the quote line</strong> —
+captured once at quote time, because a quote is a commitment.</p>
+<p><strong>When costs change after quoting</strong> (a tariff moves,
+ocean freight swings between quote and customs clearance): open the
+quote and click <strong>↻ Refresh Prices</strong>. Every markup-priced
+line is recomputed from its cost source’s <em>current</em> value — a
+re-recorded vendor quote, the latest FIFO landed cost, an updated
+standard — and the totals update. Manually priced lines never move. The
+same controls appear on regular Sales Quotes (§3.2) line entry, minus
+the RFQ basis.</p>
 <blockquote>
 <p><strong>When to use RFQs:</strong> Use RFQs for any purchase where
 you have multiple potential vendors, the amount is significant, or you
@@ -2583,6 +2617,19 @@ overrides (unit price, effective/expiry dates)</li>
 <li><strong>Q Breaks</strong> button on a price list item — define
 quantity break tiers: <code>min_qty, unit_price</code> pairs. When a
 line’s qty_ordered meets a break, the break price is used.</li>
+<li><strong>Markup-% rows</strong> — a price-list item can be a
+<strong>Markup %</strong> over a cost basis instead of a fixed price:
+choose <strong>FIFO avg</strong> (current landed cost — includes posted
+landed-cost bump-ups, §5.6), <strong>Standard cost</strong>, or
+<strong>Vendor last cost</strong>, and enter the markup. The selling
+price is computed fresh on <strong>every</strong> price lookup, so it
+follows each cost change automatically — post a new receipt or
+landed-cost allocation and the next order is priced off the new cost,
+nothing to re-key. Markup rows show <strong>auto</strong> in the price
+column (there is no stored price to edit) and quantity breaks don’t
+apply to them. Fallbacks when a basis has no data: FIFO with no stock →
+standard cost; Vendor with no preferred-vendor cost → item last cost →
+standard cost.</li>
 </ul>
 <blockquote>
 <p><strong>Pricing hierarchy (highest to lowest priority):</strong> 1.
