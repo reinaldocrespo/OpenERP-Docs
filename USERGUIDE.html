@@ -1268,10 +1268,16 @@ opportunity.</p>
 <h4 data-number="1.4.10.1" id="creating-an-inquiry"><span
 class="header-section-number">1.4.10.1</span> Creating an Inquiry</h4>
 <ol type="1">
-<li>Click <strong>+ New Inquiry</strong>. Enter the inquiry #,
+<li>Click <strong>+ New Inquiry</strong>. Enter the
 <strong>customer</strong> (contact and sales rep optional), <strong>date
-received</strong>, and target quote date. Industry, application, and
-estimated annual volume are free-form context for later reporting.</li>
+received</strong>, and target quote date. The <strong>inquiry #</strong>
+may be left blank — the system generates a unique sequential number
+(<code>INQ-mmdd-nnnn</code>) server-side. A <strong>Suggested
+Vendor</strong> may be recorded here too: it’s the vendor you
+<em>intend</em> to source from (not a commitment) — it shows on the
+Overview tab and pre-selects that vendor when the RFQ is later emailed.
+Industry, application, and estimated annual volume are free-form context
+for later reporting.</li>
 <li>Add <strong>lines</strong>. Each line describes one part being
 requested:
 <ul>
@@ -1305,10 +1311,12 @@ class="header-section-number">1.4.10.3</span> Sourcing: Spawn RFQ and
 Spawn Quote</h4>
 <ul>
 <li><strong>Spawn RFQ</strong> creates a supplier RFQ (§4.3) pre-loaded
-with the inquiry’s lines. Work the RFQ as usual — send to vendors,
-record quotes, compare prices in the comparison grid. The inquiry’s
-<strong>Sourcing</strong> tab shows the RFQ’s status and vendor-quote
-count with a <strong>View RFQ →</strong> link straight into it.</li>
+with the inquiry’s lines. Work the RFQ as usual — email it to vendors
+(the RFQ PDF carries the inquiry lines’ engineering identity: customer
+part #, drawing/rev, material spec), record quotes, compare prices in
+the comparison grid. The inquiry’s <strong>Sourcing</strong> tab shows
+the RFQ’s status and vendor-quote count with a <strong>View RFQ
+→</strong> link straight into it.</li>
 <li><strong>Spawn Quote</strong> creates a customer Sales Quote (§3.2)
 from the inquiry’s lines. Enter your selling price per line (pre-filled
 from target price); the quote then follows its normal life — send,
@@ -1317,6 +1325,15 @@ way.</li>
 </ul>
 <p>Either action moves the inquiry to <code>QUOTING</code>. An inquiry
 can have at most one RFQ and one quote.</p>
+<blockquote>
+<p><strong>The fast path — AI Help.</strong> The whole flow above can be
+driven conversationally: type <em>“Create an inquiry for Acme, 50 of
+part ABC-123 from Fast Supply”</em> into AI Help (§8.14) and confirm the
+card it produces; then <em>“email it to the vendor”</em> creates the RFQ
+and queues the email (PDF attached) to the vendor’s management office in
+one more confirmation. Nothing is created or sent until you press
+<strong>Confirm</strong>.</p>
+</blockquote>
 <h4 data-number="1.4.10.4" id="award-or-loss"><span
 class="header-section-number">1.4.10.4</span> Award or Loss</h4>
 <ul>
@@ -1649,7 +1666,25 @@ Comparison</h3>
 vendors for the same items.</p>
 <ol type="1">
 <li>Create an RFQ with line items (item, description, qty).</li>
-<li><strong>Send</strong> changes status to SENT.</li>
+<li><strong>✉ Send to Vendors</strong> opens the send form: tick the
+vendors to ask (the linked inquiry’s suggested vendor comes
+pre-selected), add an optional message, and <strong>Queue
+Emails</strong>. Each vendor’s email is resolved automatically —
+<strong>management office first</strong>: if the vendor is linked to an
+<strong>agent</strong> (§4.1), the RFQ goes to the agent’s
+MANAGEMENT-department contact, then the agent’s primary contact, then
+the agent’s own email; vendors without an agent use their own
+contacts/email the same way. The resolved address is shown per vendor
+and can be overridden before sending. Each email carries the <strong>RFQ
+PDF</strong> attached (for RFQs spawned from an inquiry, the PDF
+includes each line’s customer part #, drawing/rev, and material spec)
+and is delivered through the outbound message queue — track it in
+<strong>Admin → Message Log</strong> (§8.15) or in the RFQ’s own
+<strong>Sent To</strong> table (vendor, email used, office, ⏳/✓/✖
+status). Vendors with no email anywhere on file are reported as skipped,
+not silently dropped. Sending marks the RFQ <code>SENT</code>; more
+vendors can be added with another send. A <strong>📄 PDF</strong> button
+downloads the same document for manual handling.</li>
 <li>Use <strong>Record Quote</strong> to enter each vendor’s response
 (price per line, lead time, availability). When the quoting vendor is an
 <strong>agent</strong>, a <strong>Proposed Factory</strong> dropdown
@@ -4142,6 +4177,10 @@ plain English and the assistant prepares the transaction for you:</p>
 each”</em></li>
 <li><em>“Record a $500 check payment from Aceco, check #10456”</em></li>
 <li><em>“Adjust ITEM-X by −2, damaged in handling”</em></li>
+<li><em>“Create an inquiry for Aceco: 50 of part ABC-123 from Fast
+Supply”</em></li>
+<li><em>“Email that inquiry to the vendor”</em> (after the inquiry
+exists)</li>
 </ul>
 <p>What happens next, every time:</p>
 <ol type="1">
@@ -4162,15 +4201,33 @@ it.</li>
 <li>Press <strong>Cancel</strong> and the draft is discarded — nothing
 is created, nothing to clean up.</li>
 </ol>
-<p>Three transaction types are supported today: <strong>sales
+<p>Five transaction types are supported today: <strong>sales
 orders</strong>, <strong>AR customer payments</strong> (created
-unapplied — apply to invoices under AR → Payments), and
-<strong>inventory adjustments</strong>. For anything else (editing,
-voiding, posting, applying payments, purchase orders…), the assistant
-will point you to the right screen instead. Warnings appear on the card
-<em>before</em> you confirm — e.g. if the order would push the customer
-over their credit limit, the card says so (and Confirm would be
-rejected).</p>
+unapplied — apply to invoices under AR → Payments), <strong>inventory
+adjustments</strong>, <strong>customer inquiries</strong>, and
+<strong>emailing an inquiry’s RFQ to a vendor</strong>. For anything
+else (editing, voiding, posting, applying payments, purchase orders…),
+the assistant will point you to the right screen instead. Warnings
+appear on the card <em>before</em> you confirm — e.g. if the order would
+push the customer over their credit limit, the card says so (and Confirm
+would be rejected).</p>
+<p>Two inquiry-specific behaviors worth knowing:</p>
+<ul>
+<li><strong>Unknown parts are fine.</strong> An inquiry line for a part
+that isn’t in the Item Master becomes a free-text line (the card warns
+you) — that’s the Inquiry Master design (§3.10); the item is created
+later at award. The assistant also searches cross-references (UPC / MPN
+/ customer part numbers) before treating a part as new.</li>
+<li><strong>The vendor email goes to the management office.</strong>
+<em>“Email it to the vendor”</em> drafts one card that, on Confirm,
+creates the RFQ from the inquiry and queues the email — with the RFQ PDF
+attached — to the vendor’s resolved management-office address (agent
+chain first, §4.3). The card shows exactly which office and address will
+be used; if no email is on file anywhere, the card warns you before you
+confirm. The vendor is chosen from what you said, else the inquiry’s
+suggested vendor, else the item’s preferred vendor — the assistant asks
+when it can’t tell.</li>
+</ul>
 <h4 data-number="1.9.14.3" id="keeping-its-knowledge-current"><span
 class="header-section-number">1.9.14.3</span> 8.14.3 Keeping Its
 Knowledge Current</h4>
