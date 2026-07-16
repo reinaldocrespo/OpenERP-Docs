@@ -1299,6 +1299,13 @@ pay; it pre-fills the quote and award forms later.</li>
 Overview tab is for contextual knowledge that doesn’t fit a field —
 “customer prefers castings from Taiwan”, “drawing rev B expected next
 month”. It is editable any time before award/loss.</p>
+<p>Two more Overview fields appear when set: <strong>Sent to
+Supplier</strong> — the date the sourcing RFQ went out (stamped
+automatically by Spawn RFQ, or carried in from an imported inquiry log)
+— which together with Date Received and the quote date makes the
+quotation-turnaround timeline measurable; and <strong>Legacy Quote
+Ref</strong>, the quote/job number from a pre-OpenERP system, preserved
+by the smart import (§8.12.8) so old paperwork stays findable.</p>
 <h4 data-number="1.4.10.2"
 id="the-engineering-package-documents-tab"><span
 class="header-section-number">1.4.10.2</span> The Engineering Package
@@ -3961,6 +3968,81 @@ MFG-NINGBO,Zhang Ming,Plant Manager,MANAGEMENT,zhang@dongxin.cn,WHATSAPP,1</code
 already loaded are reported as <em>skipped</em>. An unknown
 <code>vendor_number</code> fails just that row; the rest of the file
 still imports.</p>
+<h4 data-number="1.9.12.8"
+id="dropping-a-spreadsheet-on-the-ai-assistant-smart-import"><span
+class="header-section-number">1.9.12.8</span> 8.12.8 Dropping a
+Spreadsheet on the AI Assistant (smart import)</h4>
+<p>Some real-world workbooks are too irregular for the CSV templates
+above — multi-row headers, coded columns, packed cells. For
+<strong>recognized workbook layouts</strong>, there is a faster path:
+<strong>drop the .xlsx/.xlsm file straight onto the AI Help
+panel</strong> (§8.14), or click the <strong>📎</strong> button next to
+the chat input.</p>
+<p>What happens, every time:</p>
+<ol type="1">
+<li>The system reads the workbook and <strong>fingerprints it against
+known layouts</strong> (sheet names + header rows — deterministic, no AI
+guesswork, no data leaves the server).</li>
+<li>The assistant states its conclusion — <em>“This looks like the
+Approved Vendor Log workbook…”</em> — with a summary card: how many
+records the file holds, how many already exist in the system, and any
+caveats (e.g. columns the file doesn’t carry).</li>
+<li><strong>Nothing is imported until you press Confirm</strong> on the
+card. Cancel discards the upload.</li>
+<li>On Confirm the import runs and the card reports the outcome: created
+/ already-existed / failed counts, plus what else was created along the
+way (customer shells, agents, certifications).</li>
+</ol>
+<p><strong>Recognized layouts today:</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Workbook</th>
+<th>What it imports</th>
+<th>Notable handling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Inquiry Log</strong> (yearly log sheet: INQ.# / customer /
+vendor / dates / status)</td>
+<td>Inquiry Master headers + lines, full history</td>
+<td>Statuses map to AWARDED / LOST / QUOTING / CANCELLED with the lost
+reason preserved; the out-to-supplier date and legacy quote reference
+land in their own fields (§3.10); multi-part cells
+(<code>123/456+789</code>) split into separate lines; unmatched vendor
+names are kept in the notes; <strong>missing customers and sales reps
+are auto-created as shell records</strong> (name only — enrich
+later)</td>
+</tr>
+<tr class="even">
+<td><strong>Approved Vendor Log</strong> (approved-vendor register with
+agents and certificates)</td>
+<td>Vendors, their <strong>agents</strong> (management offices, created
+and linked automatically), and <strong>certifications</strong> with
+expiration dates</td>
+<td>Country/type codes decoded; approval dates, audit dates, ESG and
+labor-policy flags preserved in the vendor’s internal notes; rows marked
+“not actively ordering” stay APPROVED with a note</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Re-running is always safe.</strong> Every smart import is
+<em>idempotent</em>: records are matched by their natural key (inquiry
+number, vendor number, certification name…) and anything already in the
+system is skipped, never overwritten and never duplicated. Drop next
+month’s copy of the same workbook and only the new rows import.</p>
+<p>Limits: <code>.xlsx</code>/<code>.xlsm</code> only (CSVs use the
+entities above), 25 MB max. A workbook that doesn’t match a known layout
+is politely declined — the assistant lists the sheet names it saw so you
+can tell what it looked at. Large files (10,000+ rows) take up to a
+minute — leave the panel open. Each import is recorded in the audit
+log.</p>
 <h3 data-number="1.9.13" id="csv-export"><span
 class="header-section-number">1.9.13</span> 8.13 CSV Export</h3>
 <p>Most list screens have an <strong>Export CSV</strong> button that
@@ -4250,6 +4332,11 @@ it.</li>
 <li>Press <strong>Cancel</strong> and the draft is discarded — nothing
 is created, nothing to clean up.</li>
 </ol>
+<p><strong>Importing spreadsheets.</strong> The panel also accepts a
+<strong>dropped .xlsx/.xlsm workbook</strong> (or the 📎 button):
+recognized layouts are identified, summarized, and imported after you
+press Confirm — see §8.12.8 for the full flow and the list of recognized
+workbooks. Re-runs never duplicate data.</p>
 <p>Five transaction types are supported today: <strong>sales
 orders</strong>, <strong>AR customer payments</strong> (created
 unapplied — apply to invoices under AR → Payments), <strong>inventory
