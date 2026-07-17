@@ -4885,14 +4885,24 @@ a detail table. Check them weekly (or before customer/vendor reviews)
 rather than daily:</p>
 <ul>
 <li><strong>Inquiry Dashboard</strong> — the business-development
-pipeline. Tiles: open pipeline count and potential value (line qty ×
-target price for DRAFT/QUOTING inquiries), <strong>win rate</strong>
-(awarded ÷ (awarded + lost) — cancelled inquiries don’t count against
-you), awarded value, and average days from receipt to award. Charts:
-inquiries by status, monthly received/awarded/lost. Table: most active
-customers with per-customer win rate. A falling win rate or an aging
-pipeline is the early signal to review pricing or supplier response
-times.</li>
+pipeline and its full history on one screen, filterable by date range,
+customer, and sales rep. Tiles: total inquiries, <strong>win
+rate</strong> (awarded ÷ (awarded + lost) — cancelled inquiries don’t
+count against you), <strong>median quote turnaround</strong> (received →
+quoted, split into <em>days to supplier</em> + <em>days back</em>,
+computable for any inquiry with a Sent-to-Supplier date — stamped by
+Spawn RFQ or carried in by the smart import §8.12.8), open pipeline, and
+days-to-award. Charts: <strong>inquiries by year</strong>
+(received/awarded/lost), <strong>win rate by year</strong>,
+<strong>turnaround trend by year</strong>, <strong>existing-vs-new
+win-rate split</strong> (a “new” part or customer = quoted for the first
+time ever — the classic pattern is winning repeat business at a far
+higher rate than first-time requests), and <strong>lost reasons</strong>
+(losing on price vs. not being able to quote are different problems).
+Table: most active customers with per-customer win rate and <strong>last
+inquiry date</strong> — years of “who asks us for what, and do we win”
+at a glance. A falling win rate or a slowing turnaround is the early
+signal to review pricing or supplier response times.</li>
 <li><strong>Customer Dashboard</strong> — relationship health. Tiles:
 revenue for the selected invoice-date range, <strong>AR
 exposure</strong> (open + partial invoice balances), open SO backlog,
@@ -4908,7 +4918,16 @@ the tile turns amber when nonzero; find a backup supplier). Charts:
 parts by manufacturing method, top parts by shipped revenue. Table: top
 parts with drawing numbers.</li>
 <li><strong>Vendor Scorecard</strong> — supplier performance (§4.1);
-linked here so all four pillars’ dashboards live in one place.</li>
+linked here so all four pillars’ dashboards live in one place. The page
+opens with a <strong>compliance strip</strong>: certification counts
+(active / expired / expiring ≤ 90 days / 91–180 days), a
+<strong>Certification Expiry Radar</strong> listing every certificate
+that is expired or lapsing within 180 days (soonest first, color-coded),
+the supply base by country, and each agent’s factory-portfolio size.
+When any certification is expired or within 90 days of lapsing, the main
+Dashboard shows a red <strong>⚠ Vendor Certs</strong> tile linking
+straight here — the system warns you <em>before</em> an ISO or PED
+certificate lapses, not after a customer asks for it.</li>
 </ul>
 <blockquote>
 <p><strong>Charts blank after an upgrade?</strong> The dashboards use
