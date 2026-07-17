@@ -972,9 +972,21 @@ spawn this quote for you once sourcing is done.</p>
 <p>Statuses: <code>DRAFT</code> → <code>SENT</code> →
 <code>ACCEPTED</code> or <code>EXPIRED</code> or
 <code>CANCELLED</code></p>
+<p>The <strong>quote number is assigned automatically</strong> (a
+sequential <code>SQ…</code> key) — there is nothing to type.</p>
 <ul>
-<li><strong>Send</strong> converts a DRAFT quote to SENT (recordkeeping
-only; no email is sent automatically unless configured).</li>
+<li><strong>📄 PDF</strong> downloads the quotation as a branded PDF
+(your company header, the customer’s address, line items with unit
+price/discount/amount, totals, and validity date) — the document you’d
+send or print.</li>
+<li><strong>✉ Email to Customer</strong> opens a short form: the
+recipient pre-fills from the customer’s email on file (editable), an
+optional message sits above the line summary, and <strong>Queue
+Email</strong> sends the quotation <em>with the PDF attached</em>
+through the outbound message queue (§8.15) — track delivery in Admin →
+Message Log. Sending marks the quote SENT; if the customer has no email
+on file, the quote is still marked SENT and you’re told it wasn’t
+emailed.</li>
 <li><strong>Accept</strong> creates a Sales Order from the quote lines
 and marks the quote ACCEPTED.</li>
 <li><strong>Expire</strong> marks the quote EXPIRED; no order is
@@ -1327,12 +1339,15 @@ the comparison grid. The inquiry’s <strong>Sourcing</strong> tab shows
 the RFQ’s status and vendor-quote count with a <strong>View RFQ
 →</strong> link straight into it.</li>
 <li><strong>Spawn Quote</strong> creates a customer Sales Quote (§3.2)
-from the inquiry’s lines. Price each line either directly (pre-filled
-from target price) or as <strong>GP % / markup over cost</strong> — with
-the winning RFQ vendor’s quoted price offered as the cost basis (see
-§4.3, “Pricing the customer quote from vendor quotes”). The quote then
-follows its normal life — send, accept into an SO, or expire. The
-Sourcing tab links to it the same way.</li>
+from the inquiry’s lines (its number is assigned automatically). Price
+each line either directly (pre-filled from target price) or as
+<strong>GP % / markup over cost</strong> — with the winning RFQ vendor’s
+quoted price offered as the cost basis (see §4.3, “Pricing the customer
+quote from vendor quotes”). Spawning a quote also stamps the inquiry’s
+<strong>Quoted to Customer</strong> date, so the received →
+out-to-supplier → quoted turnaround is measured on real dates. The quote
+then follows its normal life — send (email the PDF), accept into an SO,
+or expire. The Sourcing tab links to it the same way.</li>
 </ul>
 <p>Either action moves the inquiry to <code>QUOTING</code>. An inquiry
 can have at most one RFQ and one quote.</p>
@@ -1351,8 +1366,9 @@ class="header-section-number">1.4.10.4</span> Award or Loss</h4>
 <li><strong>Award</strong> — the customer gave you the business. For
 each line, either select the existing item or let the system
 <strong>create a new Item Master record</strong> from the part details.
-Enter the winning <strong>vendor</strong> and <strong>unit
-cost</strong>. On award the system:
+The winning <strong>vendor</strong> and <strong>unit cost</strong> are
+pre-filled from the RFQ’s selected quote (you awarded because a supplier
+quoted that price) — override if needed. On award the system:
 <ul>
 <li>creates the <code>items</code> row (type STOCK, standard cost = the
 awarded cost) for new parts,</li>
@@ -4317,9 +4333,10 @@ exists)</li>
 <ol type="1">
 <li>The assistant looks up the customer/item to make sure it’s real
 (asking you to pick when several match), fills in defaults (list price,
-standard cost, today’s date, the open GL period, an auto-generated
-document number), and shows a <strong>📝 confirmation card</strong> in
-the chat with every figure spelled out.</li>
+standard cost, today’s date, the open GL period), and shows a <strong>📝
+confirmation card</strong> in the chat with every figure spelled out.
+The document number is <em>assigned by the system when you Confirm</em>
+— the card shows “assigned on Confirm”, never an invented number.</li>
 <li><strong>Nothing has been created at this point.</strong> The card
 has <strong>Confirm</strong> and <strong>Cancel</strong> buttons; the
 assistant’s text will always say the draft is awaiting your review.</li>
