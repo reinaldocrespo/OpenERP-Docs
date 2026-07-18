@@ -1392,6 +1392,25 @@ over — accept the spawned quote into a <strong>Sales Order</strong>
 (§3.3) and convert the RFQ’s winning quote into a <strong>PO</strong>
 (§4.3), or create both directly.</p>
 </blockquote>
+<h4 data-number="1.4.10.5" id="pausing-and-reopening"><span
+class="header-section-number">1.4.10.5</span> Pausing and reopening</h4>
+<p>Not every opportunity moves in a straight line. From the Overview
+tab:</p>
+<ul>
+<li><strong>Put On Hold</strong> (available while an inquiry is
+<code>DRAFT</code> or <code>QUOTING</code>) parks an opportunity that’s
+stalled — the customer went quiet, or you’re waiting on information —
+without losing it. An on-hold inquiry is set aside from the active
+pipeline; spawning, awarding, and marking-lost are disabled until you
+reopen it.</li>
+<li><strong>Reopen</strong> brings a <code>ON_HOLD</code>,
+<code>LOST</code>, or <code>CANCELLED</code> inquiry back to life.
+Because nothing is ever deleted, a lost bid that comes back around — or
+a cancelled request the customer revives — resumes exactly where it left
+off: it returns to <code>QUOTING</code> if an RFQ or quote already
+exists, otherwise to <code>DRAFT</code>, and any lost reason is cleared.
+(An <code>AWARDED</code> inquiry is final and cannot be reopened.)</li>
+</ul>
 <h3 data-number="1.4.11"
 id="order-status-tracking-customer-notifications"><span
 class="header-section-number">1.4.11</span> 3.11 Order Status Tracking
@@ -1492,6 +1511,28 @@ filtered (commonly Twilio error 30034). This is a carrier rule, not an
 OpenERP or account problem — configure everything, then start sending
 once the campaign shows <em>approved</em>.</p>
 </blockquote>
+<p><strong>A self-service tracking page.</strong> Every status entry you
+record also feeds a public <strong>“where’s my order” page</strong> the
+customer can open in a browser — no login, no account. On <strong>Sales
+→ Sales Orders</strong>, select an order and click <strong>Tracking
+Link</strong>; the system generates an unguessable link
+(e.g. <code>.../track/c76ba321…</code>) that you <strong>Copy</strong>
+and send to the customer (paste it into an email, or include it in a
+status message). The page shows the order number, the current status,
+the full status timeline (each step with its date, estimated arrival,
+and any notes), and the ordered items by quantity and description —
+<strong>never any pricing or account information</strong>. The link is
+private-by-obscurity: anyone who has it can view that one order, so
+share it only with the customer. This works today regardless of the
+Twilio/A2P situation above — it’s a page the customer opens, not a
+message you send.</p>
+<figure>
+<img src="docs-style/images/order-tracking.png"
+alt="The public order-tracking page a customer sees — status timeline with the current step highlighted, estimated arrival, and the ordered items (no pricing)" />
+<figcaption aria-hidden="true">The public order-tracking page a customer
+sees — status timeline with the current step highlighted, estimated
+arrival, and the ordered items (no pricing)</figcaption>
+</figure>
 <h3 data-number="1.4.12" id="customer-budgets"><span
 class="header-section-number">1.4.12</span> 3.12 Customer Budgets</h3>
 <p><strong>Sales → Customer Budgets</strong> — record the sales you
@@ -4031,10 +4072,12 @@ vendor / dates / status)</td>
 <td>Statuses map to AWARDED / LOST / QUOTING / CANCELLED with the lost
 reason preserved; the out-to-supplier date and legacy quote reference
 land in their own fields (§3.10); multi-part cells
-(<code>123/456+789</code>) split into separate lines; unmatched vendor
-names are kept in the notes; <strong>missing customers and sales reps
-are auto-created as shell records</strong> (name only — enrich
-later)</td>
+(<code>123/456+789</code>) split into separate lines; <strong>each row’s
+sourcing vendor is matched against your own vendor master</strong> —
+including spelling variants, casing, dropped spaces, and typos (see
+§8.12.9); ones it can’t resolve confidently are kept in the notes for
+review; <strong>missing customers and sales reps are auto-created as
+shell records</strong> (name only — enrich later)</td>
 </tr>
 <tr class="even">
 <td><strong>Approved Vendor Log</strong> (approved-vendor register with
@@ -4059,6 +4102,42 @@ is politely declined — the assistant lists the sheet names it saw so you
 can tell what it looked at. Large files (10,000+ rows) take up to a
 minute — leave the panel open. Each import is recorded in the audit
 log.</p>
+<h4 data-number="1.9.12.9"
+id="resolving-sourcing-vendors-after-an-import"><span
+class="header-section-number">1.9.12.9</span> 8.12.9 Resolving Sourcing
+Vendors After an Import</h4>
+<p>When the inquiry-log import runs, it matches each row’s
+sourcing-vendor text against <strong>your own vendor master</strong> —
+automatically cleaning up the spelling variants any hand-kept log
+accumulates: casing (<code>WUXI AFC</code> ↔︎ <code>Wuxi Afc</code>),
+dropped spaces (<code>GOLDENSTAR</code> ↔︎ <code>Golden Star</code>),
+punctuation (<code>Yangzhou/Yuhuan Success</code>), and typos
+(<code>Qingdao</code> ↔︎ a master spelled <code>Qiangdao</code>). It only
+assigns a vendor when there’s a <strong>clear</strong> match, so it
+never mis-attributes an order. Nothing is shipped or pre-loaded — the
+matching runs entirely against the vendors <em>you</em> have on
+file.</p>
+<p>Some spellings can’t be resolved by any algorithm: internal shorthand
+or codes that share nothing with the real name (e.g. <code>SSG</code>,
+<code>DYE</code>), or a supplier that simply isn’t in your vendor master
+yet. Those are left flagged, and you clear them once on
+<strong>Analytics → Resolve Vendors</strong>:</p>
+<ol type="1">
+<li>The page lists every unresolved sourcing spelling with <strong>how
+many inquiries</strong> carry it (worst first) and the system’s
+<strong>best guess</strong> (with a match score) where it has one.</li>
+<li>Pick the correct vendor from the dropdown — the suggestion is
+pre-selected when it’s confident; for opaque codes, choose from the full
+vendor list (you know <code>SSG</code> means <em>Shanghai … </em>; the
+computer can’t).</li>
+<li>Click <strong>Apply</strong> and every inquiry with that spelling is
+back-filled to the vendor at once; the row disappears.</li>
+</ol>
+<p>The count drops as you go, and the <strong>Win Rate by Sourcing
+Vendor</strong> cut on the Inquiry Dashboard (§10.0) grows more complete
+with each one you clear. You only need to do this for spellings worth
+analyzing — a code that appears twice in eleven years can be left
+alone.</p>
 <h3 data-number="1.9.13" id="csv-export"><span
 class="header-section-number">1.9.13</span> 8.13 CSV Export</h3>
 <p>Most list screens have an <strong>Export CSV</strong> button that
@@ -4918,34 +4997,44 @@ higher rate than first-time requests), and <strong>lost reasons</strong>
 (losing on price vs. not being able to quote are different problems).
 Table: most active customers with per-customer win rate and <strong>last
 inquiry date</strong> — years of “who asks us for what, and do we win”
-at a glance. A falling win rate or a slowing turnaround is the early
-signal to review pricing or supplier response times.</li>
-<li><strong>Customer Dashboard</strong> — relationship health. Tiles:
+at a glance. A <strong>Win Rate by Sourcing Vendor</strong> section
+(chart + detail table) does the same cut by <em>supplier</em>: for each
+vendor you source from, how many inquiries, how many awarded vs. lost,
+and the resulting win rate — so you can see which suppliers’ quotes
+actually convert (a supplier at 21% is costing you business a supplier
+at 84% is winning). It carries a coverage line (<em>“vendor identified
+for N of M inquiries”</em>): not every historical inquiry has a
+resolvable sourcing vendor, and the ones that don’t link to the
+<strong>Resolve Vendors</strong> screen (§8.12.9) to clear them. A
+falling win rate or a slowing turnaround is the early signal to review
+pricing or supplier response times.</li>
+</ul>
+<p><img src="docs-style/images/inquiry-dashboard.png"
+alt="The Inquiry Dashboard — KPI tiles (inquiries, win rate, quote turnaround, open pipeline, days-to-award), charts for inquiries and win rate by year, quote turnaround, existing-vs-new win rate and lost reasons, the most-active-customers table, and the Win Rate by Sourcing Vendor cut with its detail grid" />
+- <strong>Customer Dashboard</strong> — relationship health. Tiles:
 revenue for the selected invoice-date range, <strong>AR
 exposure</strong> (open + partial invoice balances), open SO backlog,
 and customer quote win rate (with an on-credit-hold badge when any
 customer is held). Chart: top customers by revenue. Table: per-customer
 revenue, AR balance (amber when nonzero), and open SO value — customer
-concentration is visible at a glance.</li>
-<li><strong>Part Dashboard</strong> — the production portfolio. Tiles:
-active parts, <strong>engineered parts</strong> (carrying a drawing
-number), preferred-vendor coverage, and <strong>single-source
-risk</strong> (engineered parts with only one vendor in the catalog —
-the tile turns amber when nonzero; find a backup supplier). Charts:
-parts by manufacturing method, top parts by shipped revenue. Table: top
-parts with drawing numbers.</li>
-<li><strong>Vendor Scorecard</strong> — supplier performance (§4.1);
-linked here so all four pillars’ dashboards live in one place. The page
-opens with a <strong>compliance strip</strong>: certification counts
-(active / expired / expiring ≤ 90 days / 91–180 days), a
-<strong>Certification Expiry Radar</strong> listing every certificate
-that is expired or lapsing within 180 days (soonest first, color-coded),
-the supply base by country, and each agent’s factory-portfolio size.
-When any certification is expired or within 90 days of lapsing, the main
-Dashboard shows a red <strong>⚠ Vendor Certs</strong> tile linking
-straight here — the system warns you <em>before</em> an ISO or PED
-certificate lapses, not after a customer asks for it.</li>
-</ul>
+concentration is visible at a glance. - <strong>Part Dashboard</strong>
+— the production portfolio. Tiles: active parts, <strong>engineered
+parts</strong> (carrying a drawing number), preferred-vendor coverage,
+and <strong>single-source risk</strong> (engineered parts with only one
+vendor in the catalog — the tile turns amber when nonzero; find a backup
+supplier). Charts: parts by manufacturing method, top parts by shipped
+revenue. Table: top parts with drawing numbers. - <strong>Vendor
+Scorecard</strong> — supplier performance (§4.1); linked here so all
+four pillars’ dashboards live in one place. The page opens with a
+<strong>compliance strip</strong>: certification counts (active /
+expired / expiring ≤ 90 days / 91–180 days), a <strong>Certification
+Expiry Radar</strong> listing every certificate that is expired or
+lapsing within 180 days (soonest first, color-coded), the supply base by
+country, and each agent’s factory-portfolio size. When any certification
+is expired or within 90 days of lapsing, the main Dashboard shows a red
+<strong>⚠ Vendor Certs</strong> tile linking straight here — the system
+warns you <em>before</em> an ISO or PED certificate lapses, not after a
+customer asks for it.</p>
 <blockquote>
 <p><strong>Charts blank after an upgrade?</strong> The dashboards use
 the Chart.js library, which is installed automatically by
